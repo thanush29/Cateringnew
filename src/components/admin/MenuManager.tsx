@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Plus, Trash2, CreditCard as Edit2, X, Save } from 'lucide-react';
 import { supabase, MenuItem } from '../../lib/supabase';
+import ImageUpload from './ImageUpload';
+import { uploadImage, deleteImage } from '../../utils/imageUpload';
 
 export function MenuManager() {
   const [items, setItems] = useState<MenuItem[]>([]);
@@ -69,6 +71,11 @@ export function MenuManager() {
 
   const handleDelete = async (id: string) => {
     if (confirm('Are you sure you want to delete this menu item?')) {
+      const itemToDelete = items.find(item => item.id === id);
+      if (itemToDelete?.image_url) {
+        await deleteImage(itemToDelete.image_url);
+      }
+
       const { error } = await supabase
         .from('menu_items')
         .delete()
@@ -78,6 +85,11 @@ export function MenuManager() {
         fetchItems();
       }
     }
+  };
+
+  const handleMenuImageUpload = async (file: File) => {
+    const imageUrl = await uploadImage(file, 'menu');
+    setFormData({ ...formData, image_url: imageUrl });
   };
 
   const resetForm = () => {
@@ -149,14 +161,21 @@ export function MenuManager() {
               />
             </div>
             <div className="md:col-span-2">
-              <label className="block text-sm font-medium text-gray-700 mb-2">Image URL</label>
-              <input
-                type="url"
-                value={formData.image_url}
-                onChange={(e) => setFormData({ ...formData, image_url: e.target.value })}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500"
-                placeholder="https://..."
+              <ImageUpload
+                onUpload={handleMenuImageUpload}
+                currentImageUrl={formData.image_url}
+                label="Upload Menu Item Image"
               />
+              <div className="mt-2">
+                <label className="block text-sm font-medium text-gray-700 mb-2">Or paste URL</label>
+                <input
+                  type="url"
+                  value={formData.image_url}
+                  onChange={(e) => setFormData({ ...formData, image_url: e.target.value })}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500"
+                  placeholder="https://..."
+                />
+              </div>
             </div>
           </div>
           <button

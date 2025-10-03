@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Plus, Trash2, CreditCard as Edit2, X, Save } from 'lucide-react';
 import { supabase, BlogPost } from '../../lib/supabase';
+import ImageUpload from './ImageUpload';
+import { uploadImage, deleteImage } from '../../utils/imageUpload';
 
 export function BlogManager() {
   const [posts, setPosts] = useState<BlogPost[]>([]);
@@ -79,6 +81,11 @@ export function BlogManager() {
 
   const handleDelete = async (id: string) => {
     if (confirm('Are you sure you want to delete this blog post?')) {
+      const postToDelete = posts.find(p => p.id === id);
+      if (postToDelete?.thumbnail_url) {
+        await deleteImage(postToDelete.thumbnail_url);
+      }
+
       const { error } = await supabase
         .from('blog_posts')
         .delete()
@@ -88,6 +95,11 @@ export function BlogManager() {
         fetchPosts();
       }
     }
+  };
+
+  const handleThumbnailUpload = async (file: File) => {
+    const imageUrl = await uploadImage(file, 'blog');
+    setFormData({ ...formData, thumbnail_url: imageUrl });
   };
 
   const resetForm = () => {
@@ -146,15 +158,21 @@ export function BlogManager() {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Thumbnail URL</label>
-              <input
-                type="url"
-                required
-                value={formData.thumbnail_url}
-                onChange={(e) => setFormData({ ...formData, thumbnail_url: e.target.value })}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500"
-                placeholder="https://..."
+              <ImageUpload
+                onUpload={handleThumbnailUpload}
+                currentImageUrl={formData.thumbnail_url}
+                label="Upload Blog Thumbnail"
               />
+              <div className="mt-2">
+                <label className="block text-sm font-medium text-gray-700 mb-2">Or paste URL</label>
+                <input
+                  type="url"
+                  value={formData.thumbnail_url}
+                  onChange={(e) => setFormData({ ...formData, thumbnail_url: e.target.value })}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500"
+                  placeholder="https://..."
+                />
+              </div>
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Excerpt</label>

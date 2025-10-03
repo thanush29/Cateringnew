@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Upload, Trash2, CreditCard as Edit2, X, Save } from 'lucide-react';
 import { supabase, GalleryImage } from '../../lib/supabase';
+import ImageUpload from './ImageUpload';
+import { uploadImage, deleteImage } from '../../utils/imageUpload';
 
 export function GalleryManager() {
   const [images, setImages] = useState<GalleryImage[]>([]);
@@ -69,6 +71,11 @@ export function GalleryManager() {
 
   const handleDelete = async (id: string) => {
     if (confirm('Are you sure you want to delete this image?')) {
+      const imageToDelete = images.find(img => img.id === id);
+      if (imageToDelete?.image_url) {
+        await deleteImage(imageToDelete.image_url);
+      }
+
       const { error } = await supabase
         .from('gallery_images')
         .delete()
@@ -78,6 +85,11 @@ export function GalleryManager() {
         fetchImages();
       }
     }
+  };
+
+  const handleImageUpload = async (file: File) => {
+    const imageUrl = await uploadImage(file, 'gallery');
+    setFormData({ ...formData, image_url: imageUrl });
   };
 
   const resetForm = () => {
@@ -138,16 +150,22 @@ export function GalleryManager() {
                 ))}
               </select>
             </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Image URL</label>
-              <input
-                type="url"
-                required
-                value={formData.image_url}
-                onChange={(e) => setFormData({ ...formData, image_url: e.target.value })}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500"
-                placeholder="https://..."
+            <div className="md:col-span-2">
+              <ImageUpload
+                onUpload={handleImageUpload}
+                currentImageUrl={formData.image_url}
+                label="Upload Gallery Image"
               />
+              <div className="mt-2">
+                <label className="block text-sm font-medium text-gray-700 mb-2">Or paste URL</label>
+                <input
+                  type="url"
+                  value={formData.image_url}
+                  onChange={(e) => setFormData({ ...formData, image_url: e.target.value })}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500"
+                  placeholder="https://..."
+                />
+              </div>
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Alt Text</label>

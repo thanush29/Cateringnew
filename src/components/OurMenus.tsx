@@ -1,40 +1,90 @@
 import { motion, useInView } from 'framer-motion';
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { MenuCard } from './MenuCard';
+import { supabase } from '../lib/supabase';
+
+interface MenuItem {
+  id: string;
+  name: string;
+  description: string;
+  category: string;
+  image_url: string;
+}
 
 export function OurMenus() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const menuCategories = [
-    {
-      category: 'Vegetarian Delights',
-      description: 'Fresh seasonal vegetables prepared with aromatic spices and traditional techniques',
-      imageUrl: 'https://images.pexels.com/photos/1640772/pexels-photo-1640772.jpeg?auto=compress&cs=tinysrgb&w=800'
-    },
-    {
-      category: 'Non-Vegetarian Specialties',
-      description: 'Tender meats and seafood, expertly grilled and marinated with signature spices',
-      imageUrl: 'https://images.pexels.com/photos/2338407/pexels-photo-2338407.jpeg?auto=compress&cs=tinysrgb&w=800'
-    },
-    {
-      category: 'Exquisite Desserts',
-      description: 'Traditional sweets and contemporary desserts to end your meal on a sweet note',
-      imageUrl: 'https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg?auto=compress&cs=tinysrgb&w=800'
-    },
-    {
-      category: 'Appetizers & Starters',
-      description: 'An array of savory bites to begin your culinary journey',
-      imageUrl: 'https://images.pexels.com/photos/1639562/pexels-photo-1639562.jpeg?auto=compress&cs=tinysrgb&w=800'
-    },
-    {
-      category: 'Beverages',
-      description: 'Refreshing drinks and traditional beverages to complement your meal',
-      imageUrl: 'https://images.pexels.com/photos/1233319/pexels-photo-1233319.jpeg?auto=compress&cs=tinysrgb&w=800'
+  useEffect(() => {
+    fetchMenuItems();
+  }, []);
+
+  const fetchMenuItems = async () => {
+    const { data, error } = await supabase
+      .from('menu_items')
+      .select('*')
+      .order('created_at', { ascending: false });
+
+    if (!error && data && data.length > 0) {
+      setMenuItems(data);
+    } else {
+      setMenuItems([
+        {
+          id: '1',
+          category: 'Vegetarian Delights',
+          name: 'Vegetarian Delights',
+          description: 'Fresh seasonal vegetables prepared with aromatic spices and traditional techniques',
+          image_url: 'https://images.pexels.com/photos/1640772/pexels-photo-1640772.jpeg?auto=compress&cs=tinysrgb&w=800'
+        },
+        {
+          id: '2',
+          category: 'Non-Vegetarian Specialties',
+          name: 'Non-Vegetarian Specialties',
+          description: 'Tender meats and seafood, expertly grilled and marinated with signature spices',
+          image_url: 'https://images.pexels.com/photos/2338407/pexels-photo-2338407.jpeg?auto=compress&cs=tinysrgb&w=800'
+        },
+        {
+          id: '3',
+          category: 'Exquisite Desserts',
+          name: 'Exquisite Desserts',
+          description: 'Traditional sweets and contemporary desserts to end your meal on a sweet note',
+          image_url: 'https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg?auto=compress&cs=tinysrgb&w=800'
+        },
+        {
+          id: '4',
+          category: 'Appetizers & Starters',
+          name: 'Appetizers & Starters',
+          description: 'An array of savory bites to begin your culinary journey',
+          image_url: 'https://images.pexels.com/photos/1639562/pexels-photo-1639562.jpeg?auto=compress&cs=tinysrgb&w=800'
+        },
+        {
+          id: '5',
+          category: 'Beverages',
+          name: 'Beverages',
+          description: 'Refreshing drinks and traditional beverages to complement your meal',
+          image_url: 'https://images.pexels.com/photos/1233319/pexels-photo-1233319.jpeg?auto=compress&cs=tinysrgb&w=800'
+        }
+      ]);
     }
-  ];
+    setLoading(false);
+  };
+
+  const groupedItems = menuItems.reduce((acc, item) => {
+    if (!acc[item.category]) {
+      acc[item.category] = {
+        category: item.category,
+        description: item.description,
+        imageUrl: item.image_url
+      };
+    }
+    return acc;
+  }, {} as Record<string, { category: string; description: string; imageUrl: string }>);
+
+  const menuCategories = Object.values(groupedItems);
 
   const next = () => {
     setCurrentIndex((prev) => (prev + 1) % menuCategories.length);

@@ -17,23 +17,28 @@ export function Hero() {
         />
       </video>
 
-      <div className="absolute inset-0 bg-black/50" />
+      <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/50 to-black/70" />
 
       <div className="relative h-full flex items-center justify-center">
-        <div className="container mx-auto px-4 text-center">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <h1 className="text-5xl md:text-7xl font-bold text-white mb-6">
+            <motion.h1
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-bold text-white mb-6 text-shadow"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
               Turning Moments into Memories
-            </h1>
+            </motion.h1>
             <motion.h2
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-              className="text-3xl md:text-4xl font-semibold text-amber-400 mb-4"
+              transition={{ duration: 0.8, delay: 0.4 }}
+              className="text-2xl sm:text-3xl md:text-4xl font-display font-semibold bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 bg-clip-text text-transparent mb-4"
             >
               Made For You With Love
             </motion.h2>
@@ -41,7 +46,7 @@ export function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.6 }}
-              className="text-xl md:text-2xl text-gray-200 mb-12 max-w-3xl mx-auto italic"
+              className="text-lg sm:text-xl md:text-2xl text-gray-100 mb-12 max-w-3xl mx-auto italic leading-relaxed"
             >
               Hygienic, Quality Catering with Signature Flavours Celebrating our Culinary Heritage
             </motion.p>
@@ -49,20 +54,24 @@ export function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.9 }}
-              className="flex flex-col sm:flex-row gap-4 justify-center"
+              className="flex flex-col sm:flex-row gap-4 justify-center items-center"
             >
-              <a
+              <motion.a
                 href="#contact"
-                className="bg-amber-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-amber-700 transition-colors shadow-lg"
+                className="btn-primary text-base sm:text-lg w-full sm:w-auto"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
                 Book a Tasting
-              </a>
-              <a
+              </motion.a>
+              <motion.a
                 href="#menu"
-                className="bg-white text-amber-700 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-gray-100 transition-colors shadow-lg"
+                className="bg-white text-burgundy-800 px-6 sm:px-8 py-3 sm:py-4 rounded-lg text-base sm:text-lg font-semibold hover:bg-gray-100 transition-all duration-300 shadow-lg hover:shadow-xl w-full sm:w-auto"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
                 See Menu
-              </a>
+              </motion.a>
             </motion.div>
           </motion.div>
         </div>

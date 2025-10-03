@@ -2,10 +2,12 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { supabase } from '../lib/supabase';
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [logoUrl, setLogoUrl] = useState<string>('');
   const location = useLocation();
 
   const isNonHomePage = location.pathname !== '/';
@@ -17,6 +19,22 @@ export function Header() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  useEffect(() => {
+    fetchLogo();
+  }, []);
+
+  const fetchLogo = async () => {
+    const { data, error } = await supabase
+      .from('site_settings')
+      .select('value')
+      .eq('key', 'logo_url')
+      .maybeSingle();
+
+    if (!error && data && data.value) {
+      setLogoUrl(data.value);
+    }
+  };
 
   useEffect(() => {
     setIsOpen(false);
@@ -77,26 +95,33 @@ export function Header() {
           </div>
 
           <Link
-            to="/"
-            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            className="flex items-center gap-3 px-8 group"
-          >
-            <div className="w-12 h-12 bg-amber-600 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
-              <span className="text-white font-bold text-xl">S</span>
-            </div>
-            <div className="flex flex-col">
-              <span className={`text-xl font-bold transition-colors group-hover:text-amber-600 ${
-                isScrolled || isNonHomePage ? 'text-amber-700' : 'text-white'
-              }`}>
-                shanvikcateringevents
-              </span>
-              <span className={`text-xs transition-colors ${
-                isScrolled || isNonHomePage ? 'text-gray-600' : 'text-gray-200'
-              }`}>
-                Turning Moments into Memories
-              </span>
-            </div>
-          </Link>
+  to="/"
+  onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+  className="flex flex-col items-center justify-center px-8 group"
+>
+  {logoUrl ? (
+    <motion.img
+      src={logoUrl}
+      alt="shanvikcateringevents"
+      className="h-16 w-auto group-hover:scale-110 transition-transform"
+      initial={{ opacity: 0, scale: 0.8 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.5 }}
+    />
+  ) : (
+    <div className="w-12 h-12 bg-gradient-to-br from-amber-500 to-amber-700 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg">
+      <span className="text-white font-bold text-xl">S</span>
+    </div>
+  )}
+
+  {/* Main Text below logo */}
+  <span className={`text-lg font-display font-bold transition-colors group-hover:text-amber-600 ${
+    isScrolled || isNonHomePage ? 'text-amber-700' : 'text-white'
+  }`}>
+    shanvikcateringevents
+  </span>
+</Link>
+
 
           <div className="flex items-center gap-8 flex-1">
             {rightLinks.map((link) => (
@@ -114,21 +139,31 @@ export function Header() {
 
         <div className="lg:hidden flex items-center justify-between h-20">
           <Link to="/" className="flex items-center gap-2">
-            <div className="w-10 h-10 bg-amber-600 rounded-full flex items-center justify-center">
-              <span className="text-white font-bold">S</span>
-            </div>
-            <div className="flex flex-col">
-              <span className={`text-lg font-bold transition-colors ${
-                isScrolled || isNonHomePage ? 'text-amber-700' : 'text-white'
-              }`}>
-                shanvikcateringevents
-              </span>
-              <span className={`text-xs transition-colors ${
-                isScrolled || isNonHomePage ? 'text-gray-600' : 'text-gray-200'
-              }`}>
-                Turning Moments into Memories
-              </span>
-            </div>
+            {logoUrl ? (
+              <img
+                src={logoUrl}
+                alt="shanvikcateringevents"
+                className="h-12 w-auto"
+              />
+            ) : (
+              <>
+                <div className="w-10 h-10 bg-gradient-to-br from-amber-500 to-amber-700 rounded-full flex items-center justify-center shadow-lg">
+                  <span className="text-white font-bold">S</span>
+                </div>
+                <div className="flex flex-col">
+                  <span className={`text-lg font-display font-bold transition-colors ${
+                    isScrolled || isNonHomePage ? 'text-amber-700' : 'text-white'
+                  }`}>
+                    shanvikcateringevents
+                  </span>
+                  <span className={`text-xs transition-colors ${
+                    isScrolled || isNonHomePage ? 'text-gray-600' : 'text-gray-200'
+                  }`}>
+                    Turning Moments into Memories
+                  </span>
+                </div>
+              </>
+            )}
           </Link>
 
           <button

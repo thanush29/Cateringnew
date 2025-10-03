@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { LogOut, Image, MessageSquare, FileText, Mail, Utensils } from 'lucide-react';
+import { LogOut, Image, MessageSquare, FileText, Mail, Utensils, Image as ImageIcon } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { supabase } from '../lib/supabase';
 import { GalleryManager } from '../components/admin/GalleryManager';
@@ -9,6 +9,7 @@ import { TestimonialManager } from '../components/admin/TestimonialManager';
 import { BlogManager } from '../components/admin/BlogManager';
 import { MenuManager } from '../components/admin/MenuManager';
 import { InquiriesViewer } from '../components/admin/InquiriesViewer';
+import { LogoManager } from '../components/admin/LogoManager';
 
 export function AdminDashboard() {
   const navigate = useNavigate();
@@ -20,7 +21,7 @@ export function AdminDashboard() {
     menuItems: 0,
     inquiries: 0
   });
-  const [activeTab, setActiveTab] = useState<'gallery' | 'testimonials' | 'blog' | 'menu' | 'inquiries'>('gallery');
+  const [activeTab, setActiveTab] = useState<'logo' | 'gallery' | 'testimonials' | 'blog' | 'menu' | 'inquiries'>('logo');
 
   useEffect(() => {
     if (!user) {
@@ -54,6 +55,7 @@ export function AdminDashboard() {
   };
 
   const tabs = [
+    { id: 'logo', label: 'Logo', icon: ImageIcon, count: null },
     { id: 'gallery', label: 'Gallery', icon: Image, count: stats.galleryImages },
     { id: 'testimonials', label: 'Testimonials', icon: MessageSquare, count: stats.testimonials },
     { id: 'blog', label: 'Blog Posts', icon: FileText, count: stats.blogPosts },
@@ -82,7 +84,7 @@ export function AdminDashboard() {
       </header>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-8">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
           {tabs.map((tab) => {
             const Icon = tab.icon;
             const isActive = activeTab === tab.id;
@@ -100,10 +102,12 @@ export function AdminDashboard() {
               >
                 <div className="flex flex-col items-center text-center">
                   <Icon className={isActive ? 'text-white' : 'text-amber-600'} size={32} />
-                  <span className={`text-3xl font-bold mt-3 ${isActive ? 'text-white' : 'text-gray-800'}`}>
-                    {tab.count}
-                  </span>
-                  <h3 className={`text-sm font-semibold mt-2 ${isActive ? 'text-white' : 'text-gray-700'}`}>
+                  {tab.count !== null && (
+                    <span className={`text-3xl font-bold mt-3 ${isActive ? 'text-white' : 'text-gray-800'}`}>
+                      {tab.count}
+                    </span>
+                  )}
+                  <h3 className={`text-sm font-semibold ${tab.count !== null ? 'mt-2' : 'mt-3'} ${isActive ? 'text-white' : 'text-gray-700'}`}>
                     {tab.label}
                   </h3>
                 </div>
@@ -119,6 +123,7 @@ export function AdminDashboard() {
           transition={{ duration: 0.3 }}
           className="bg-white rounded-xl shadow-lg p-6"
         >
+          {activeTab === 'logo' && <LogoManager />}
           {activeTab === 'gallery' && <GalleryManager />}
           {activeTab === 'testimonials' && <TestimonialManager />}
           {activeTab === 'blog' && <BlogManager />}

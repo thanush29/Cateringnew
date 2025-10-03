@@ -50,7 +50,7 @@ export function Contact() {
   };
 
   return (
-    <section id="contact" className="py-20 bg-gradient-to-b from-amber-50 to-white" ref={ref}>
+    <section id="contact" className="py-16 sm:py-20 lg:py-24 section-gradient" ref={ref}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -58,11 +58,11 @@ export function Contact() {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold text-burgundy-900 mb-4">
             Let's Plan Your Perfect Event
           </h2>
-          <div className="w-24 h-1 bg-amber-600 mx-auto mb-6" />
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          <div className="w-24 h-1 bg-gradient-to-r from-amber-500 to-emerald-500 mx-auto mb-6" />
+          <p className="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto">
             Get in touch with us to discuss your catering needs
           </p>
         </motion.div>
@@ -75,8 +75,8 @@ export function Contact() {
           >
             <div className="space-y-6">
               <div className="flex items-start gap-4">
-                <div className="p-3 bg-amber-100 rounded-lg">
-                  <Phone className="text-amber-600" size={24} />
+                <div className="p-3 bg-gradient-to-br from-amber-100 to-emerald-100 rounded-lg">
+                  <Phone className="text-emerald-600" size={24} />
                 </div>
                 <div>
                   <h3 className="font-semibold text-gray-800 mb-1">Phone</h3>
@@ -87,7 +87,7 @@ export function Contact() {
               </div>
 
               <div className="flex items-start gap-4">
-                <div className="p-3 bg-amber-100 rounded-lg">
+                <div className="p-3 bg-gradient-to-br from-emerald-100 to-amber-100 rounded-lg">
                   <Mail className="text-amber-600" size={24} />
                 </div>
                 <div>
@@ -99,8 +99,8 @@ export function Contact() {
               </div>
 
               <div className="flex items-start gap-4">
-                <div className="p-3 bg-amber-100 rounded-lg">
-                  <MapPin className="text-amber-600" size={24} />
+                <div className="p-3 bg-gradient-to-br from-amber-100 to-emerald-100 rounded-lg">
+                  <MapPin className="text-burgundy-600" size={24} />
                 </div>
                 <div>
                   <h3 className="font-semibold text-gray-800 mb-1">Location</h3>
@@ -216,7 +216,7 @@ export function Contact() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full bg-amber-600 text-white py-3 rounded-lg hover:bg-amber-700 transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
+                  className="w-full btn-secondary flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <Send size={20} />
                   {isSubmitting ? 'Sending...' : 'Send Message'}
