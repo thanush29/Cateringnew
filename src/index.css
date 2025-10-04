@@ -36,19 +36,19 @@
 
 @layer components {
   .btn-primary {
-    @apply bg-[#d4af37] text-[#0b1a45] px-6 py-3 rounded-lg font-semibold hover:bg-[#c9a332] transition-all duration-300 hover:scale-105 hover:shadow-lg;
+    @apply bg-gradient-to-r from-[#d4af37] to-[#c9a332] text-white px-8 py-3 rounded-xl font-bold hover:from-[#c9a332] hover:to-[#d4af37] transition-all duration-300 hover:scale-105 hover:shadow-2xl;
   }
 
   .btn-secondary {
-    @apply bg-[#0b1a45] text-[#d4af37] px-6 py-3 rounded-lg font-semibold hover:bg-[#0d2055] transition-all duration-300 hover:scale-105 hover:shadow-lg;
+    @apply bg-gradient-to-r from-[#0b1a45] to-[#0d2055] text-white px-8 py-3 rounded-xl font-bold hover:from-[#0d2055] hover:to-[#0b1a45] transition-all duration-300 hover:scale-105 hover:shadow-2xl;
   }
 
   .btn-outline {
-    @apply border-2 border-[#d4af37] text-[#d4af37] px-6 py-3 rounded-lg font-semibold hover:bg-[#d4af37] hover:text-[#0b1a45] transition-all duration-300;
+    @apply border-2 border-[#d4af37] text-[#d4af37] px-8 py-3 rounded-xl font-bold hover:bg-gradient-to-r hover:from-[#d4af37] hover:to-[#c9a332] hover:text-white transition-all duration-300 hover:shadow-xl;
   }
 
   .card {
-    @apply bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1;
+    @apply bg-gradient-to-br from-white to-[#faf8f3] rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border-2 border-transparent hover:border-[#d4af37]/20;
   }
 
   .section-gradient {

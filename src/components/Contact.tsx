@@ -105,7 +105,7 @@ export function Contact() {
           >
             <div className="space-y-6">
               <div className="flex items-start gap-4">
-                <div className="p-3 bg-[#d4af37]/10 rounded-lg">
+                <div className="p-3 bg-gradient-to-br from-[#d4af37]/20 to-[#d4af37]/10 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105">
                   <Phone className="text-[#d4af37]" size={24} />
                 </div>
                 <div>
@@ -117,7 +117,7 @@ export function Contact() {
               </div>
 
               <div className="flex items-start gap-4">
-                <div className="p-3 bg-[#d4af37]/10 rounded-lg">
+                <div className="p-3 bg-gradient-to-br from-[#0b1a45]/20 to-[#0b1a45]/10 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105">
                   <Mail className="text-[#0b1a45]" size={24} />
                 </div>
                 <div>
@@ -129,7 +129,7 @@ export function Contact() {
               </div>
 
               <div className="flex items-start gap-4">
-                <div className="p-3 bg-[#0b1a45]/10 rounded-lg">
+                <div className="p-3 bg-gradient-to-br from-[#d4af37]/20 to-[#0b1a45]/10 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105">
                   <MapPin className="text-[#0b1a45]" size={24} />
                 </div>
                 <div>
@@ -160,7 +160,7 @@ export function Contact() {
             animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            <form onSubmit={handleSubmit} className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-2xl p-8 border border-[#d4af37]/30">
+            <form onSubmit={handleSubmit} className="bg-gradient-to-br from-white/90 to-white/80 backdrop-blur-sm rounded-2xl shadow-2xl p-8 border border-[#d4af37]/30 hover:border-[#d4af37]/50 transition-all duration-300">
               <div className="space-y-6">
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-[#0b1a45] mb-2">
@@ -172,7 +172,7 @@ export function Contact() {
                     required
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#d4af37] focus:border-transparent"
+                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-[#d4af37] focus:border-[#d4af37] transition-all duration-300 bg-white/50 hover:bg-white"
                   />
                 </div>
 
@@ -186,7 +186,7 @@ export function Contact() {
                     required
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#d4af37] focus:border-transparent"
+                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-[#d4af37] focus:border-[#d4af37] transition-all duration-300 bg-white/50 hover:bg-white"
                   />
                 </div>
 
@@ -200,7 +200,7 @@ export function Contact() {
                     required
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#d4af37] focus:border-transparent"
+                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-[#d4af37] focus:border-[#d4af37] transition-all duration-300 bg-white/50 hover:bg-white"
                   />
                 </div>
 
@@ -214,7 +214,7 @@ export function Contact() {
                     rows={4}
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#d4af37] focus:border-transparent"
+                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-[#d4af37] focus:border-[#d4af37] transition-all duration-300 bg-white/50 hover:bg-white"
                   />
                 </div>
 
@@ -246,7 +246,7 @@ export function Contact() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full btn-secondary flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full bg-gradient-to-r from-[#0b1a45] to-[#0d2055] text-white px-8 py-4 rounded-xl font-bold hover:from-[#0d2055] hover:to-[#0b1a45] transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
                 >
                   <Send size={20} />
                   {isSubmitting ? 'Sending...' : 'Send Message'}

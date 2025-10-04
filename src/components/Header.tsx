@@ -168,65 +168,62 @@ export function Header() {
         </div>
 
         <motion.div
-          className="lg:hidden flex flex-col items-center py-4"
+          className="lg:hidden flex items-center justify-between py-3"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5 }}
         >
-          <div className="flex items-center justify-between w-full mb-3">
-            <Link to="/" className="flex items-center gap-3">
-              {logoUrl ? (
-                <div className="relative">
-                  <div className="absolute inset-0 bg-[#d4af37]/30 blur-md opacity-40"></div>
-                  <img
-                    src={logoUrl}
-                    alt="shanvikcateringevents"
-                    className="h-14 w-auto relative z-10 drop-shadow-lg"
-                  />
+          <Link to="/" className="flex items-center gap-2">
+            {logoUrl ? (
+              <div className="relative">
+                <div className="absolute inset-0 bg-[#d4af37]/30 blur-md opacity-40"></div>
+                <img
+                  src={logoUrl}
+                  alt="shanvikcateringevents"
+                  className="h-12 w-auto relative z-10 drop-shadow-lg"
+                />
+              </div>
+            ) : (
+              <div className="relative">
+                <div className="absolute inset-0 bg-[#d4af37]/30 blur-md opacity-50"></div>
+                <div className="w-10 h-10 bg-[#d4af37] rounded-full flex items-center justify-center shadow-xl relative z-10">
+                  <span className="text-[#0b1a45] font-bold text-base">S</span>
                 </div>
-              ) : (
-                <div className="relative">
-                  <div className="absolute inset-0 bg-[#d4af37]/30 blur-md opacity-50"></div>
-                  <div className="w-12 h-12 bg-[#d4af37] rounded-full flex items-center justify-center shadow-xl relative z-10">
-                    <span className="text-[#0b1a45] font-bold text-lg">S</span>
-                  </div>
-                </div>
-              )}
-            </Link>
-
-            <button
-              className={`p-2 transition-all duration-300 rounded-lg hover:bg-[#d4af37]/10 ${textColor}`}
-              onClick={() => setIsOpen(!isOpen)}
-              aria-label="Toggle menu"
+              </div>
+            )}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.2, duration: 0.5 }}
+              className="flex flex-col"
             >
-              <motion.div
-                animate={{ rotate: isOpen ? 90 : 0 }}
-                transition={{ duration: 0.3 }}
-              >
-                {isOpen ? <X size={28} /> : <Menu size={28} />}
-              </motion.div>
-            </button>
-          </div>
+              <span className={`text-base font-display font-bold leading-tight transition-colors duration-300 ${
+                isScrolled || isNonHomePage
+                  ? 'text-[#d4af37]'
+                  : 'text-[#d4af37] drop-shadow-lg'
+              }`}>
+                shanvikcateringevents
+              </span>
+              <span className={`text-[10px] font-medium leading-tight transition-colors duration-300 ${
+                isScrolled || isNonHomePage ? 'text-[#0b1a45]/80' : 'text-[#d4af37]/90'
+              }`}>
+                Turning Moments into Memories
+              </span>
+            </motion.div>
+          </Link>
 
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.2, duration: 0.5 }}
-            className="text-center"
+          <button
+            className={`p-2 transition-all duration-300 rounded-lg hover:bg-[#d4af37]/20 active:bg-[#d4af37]/30 ${textColor}`}
+            onClick={() => setIsOpen(!isOpen)}
+            aria-label="Toggle menu"
           >
-            <span className={`text-lg font-display font-bold block transition-colors duration-300 ${
-              isScrolled || isNonHomePage
-                ? 'text-[#d4af37]'
-                : 'text-[#d4af37] drop-shadow-lg'
-            }`}>
-              shanvikcateringevents
-            </span>
-            <span className={`text-xs font-medium transition-colors duration-300 ${
-              isScrolled || isNonHomePage ? 'text-[#0b1a45]' : 'text-[#d4af37]/90'
-            }`}>
-              Turning Moments into Memories
-            </span>
-          </motion.div>
+            <motion.div
+              animate={{ rotate: isOpen ? 90 : 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              {isOpen ? <X size={26} /> : <Menu size={26} />}
+            </motion.div>
+          </button>
         </motion.div>
       </nav>
 
@@ -237,7 +234,7 @@ export function Header() {
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3 }}
-            className="lg:hidden bg-white border-t border-[#d4af37]/30 shadow-xl backdrop-blur-lg"
+            className="lg:hidden bg-white/95 border-t border-[#d4af37]/30 shadow-xl backdrop-blur-lg"
           >
             <div className="container mx-auto px-4 py-6 space-y-2">
               {[...leftLinks, ...rightLinks].map((link, index) => (
@@ -250,7 +247,7 @@ export function Header() {
                   <Link
                     to={link.to}
                     onClick={(e) => handleNavClick(link.to, e)}
-                    className="block py-4 px-5 text-[#0b1a45] font-semibold hover:text-white hover:bg-[#0b1a45] rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-lg border border-transparent hover:border-[#d4af37]"
+                    className="block py-3.5 px-5 text-[#0b1a45] font-semibold hover:text-white hover:bg-gradient-to-r hover:from-[#0b1a45] hover:to-[#0d2055] rounded-xl transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg border border-[#d4af37]/20 hover:border-[#d4af37]"
                   >
                     {link.label}
                   </Link>

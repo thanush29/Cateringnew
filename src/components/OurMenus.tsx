@@ -178,7 +178,7 @@ export function OurMenus() {
           <div className="flex items-center justify-center gap-4 mb-8">
             <button
               onClick={prev}
-              className="p-3 bg-white rounded-full shadow-lg hover:bg-[#faf8f3] transition-colors"
+              className="p-3 bg-gradient-to-br from-white to-[#faf8f3] rounded-full shadow-xl hover:shadow-2xl hover:scale-110 transition-all duration-300 border-2 border-[#d4af37]/20 hover:border-[#d4af37]/40"
               aria-label="Previous menu"
             >
               <ChevronLeft className="text-[#d4af37]" size={24} />
@@ -197,7 +197,7 @@ export function OurMenus() {
             </div>
             <button
               onClick={next}
-              className="p-3 bg-white rounded-full shadow-lg hover:bg-[#faf8f3] transition-colors"
+              className="p-3 bg-gradient-to-br from-white to-[#faf8f3] rounded-full shadow-xl hover:shadow-2xl hover:scale-110 transition-all duration-300 border-2 border-[#d4af37]/20 hover:border-[#d4af37]/40"
               aria-label="Next menu"
             >
               <ChevronRight className="text-[#d4af37]" size={24} />

@@ -123,7 +123,7 @@ export function Testimonials() {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.9 }}
               transition={{ duration: 0.5 }}
-              className="bg-white rounded-2xl shadow-2xl p-8 md:p-12"
+              className="bg-gradient-to-br from-white to-[#faf8f3] rounded-3xl shadow-2xl hover:shadow-3xl p-8 md:p-12 border-2 border-[#d4af37]/20 transition-all duration-500"
             >
               <div className="flex items-start gap-6 mb-6">
                 {currentTestimonial?.photo_url ? (
@@ -133,7 +133,7 @@ export function Testimonials() {
                     className="w-20 h-20 rounded-full object-cover ring-4 ring-[#d4af37]/30"
                   />
                 ) : (
-                  <div className="w-20 h-20 rounded-full bg-[#d4af37] flex items-center justify-center text-[#0b1a45] font-bold text-2xl ring-4 ring-[#d4af37]/30">
+                  <div className="w-20 h-20 rounded-full bg-gradient-to-br from-[#d4af37] to-[#c9a332] flex items-center justify-center text-white font-bold text-2xl ring-4 ring-[#d4af37]/30 shadow-xl">
                     {currentTestimonial?.reviewer_name.charAt(0)}
                   </div>
                 )}
@@ -152,8 +152,8 @@ export function Testimonials() {
                   </div>
                 </div>
               </div>
-              <div className="text-6xl text-[#d4af37] mb-4">"</div>
-              <p className="text-xl text-[#0b1a45] mb-6 italic leading-relaxed">
+              <div className="text-7xl text-[#d4af37] mb-4 leading-none opacity-70">"</div>
+              <p className="text-xl text-[#0b1a45]/90 mb-6 italic leading-relaxed font-medium">
                 {currentTestimonial?.content}
               </p>
             </motion.div>
@@ -162,14 +162,14 @@ export function Testimonials() {
               <>
                 <button
                   onClick={prev}
-                  className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-16 p-4 bg-white rounded-full shadow-xl hover:bg-[#faf8f3] hover:scale-110 transition-all hidden md:block"
+                  className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-16 p-4 bg-gradient-to-br from-white to-[#faf8f3] rounded-full shadow-xl hover:shadow-2xl hover:scale-110 transition-all hidden md:block border-2 border-[#d4af37]/20 hover:border-[#d4af37]/40"
                   aria-label="Previous testimonial"
                 >
                   <ChevronLeft className="text-[#d4af37]" size={28} />
                 </button>
                 <button
                   onClick={next}
-                  className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-16 p-4 bg-white rounded-full shadow-xl hover:bg-[#faf8f3] hover:scale-110 transition-all hidden md:block"
+                  className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-16 p-4 bg-gradient-to-br from-white to-[#faf8f3] rounded-full shadow-xl hover:shadow-2xl hover:scale-110 transition-all hidden md:block border-2 border-[#d4af37]/20 hover:border-[#d4af37]/40"
                   aria-label="Next testimonial"
                 >
                   <ChevronRight className="text-[#d4af37]" size={28} />
