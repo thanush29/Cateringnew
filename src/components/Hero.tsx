@@ -75,7 +75,7 @@ export function Hero() {
                 }}
                 className="text-lg sm:text-xl md:text-2xl text-white mb-12 max-w-3xl mx-auto italic leading-relaxed font-medium"
               >
-                Hygienic, Quality Catering with Signature Flavours Celebrating our Culinary Heritage
+                BIRTHDAY - SOCIAL EVENTS - MEETINGS-WEDDINGS ANNIVERSARIES ALL TYPE OF MAKEUP AND CANDID CAMERAZ AND STAGE DECORATION
               </motion.p>
             </motion.div>
             <motion.div

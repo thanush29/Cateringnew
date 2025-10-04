@@ -202,7 +202,7 @@ export function Header() {
                   ? 'text-[#d4af37]'
                   : 'text-[#d4af37] drop-shadow-lg'
               }`}>
-                shanvikcateringevents
+                Shanvik Catering & Events
               </span>
               <span className={`text-[10px] font-medium leading-tight transition-colors duration-300 ${
                 isScrolled || isNonHomePage ? 'text-[#0b1a45]/80' : 'text-[#d4af37]/90'
