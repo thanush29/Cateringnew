@@ -95,21 +95,64 @@ export function OurMenus() {
   };
 
   return (
-    <section id="menu" className="py-20 bg-gradient-to-b from-amber-50 to-white" ref={ref}>
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="menu" className="py-20 relative overflow-hidden" ref={ref}>
+      <div className="absolute inset-0 bg-gradient-to-br from-amber-50 via-yellow-50 to-orange-50"></div>
+      <motion.div
+        className="absolute top-0 left-0 w-96 h-96 bg-gradient-to-br from-amber-300/20 to-yellow-300/20 rounded-full blur-3xl"
+        animate={{
+          x: [0, 100, 0],
+          y: [0, 50, 0],
+        }}
+        transition={{
+          duration: 20,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+      />
+      <motion.div
+        className="absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-br from-yellow-300/20 to-orange-300/20 rounded-full blur-3xl"
+        animate={{
+          x: [0, -100, 0],
+          y: [0, -50, 0],
+        }}
+        transition={{
+          duration: 20,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: 1
+        }}
+      />
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
-            Our Menus
-          </h2>
-          <div className="w-24 h-1 bg-amber-600 mx-auto mb-6" />
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          <motion.h2
+            className="text-4xl md:text-5xl font-bold mb-4"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-700 via-yellow-600 to-orange-600">
+              Our Menus
+            </span>
+          </motion.h2>
+          <motion.div
+            className="w-32 h-1.5 bg-gradient-to-r from-amber-600 via-yellow-500 to-orange-600 mx-auto mb-6 rounded-full"
+            initial={{ width: 0 }}
+            animate={isInView ? { width: 128 } : { width: 0 }}
+            transition={{ duration: 1, delay: 0.4 }}
+          />
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+            className="text-xl text-gray-700 max-w-2xl mx-auto font-medium"
+          >
             Explore our diverse menu offerings crafted to delight every palate
-          </p>
+          </motion.p>
         </motion.div>
 
         <div className="relative max-w-6xl mx-auto">

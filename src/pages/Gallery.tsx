@@ -116,52 +116,90 @@ export function Gallery() {
 
   return (
     <div className="min-h-screen pt-20">
-      <div className="bg-gradient-to-r from-amber-600 to-amber-700 text-white py-16">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">Our Gallery</h1>
-          <p className="text-xl text-amber-100">
+      <div className="bg-gradient-to-br from-rose-600 via-pink-600 to-purple-600 text-white py-20 relative overflow-hidden">
+        <motion.div
+          className="absolute inset-0 bg-gradient-to-r from-pink-500/20 to-purple-500/20"
+          animate={{
+            backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
+          }}
+          transition={{
+            duration: 10,
+            repeat: Infinity,
+            ease: "linear"
+          }}
+          style={{ backgroundSize: "200% 200%" }}
+        />
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+          <motion.h1
+            initial={{ opacity: 0, y: -30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-5xl md:text-6xl font-bold mb-6 drop-shadow-2xl"
+          >
+            Our Gallery
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="text-2xl text-white/95 font-medium"
+          >
             Explore our memorable events and celebrations
-          </p>
+          </motion.p>
         </div>
       </div>
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="flex flex-wrap justify-center gap-4 mb-12">
-          {categories.map(category => (
-            <button
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="flex flex-wrap justify-center gap-4 mb-16"
+        >
+          {categories.map((category, index) => (
+            <motion.button
               key={category}
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.3, delay: index * 0.1 }}
+              whileHover={{ scale: 1.1, y: -3 }}
+              whileTap={{ scale: 0.95 }}
               onClick={() => setSelectedCategory(category)}
-              className={`px-6 py-2 rounded-full font-medium transition-all ${
+              className={`px-8 py-3 rounded-full font-bold transition-all duration-300 ${
                 selectedCategory === category
-                  ? 'bg-amber-600 text-white shadow-lg scale-105'
-                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                  ? 'bg-gradient-to-r from-rose-600 via-pink-600 to-purple-600 text-white shadow-xl'
+                  : 'bg-gradient-to-r from-gray-100 to-gray-200 text-gray-700 hover:from-pink-100 hover:to-purple-100 hover:text-purple-700 shadow-md'
               }`}
             >
               {category}
-            </button>
+            </motion.button>
           ))}
-        </div>
+        </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
           {filteredImages.map((image, index) => (
             <motion.div
               key={image.id}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.3, delay: index * 0.05 }}
-              whileHover={{ scale: 1.05 }}
-              className="relative aspect-square rounded-lg overflow-hidden shadow-lg cursor-pointer group"
+              initial={{ opacity: 0, y: 30, scale: 0.9 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ duration: 0.5, delay: index * 0.05 }}
+              whileHover={{ scale: 1.08, y: -10 }}
+              className="relative aspect-square rounded-2xl overflow-hidden shadow-xl cursor-pointer group border-4 border-transparent hover:border-pink-300"
               onClick={() => setLightboxImage(image)}
             >
               <img
                 src={image.image_url}
                 alt={image.alt_text}
-                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                className="w-full h-full object-cover transition-all duration-500 group-hover:scale-125 group-hover:rotate-2"
                 loading="lazy"
               />
-              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                <span className="text-white font-semibold text-lg">{image.title}</span>
-              </div>
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-br from-rose-600/70 via-pink-600/70 to-purple-600/70 opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center"
+                initial={{ opacity: 0 }}
+                whileHover={{ opacity: 1 }}
+              >
+                <span className="text-white font-bold text-xl drop-shadow-lg transform -translate-y-2 group-hover:translate-y-0 transition-transform duration-300">{image.title}</span>
+              </motion.div>
             </motion.div>
           ))}
         </div>

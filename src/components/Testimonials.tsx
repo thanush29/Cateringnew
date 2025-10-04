@@ -63,18 +63,56 @@ export function Testimonials() {
   const currentTestimonial = displayTestimonials[currentIndex];
 
   return (
-    <section id="testimonials" className="py-20 bg-gradient-to-b from-white via-amber-50 to-white" ref={ref}>
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="testimonials" className="py-20 relative overflow-hidden" ref={ref}>
+      <div className="absolute inset-0 bg-gradient-to-br from-violet-50 via-fuchsia-50 to-pink-50"></div>
+      <motion.div
+        className="absolute top-20 left-0 w-96 h-96 bg-gradient-to-br from-violet-300/20 to-fuchsia-300/20 rounded-full blur-3xl"
+        animate={{
+          x: [0, 100, 0],
+          y: [0, 50, 0],
+        }}
+        transition={{
+          duration: 20,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+      />
+      <motion.div
+        className="absolute bottom-20 right-0 w-96 h-96 bg-gradient-to-br from-fuchsia-300/20 to-pink-300/20 rounded-full blur-3xl"
+        animate={{
+          x: [0, -100, 0],
+          y: [0, -50, 0],
+        }}
+        transition={{
+          duration: 20,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: 1
+        }}
+      />
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
-            What Our Clients Say
-          </h2>
-          <div className="w-24 h-1 bg-gradient-to-r from-amber-600 to-orange-600 mx-auto" />
+          <motion.h2
+            className="text-4xl md:text-5xl font-bold mb-4"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-700 via-fuchsia-600 to-pink-600">
+              What Our Clients Say
+            </span>
+          </motion.h2>
+          <motion.div
+            className="w-32 h-1.5 bg-gradient-to-r from-violet-600 via-fuchsia-600 to-pink-600 mx-auto rounded-full"
+            initial={{ width: 0 }}
+            animate={isInView ? { width: 128 } : { width: 0 }}
+            transition={{ duration: 1, delay: 0.4 }}
+          />
         </motion.div>
 
         <div className="max-w-4xl mx-auto mb-16">
@@ -157,28 +195,54 @@ export function Testimonials() {
         </div>
 
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 30, scale: 0.95 }}
+          animate={isInView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 30, scale: 0.95 }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          className="text-center bg-gradient-to-r from-pink-600 to-purple-600 rounded-2xl shadow-xl p-8"
+          className="relative text-center bg-gradient-to-r from-pink-600 via-fuchsia-600 to-violet-600 rounded-3xl shadow-2xl p-10 overflow-hidden group"
         >
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <Instagram className="text-white" size={36} />
-            <h3 className="text-3xl font-bold text-white">
-              Follow us on Instagram
-            </h3>
+          <motion.div
+            className="absolute inset-0 bg-gradient-to-r from-violet-500 to-pink-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+            animate={{
+              backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
+            }}
+            transition={{
+              duration: 5,
+              repeat: Infinity,
+              ease: "linear"
+            }}
+            style={{ backgroundSize: "200% 200%" }}
+          />
+          <div className="relative z-10">
+            <motion.div
+              className="flex items-center justify-center gap-4 mb-6"
+              animate={{
+                scale: [1, 1.05, 1],
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+            >
+              <Instagram className="text-white drop-shadow-lg" size={42} />
+              <h3 className="text-4xl font-bold text-white drop-shadow-lg">
+                Follow us on Instagram
+              </h3>
+            </motion.div>
+            <p className="text-white font-bold mb-8 text-2xl tracking-wide">
+              @shanvikcateringevents
+            </p>
+            <motion.a
+              href="https://instagram.com/shanvikcateringevents"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block bg-white text-transparent bg-clip-text bg-gradient-to-r from-pink-600 to-violet-600 px-10 py-4 rounded-xl hover:bg-gray-50 transition-all font-bold shadow-2xl text-lg"
+              whileHover={{ scale: 1.08, y: -3 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Follow Us
+            </motion.a>
           </div>
-          <p className="text-white/90 mb-6 text-lg">
-            @shanvikcateringevents
-          </p>
-          <a
-            href="https://instagram.com/shanvikcateringevents"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-block bg-white text-purple-600 px-8 py-3 rounded-lg hover:bg-gray-100 transition-all hover:scale-105 font-semibold shadow-lg"
-          >
-            Follow Us
-          </a>
         </motion.div>
       </div>
     </section>

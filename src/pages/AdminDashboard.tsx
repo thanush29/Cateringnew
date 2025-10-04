@@ -64,39 +64,73 @@ export function AdminDashboard() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-amber-50">
-      <header className="bg-white shadow-md border-b border-amber-100">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 flex items-center justify-between">
-          <div>
-            <h1 className="text-3xl font-bold bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent">
-              Admin Dashboard
-            </h1>
-            <p className="text-sm text-gray-600 mt-1">Manage shanvikcateringevents.com</p>
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-cyan-50 relative overflow-hidden">
+      <motion.div
+        className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-blue-300/20 to-cyan-300/20 rounded-full blur-3xl"
+        animate={{
+          x: [0, -100, 0],
+          y: [0, 100, 0],
+        }}
+        transition={{
+          duration: 20,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+      />
+
+      <header className="bg-white/80 backdrop-blur-xl shadow-xl border-b border-blue-200/50 relative z-10">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
+            >
+              <h1 className="text-4xl font-bold mb-2">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-cyan-600 to-teal-600">
+                  Admin Dashboard
+                </span>
+              </h1>
+              <p className="text-sm text-gray-600 font-medium">Manage shanvikcateringevents.com</p>
+            </motion.div>
+            <motion.button
+              initial={{ opacity: 0, x: 30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
+              onClick={handleSignOut}
+              whileHover={{ scale: 1.05, y: -2 }}
+              whileTap={{ scale: 0.95 }}
+              className="flex items-center gap-3 bg-gradient-to-r from-red-500 to-pink-500 text-white px-6 py-3 rounded-xl hover:from-red-600 hover:to-pink-600 transition-all shadow-lg hover:shadow-xl font-semibold"
+            >
+              <LogOut size={20} />
+              Sign Out
+            </motion.button>
           </div>
-          <button
-            onClick={handleSignOut}
-            className="flex items-center gap-2 bg-gray-100 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-200 transition-all hover:scale-105"
-          >
-            <LogOut size={20} />
-            Sign Out
-          </button>
         </div>
       </header>
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
-          {tabs.map((tab) => {
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-8"
+        >
+          {tabs.map((tab, index) => {
             const Icon = tab.icon;
             const isActive = activeTab === tab.id;
             return (
               <motion.div
                 key={tab.id}
-                whileHover={{ scale: 1.05, y: -5 }}
+                initial={{ opacity: 0, y: 20, scale: 0.9 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{ duration: 0.4, delay: 0.3 + index * 0.1 }}
+                whileHover={{ scale: 1.08, y: -8 }}
                 whileTap={{ scale: 0.95 }}
-                className={`rounded-xl shadow-lg p-6 cursor-pointer transition-all ${
+                className={`rounded-2xl shadow-xl p-6 cursor-pointer transition-all border-2 ${
                   isActive
-                    ? 'bg-gradient-to-br from-amber-500 to-orange-600 text-white'
-                    : 'bg-white hover:shadow-xl'
+                    ? 'bg-gradient-to-br from-blue-500 via-cyan-500 to-teal-500 text-white border-blue-300 shadow-blue-200'
+                    : 'bg-white/90 backdrop-blur-sm hover:shadow-2xl border-transparent hover:border-blue-200'
                 }`}
                 onClick={() => setActiveTab(tab.id as typeof activeTab)}
               >
@@ -114,7 +148,7 @@ export function AdminDashboard() {
               </motion.div>
             );
           })}
-        </div>
+        </motion.div>
 
         <motion.div
           key={activeTab}

@@ -47,21 +47,64 @@ export function CateringServices() {
   ];
 
   return (
-    <section id="services" className="py-16 sm:py-20 lg:py-24 bg-white" ref={ref}>
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="services" className="py-16 sm:py-20 lg:py-24 relative overflow-hidden" ref={ref}>
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-teal-50 to-emerald-50"></div>
+      <motion.div
+        className="absolute top-20 right-0 w-96 h-96 bg-gradient-to-br from-blue-300/20 to-teal-300/20 rounded-full blur-3xl"
+        animate={{
+          scale: [1, 1.2, 1],
+          rotate: [0, 90, 0],
+        }}
+        transition={{
+          duration: 20,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+      />
+      <motion.div
+        className="absolute bottom-20 left-0 w-96 h-96 bg-gradient-to-br from-emerald-300/20 to-teal-300/20 rounded-full blur-3xl"
+        animate={{
+          scale: [1, 1.3, 1],
+          rotate: [0, -90, 0],
+        }}
+        transition={{
+          duration: 20,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: 1
+        }}
+      />
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold text-burgundy-900 mb-4">
-            Catering Services
-          </h2>
-          <div className="w-24 h-1 bg-gradient-to-r from-emerald-500 to-amber-500 mx-auto mb-6" />
-          <p className="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto">
+          <motion.h2
+            className="text-3xl sm:text-4xl md:text-5xl font-display font-bold mb-4"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-700 via-teal-600 to-emerald-600">
+              Catering Services
+            </span>
+          </motion.h2>
+          <motion.div
+            className="w-32 h-1.5 bg-gradient-to-r from-blue-500 via-teal-500 to-emerald-500 mx-auto mb-6 rounded-full"
+            initial={{ width: 0 }}
+            animate={isInView ? { width: 128 } : { width: 0 }}
+            transition={{ duration: 1, delay: 0.4 }}
+          />
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+            className="text-lg sm:text-xl text-gray-700 max-w-2xl mx-auto font-medium"
+          >
             From intimate gatherings to grand celebrations, we create memorable culinary experiences
-          </p>
+          </motion.p>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">

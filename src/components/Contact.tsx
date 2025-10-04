@@ -50,21 +50,51 @@ export function Contact() {
   };
 
   return (
-    <section id="contact" className="py-16 sm:py-20 lg:py-24 section-gradient" ref={ref}>
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="contact" className="py-16 sm:py-20 lg:py-24 relative overflow-hidden" ref={ref}>
+      <div className="absolute inset-0 bg-gradient-to-br from-cyan-50 via-sky-50 to-blue-50"></div>
+      <motion.div
+        className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-cyan-300/20 to-blue-300/20 rounded-full blur-3xl"
+        animate={{
+          x: [0, -50, 0],
+          y: [0, 50, 0],
+        }}
+        transition={{
+          duration: 15,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+      />
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold text-burgundy-900 mb-4">
-            Let's Plan Your Perfect Event
-          </h2>
-          <div className="w-24 h-1 bg-gradient-to-r from-amber-500 to-emerald-500 mx-auto mb-6" />
-          <p className="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto">
+          <motion.h2
+            className="text-3xl sm:text-4xl md:text-5xl font-display font-bold mb-4"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-700 via-sky-600 to-blue-600">
+              Let's Plan Your Perfect Event
+            </span>
+          </motion.h2>
+          <motion.div
+            className="w-32 h-1.5 bg-gradient-to-r from-cyan-500 via-sky-500 to-blue-500 mx-auto mb-6 rounded-full"
+            initial={{ width: 0 }}
+            animate={isInView ? { width: 128 } : { width: 0 }}
+            transition={{ duration: 1, delay: 0.4 }}
+          />
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+            className="text-lg sm:text-xl text-gray-700 max-w-2xl mx-auto font-medium"
+          >
             Get in touch with us to discuss your catering needs
-          </p>
+          </motion.p>
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
@@ -130,7 +160,7 @@ export function Contact() {
             animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow-lg p-8">
+            <form onSubmit={handleSubmit} className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-2xl p-8 border border-cyan-100">
               <div className="space-y-6">
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">

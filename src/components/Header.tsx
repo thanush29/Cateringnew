@@ -74,106 +74,161 @@ export function Header() {
     }
   };
 
-  const textColor = isScrolled || isNonHomePage ? 'text-gray-700' : 'text-white';
-  const bgColor = isScrolled || isNonHomePage ? 'bg-white shadow-md' : 'bg-transparent';
+  const textColor = isScrolled || isNonHomePage ? 'text-gray-800' : 'text-white';
+  const bgColor = isScrolled || isNonHomePage
+    ? 'bg-gradient-to-r from-white via-amber-50 to-white shadow-lg backdrop-blur-sm'
+    : 'bg-gradient-to-r from-transparent via-black/10 to-transparent backdrop-blur-md';
 
   return (
-    <header className={`fixed w-full z-50 transition-all duration-300 ${bgColor}`}>
+    <header className={`fixed w-full z-50 transition-all duration-500 ${bgColor} border-b ${isScrolled || isNonHomePage ? 'border-amber-200/50' : 'border-white/10'}`}>
       <nav className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="hidden lg:flex items-center justify-between h-24">
+        <div className="hidden lg:flex items-center justify-center h-28 gap-12">
           <div className="flex items-center gap-8 flex-1 justify-end">
-            {leftLinks.map((link) => (
-              <Link
+            {leftLinks.map((link, index) => (
+              <motion.div
                 key={link.to}
-                to={link.to}
-                onClick={(e) => handleNavClick(link.to, e)}
-                className={`text-sm font-medium transition-all hover:text-amber-600 hover:scale-105 ${textColor}`}
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1, duration: 0.5 }}
               >
-                {link.label}
-              </Link>
+                <Link
+                  to={link.to}
+                  onClick={(e) => handleNavClick(link.to, e)}
+                  className={`text-sm font-semibold transition-all duration-300 hover:text-amber-600 hover:scale-110 relative group ${textColor}`}
+                >
+                  {link.label}
+                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-amber-500 to-orange-500 transition-all duration-300 group-hover:w-full"></span>
+                </Link>
+              </motion.div>
             ))}
           </div>
 
           <Link
-  to="/"
-  onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-  className="flex flex-col items-center justify-center px-8 group"
->
-  {logoUrl ? (
-    <motion.img
-      src={logoUrl}
-      alt="shanvikcateringevents"
-      className="h-16 w-auto group-hover:scale-110 transition-transform"
-      initial={{ opacity: 0, scale: 0.8 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.5 }}
-    />
-  ) : (
-    <div className="w-12 h-12 bg-gradient-to-br from-amber-500 to-amber-700 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg">
-      <span className="text-white font-bold text-xl">S</span>
-    </div>
-  )}
+            to="/"
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            className="flex flex-col items-center justify-center px-12 group"
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.5, rotate: -10 }}
+              animate={{ opacity: 1, scale: 1, rotate: 0 }}
+              transition={{ duration: 0.7, type: "spring" }}
+              className="relative"
+            >
+              {logoUrl ? (
+                <div className="relative">
+                  <div className="absolute inset-0 bg-gradient-to-br from-amber-400 to-orange-500 blur-lg opacity-30 group-hover:opacity-50 transition-opacity duration-300"></div>
+                  <img
+                    src={logoUrl}
+                    alt="shanvikcateringevents"
+                    className="h-20 w-auto relative z-10 group-hover:scale-110 transition-transform duration-300 drop-shadow-xl"
+                  />
+                </div>
+              ) : (
+                <div className="relative">
+                  <div className="absolute inset-0 bg-gradient-to-br from-amber-400 to-orange-500 blur-md opacity-50"></div>
+                  <div className="w-16 h-16 bg-gradient-to-br from-amber-500 via-orange-500 to-red-500 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-2xl relative z-10">
+                    <span className="text-white font-bold text-2xl">S</span>
+                  </div>
+                </div>
+              )}
+            </motion.div>
 
-  {/* Main Text below logo */}
-  <span className={`text-lg font-display font-bold transition-colors group-hover:text-amber-600 ${
-    isScrolled || isNonHomePage ? 'text-amber-700' : 'text-white'
-  }`}>
-    shanvikcateringevents
-  </span>
-</Link>
-
+            <motion.span
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.5 }}
+              className={`mt-2 text-xl font-display font-bold transition-all duration-300 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-amber-600 group-hover:to-orange-600 ${
+                isScrolled || isNonHomePage
+                  ? 'text-transparent bg-clip-text bg-gradient-to-r from-amber-700 via-orange-600 to-red-600'
+                  : 'text-white drop-shadow-lg'
+              }`}
+            >
+              shanvikcateringevents
+            </motion.span>
+          </Link>
 
           <div className="flex items-center gap-8 flex-1">
-            {rightLinks.map((link) => (
-              <Link
+            {rightLinks.map((link, index) => (
+              <motion.div
                 key={link.to}
-                to={link.to}
-                onClick={(e) => handleNavClick(link.to, e)}
-                className={`text-sm font-medium transition-all hover:text-amber-600 hover:scale-105 ${textColor}`}
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: (index + leftLinks.length) * 0.1, duration: 0.5 }}
               >
-                {link.label}
-              </Link>
+                <Link
+                  to={link.to}
+                  onClick={(e) => handleNavClick(link.to, e)}
+                  className={`text-sm font-semibold transition-all duration-300 hover:text-amber-600 hover:scale-110 relative group ${textColor}`}
+                >
+                  {link.label}
+                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-amber-500 to-orange-500 transition-all duration-300 group-hover:w-full"></span>
+                </Link>
+              </motion.div>
             ))}
           </div>
         </div>
 
-        <div className="lg:hidden flex items-center justify-between h-20">
-          <Link to="/" className="flex items-center gap-2">
-            {logoUrl ? (
-              <img
-                src={logoUrl}
-                alt="shanvikcateringevents"
-                className="h-12 w-auto"
-              />
-            ) : (
-              <>
-                <div className="w-10 h-10 bg-gradient-to-br from-amber-500 to-amber-700 rounded-full flex items-center justify-center shadow-lg">
-                  <span className="text-white font-bold">S</span>
+        <motion.div
+          className="lg:hidden flex flex-col items-center py-4"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+        >
+          <div className="flex items-center justify-between w-full mb-3">
+            <Link to="/" className="flex items-center gap-3">
+              {logoUrl ? (
+                <div className="relative">
+                  <div className="absolute inset-0 bg-gradient-to-br from-amber-400 to-orange-500 blur-md opacity-40"></div>
+                  <img
+                    src={logoUrl}
+                    alt="shanvikcateringevents"
+                    className="h-14 w-auto relative z-10 drop-shadow-lg"
+                  />
                 </div>
-                <div className="flex flex-col">
-                  <span className={`text-lg font-display font-bold transition-colors ${
-                    isScrolled || isNonHomePage ? 'text-amber-700' : 'text-white'
-                  }`}>
-                    shanvikcateringevents
-                  </span>
-                  <span className={`text-xs transition-colors ${
-                    isScrolled || isNonHomePage ? 'text-gray-600' : 'text-gray-200'
-                  }`}>
-                    Turning Moments into Memories
-                  </span>
+              ) : (
+                <div className="relative">
+                  <div className="absolute inset-0 bg-gradient-to-br from-amber-400 to-orange-500 blur-md opacity-50"></div>
+                  <div className="w-12 h-12 bg-gradient-to-br from-amber-500 via-orange-500 to-red-500 rounded-full flex items-center justify-center shadow-xl relative z-10">
+                    <span className="text-white font-bold text-lg">S</span>
+                  </div>
                 </div>
-              </>
-            )}
-          </Link>
+              )}
+            </Link>
 
-          <button
-            className={`p-2 transition-colors ${textColor}`}
-            onClick={() => setIsOpen(!isOpen)}
-            aria-label="Toggle menu"
+            <button
+              className={`p-2 transition-all duration-300 rounded-lg hover:bg-amber-100 ${textColor}`}
+              onClick={() => setIsOpen(!isOpen)}
+              aria-label="Toggle menu"
+            >
+              <motion.div
+                animate={{ rotate: isOpen ? 90 : 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                {isOpen ? <X size={28} /> : <Menu size={28} />}
+              </motion.div>
+            </button>
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.2, duration: 0.5 }}
+            className="text-center"
           >
-            {isOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
-        </div>
+            <span className={`text-lg font-display font-bold block transition-colors duration-300 ${
+              isScrolled || isNonHomePage
+                ? 'text-transparent bg-clip-text bg-gradient-to-r from-amber-700 via-orange-600 to-red-600'
+                : 'text-white drop-shadow-lg'
+            }`}>
+              shanvikcateringevents
+            </span>
+            <span className={`text-xs font-medium transition-colors duration-300 ${
+              isScrolled || isNonHomePage ? 'text-amber-700' : 'text-white/90'
+            }`}>
+              Turning Moments into Memories
+            </span>
+          </motion.div>
+        </motion.div>
       </nav>
 
       <AnimatePresence>
@@ -182,18 +237,25 @@ export function Header() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden bg-white border-t shadow-lg"
+            transition={{ duration: 0.3 }}
+            className="lg:hidden bg-gradient-to-br from-white via-amber-50/30 to-orange-50/20 border-t border-amber-200/50 shadow-xl backdrop-blur-lg"
           >
-            <div className="container mx-auto px-4 py-4 space-y-3">
-              {[...leftLinks, ...rightLinks].map((link) => (
-                <Link
+            <div className="container mx-auto px-4 py-6 space-y-2">
+              {[...leftLinks, ...rightLinks].map((link, index) => (
+                <motion.div
                   key={link.to}
-                  to={link.to}
-                  onClick={(e) => handleNavClick(link.to, e)}
-                  className="block py-3 px-4 text-gray-700 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition-all font-medium"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: index * 0.05, duration: 0.3 }}
                 >
-                  {link.label}
-                </Link>
+                  <Link
+                    to={link.to}
+                    onClick={(e) => handleNavClick(link.to, e)}
+                    className="block py-4 px-5 text-gray-800 font-semibold hover:text-white hover:bg-gradient-to-r hover:from-amber-500 hover:to-orange-500 rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-lg border border-transparent hover:border-amber-300"
+                  >
+                    {link.label}
+                  </Link>
+                </motion.div>
               ))}
             </div>
           </motion.div>
