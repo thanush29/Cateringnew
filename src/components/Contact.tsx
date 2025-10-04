@@ -51,9 +51,9 @@ export function Contact() {
 
   return (
     <section id="contact" className="py-16 sm:py-20 lg:py-24 relative overflow-hidden" ref={ref}>
-      <div className="absolute inset-0 bg-gradient-to-br from-cyan-50 via-sky-50 to-blue-50"></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-[#f5f5f5] via-white to-[#faf8f3]"></div>
       <motion.div
-        className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-cyan-300/20 to-blue-300/20 rounded-full blur-3xl"
+        className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-[#0b1a45]/5 to-[#d4af37]/10 rounded-full blur-3xl"
         animate={{
           x: [0, -50, 0],
           y: [0, 50, 0],
@@ -77,12 +77,12 @@ export function Contact() {
             animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-700 via-sky-600 to-blue-600">
+            <span className="text-[#0b1a45]">
               Let's Plan Your Perfect Event
             </span>
           </motion.h2>
           <motion.div
-            className="w-32 h-1.5 bg-gradient-to-r from-cyan-500 via-sky-500 to-blue-500 mx-auto mb-6 rounded-full"
+            className="w-32 h-1.5 bg-[#d4af37] mx-auto mb-6 rounded-full"
             initial={{ width: 0 }}
             animate={isInView ? { width: 128 } : { width: 0 }}
             transition={{ duration: 1, delay: 0.4 }}
@@ -91,7 +91,7 @@ export function Contact() {
             initial={{ opacity: 0 }}
             animate={isInView ? { opacity: 1 } : { opacity: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="text-lg sm:text-xl text-gray-700 max-w-2xl mx-auto font-medium"
+            className="text-lg sm:text-xl text-[#0b1a45] max-w-2xl mx-auto font-medium"
           >
             Get in touch with us to discuss your catering needs
           </motion.p>
@@ -105,36 +105,36 @@ export function Contact() {
           >
             <div className="space-y-6">
               <div className="flex items-start gap-4">
-                <div className="p-3 bg-gradient-to-br from-amber-100 to-emerald-100 rounded-lg">
-                  <Phone className="text-emerald-600" size={24} />
+                <div className="p-3 bg-[#d4af37]/10 rounded-lg">
+                  <Phone className="text-[#d4af37]" size={24} />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-gray-800 mb-1">Phone</h3>
-                  <a href="tel:+919840650939" className="text-gray-600 hover:text-amber-600 transition-colors">
+                  <h3 className="font-semibold text-[#0b1a45] mb-1">Phone</h3>
+                  <a href="tel:+919840650939" className="text-[#0b1a45] hover:text-[#d4af37] transition-colors">
                     +91 98406 50939
                   </a>
                 </div>
               </div>
 
               <div className="flex items-start gap-4">
-                <div className="p-3 bg-gradient-to-br from-emerald-100 to-amber-100 rounded-lg">
-                  <Mail className="text-amber-600" size={24} />
+                <div className="p-3 bg-[#d4af37]/10 rounded-lg">
+                  <Mail className="text-[#0b1a45]" size={24} />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-gray-800 mb-1">Email</h3>
-                  <a href="mailto:info@shanvikcateringevents.com" className="text-gray-600 hover:text-amber-600 transition-colors">
+                  <h3 className="font-semibold text-[#0b1a45] mb-1">Email</h3>
+                  <a href="mailto:info@shanvikcateringevents.com" className="text-[#0b1a45] hover:text-[#d4af37] transition-colors">
                     info@shanvikcateringevents.com
                   </a>
                 </div>
               </div>
 
               <div className="flex items-start gap-4">
-                <div className="p-3 bg-gradient-to-br from-amber-100 to-emerald-100 rounded-lg">
-                  <MapPin className="text-burgundy-600" size={24} />
+                <div className="p-3 bg-[#0b1a45]/10 rounded-lg">
+                  <MapPin className="text-[#0b1a45]" size={24} />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-gray-800 mb-1">Location</h3>
-                  <p className="text-gray-600">
+                  <h3 className="font-semibold text-[#0b1a45] mb-1">Location</h3>
+                  <p className="text-[#0b1a45]">
                     Chennai, Tamil Nadu, India
                   </p>
                 </div>
@@ -160,10 +160,10 @@ export function Contact() {
             animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            <form onSubmit={handleSubmit} className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-2xl p-8 border border-cyan-100">
+            <form onSubmit={handleSubmit} className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-2xl p-8 border border-[#d4af37]/30">
               <div className="space-y-6">
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="name" className="block text-sm font-medium text-[#0b1a45] mb-2">
                     Name *
                   </label>
                   <input
@@ -172,12 +172,12 @@ export function Contact() {
                     required
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#d4af37] focus:border-transparent"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="email" className="block text-sm font-medium text-[#0b1a45] mb-2">
                     Email *
                   </label>
                   <input
@@ -186,12 +186,12 @@ export function Contact() {
                     required
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#d4af37] focus:border-transparent"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="phone" className="block text-sm font-medium text-[#0b1a45] mb-2">
                     Phone Number *
                   </label>
                   <input
@@ -200,12 +200,12 @@ export function Contact() {
                     required
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#d4af37] focus:border-transparent"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="message" className="block text-sm font-medium text-[#0b1a45] mb-2">
                     Message *
                   </label>
                   <textarea
@@ -214,7 +214,7 @@ export function Contact() {
                     rows={4}
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#d4af37] focus:border-transparent"
                   />
                 </div>
 
@@ -224,9 +224,9 @@ export function Contact() {
                     id="whatsapp"
                     checked={formData.viaWhatsApp}
                     onChange={(e) => setFormData({ ...formData, viaWhatsApp: e.target.checked })}
-                    className="w-4 h-4 text-amber-600 border-gray-300 rounded focus:ring-amber-500"
+                    className="w-4 h-4 text-[#d4af37] border-gray-300 rounded focus:ring-[#d4af37]"
                   />
-                  <label htmlFor="whatsapp" className="ml-2 text-sm text-gray-700">
+                  <label htmlFor="whatsapp" className="ml-2 text-sm text-[#0b1a45]">
                     Connect via WhatsApp
                   </label>
                 </div>

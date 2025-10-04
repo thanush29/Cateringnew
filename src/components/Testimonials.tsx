@@ -64,9 +64,9 @@ export function Testimonials() {
 
   return (
     <section id="testimonials" className="py-20 relative overflow-hidden" ref={ref}>
-      <div className="absolute inset-0 bg-gradient-to-br from-violet-50 via-fuchsia-50 to-pink-50"></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-white via-[#faf8f3] to-[#f5f5f5]"></div>
       <motion.div
-        className="absolute top-20 left-0 w-96 h-96 bg-gradient-to-br from-violet-300/20 to-fuchsia-300/20 rounded-full blur-3xl"
+        className="absolute top-20 left-0 w-96 h-96 bg-gradient-to-br from-[#0b1a45]/5 to-[#d4af37]/10 rounded-full blur-3xl"
         animate={{
           x: [0, 100, 0],
           y: [0, 50, 0],
@@ -78,7 +78,7 @@ export function Testimonials() {
         }}
       />
       <motion.div
-        className="absolute bottom-20 right-0 w-96 h-96 bg-gradient-to-br from-fuchsia-300/20 to-pink-300/20 rounded-full blur-3xl"
+        className="absolute bottom-20 right-0 w-96 h-96 bg-gradient-to-br from-[#d4af37]/10 to-[#0b1a45]/5 rounded-full blur-3xl"
         animate={{
           x: [0, -100, 0],
           y: [0, -50, 0],
@@ -103,12 +103,12 @@ export function Testimonials() {
             animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-700 via-fuchsia-600 to-pink-600">
+            <span className="text-[#0b1a45]">
               What Our Clients Say
             </span>
           </motion.h2>
           <motion.div
-            className="w-32 h-1.5 bg-gradient-to-r from-violet-600 via-fuchsia-600 to-pink-600 mx-auto rounded-full"
+            className="w-32 h-1.5 bg-[#d4af37] mx-auto rounded-full"
             initial={{ width: 0 }}
             animate={isInView ? { width: 128 } : { width: 0 }}
             transition={{ duration: 1, delay: 0.4 }}
@@ -130,15 +130,15 @@ export function Testimonials() {
                   <img
                     src={currentTestimonial.photo_url}
                     alt={currentTestimonial.reviewer_name}
-                    className="w-20 h-20 rounded-full object-cover ring-4 ring-amber-100"
+                    className="w-20 h-20 rounded-full object-cover ring-4 ring-[#d4af37]/30"
                   />
                 ) : (
-                  <div className="w-20 h-20 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-white font-bold text-2xl ring-4 ring-amber-100">
+                  <div className="w-20 h-20 rounded-full bg-[#d4af37] flex items-center justify-center text-[#0b1a45] font-bold text-2xl ring-4 ring-[#d4af37]/30">
                     {currentTestimonial?.reviewer_name.charAt(0)}
                   </div>
                 )}
                 <div className="flex-1">
-                  <h3 className="font-bold text-xl text-gray-800 mb-2">
+                  <h3 className="font-bold text-xl text-[#0b1a45] mb-2">
                     {currentTestimonial?.reviewer_name}
                   </h3>
                   <div className="flex gap-1">
@@ -146,14 +146,14 @@ export function Testimonials() {
                       <Star
                         key={i}
                         size={20}
-                        className={i < (currentTestimonial?.rating || 0) ? 'fill-amber-500 text-amber-500' : 'text-gray-300'}
+                        className={i < (currentTestimonial?.rating || 0) ? 'fill-[#d4af37] text-[#d4af37]' : 'text-gray-300'}
                       />
                     ))}
                   </div>
                 </div>
               </div>
-              <div className="text-6xl text-amber-600 mb-4">"</div>
-              <p className="text-xl text-gray-700 mb-6 italic leading-relaxed">
+              <div className="text-6xl text-[#d4af37] mb-4">"</div>
+              <p className="text-xl text-[#0b1a45] mb-6 italic leading-relaxed">
                 {currentTestimonial?.content}
               </p>
             </motion.div>
@@ -162,17 +162,17 @@ export function Testimonials() {
               <>
                 <button
                   onClick={prev}
-                  className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-16 p-4 bg-white rounded-full shadow-xl hover:bg-amber-50 hover:scale-110 transition-all hidden md:block"
+                  className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-16 p-4 bg-white rounded-full shadow-xl hover:bg-[#faf8f3] hover:scale-110 transition-all hidden md:block"
                   aria-label="Previous testimonial"
                 >
-                  <ChevronLeft className="text-amber-600" size={28} />
+                  <ChevronLeft className="text-[#d4af37]" size={28} />
                 </button>
                 <button
                   onClick={next}
-                  className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-16 p-4 bg-white rounded-full shadow-xl hover:bg-amber-50 hover:scale-110 transition-all hidden md:block"
+                  className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-16 p-4 bg-white rounded-full shadow-xl hover:bg-[#faf8f3] hover:scale-110 transition-all hidden md:block"
                   aria-label="Next testimonial"
                 >
-                  <ChevronRight className="text-amber-600" size={28} />
+                  <ChevronRight className="text-[#d4af37]" size={28} />
                 </button>
               </>
             )}
@@ -185,7 +185,7 @@ export function Testimonials() {
                   key={index}
                   onClick={() => setCurrentIndex(index)}
                   className={`w-3 h-3 rounded-full transition-all ${
-                    index === currentIndex ? 'bg-amber-600 w-10' : 'bg-gray-300 hover:bg-gray-400'
+                    index === currentIndex ? 'bg-[#d4af37] w-10' : 'bg-gray-300 hover:bg-gray-400'
                   }`}
                   aria-label={`Go to testimonial ${index + 1}`}
                 />
@@ -198,10 +198,10 @@ export function Testimonials() {
           initial={{ opacity: 0, y: 30, scale: 0.95 }}
           animate={isInView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 30, scale: 0.95 }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          className="relative text-center bg-gradient-to-r from-pink-600 via-fuchsia-600 to-violet-600 rounded-3xl shadow-2xl p-10 overflow-hidden group"
+          className="relative text-center bg-[#0b1a45] rounded-3xl shadow-2xl p-10 overflow-hidden group"
         >
           <motion.div
-            className="absolute inset-0 bg-gradient-to-r from-violet-500 to-pink-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+            className="absolute inset-0 bg-[#0d2055] opacity-0 group-hover:opacity-100 transition-opacity duration-500"
             animate={{
               backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
             }}
@@ -229,14 +229,14 @@ export function Testimonials() {
                 Follow us on Instagram
               </h3>
             </motion.div>
-            <p className="text-white font-bold mb-8 text-2xl tracking-wide">
+            <p className="text-[#d4af37] font-bold mb-8 text-2xl tracking-wide">
               @shanvikcateringevents
             </p>
             <motion.a
               href="https://instagram.com/shanvikcateringevents"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-block bg-white text-transparent bg-clip-text bg-gradient-to-r from-pink-600 to-violet-600 px-10 py-4 rounded-xl hover:bg-gray-50 transition-all font-bold shadow-2xl text-lg"
+              className="inline-block bg-[#d4af37] text-[#0b1a45] px-10 py-4 rounded-xl hover:bg-[#c9a332] transition-all font-bold shadow-2xl text-lg"
               whileHover={{ scale: 1.08, y: -3 }}
               whileTap={{ scale: 0.95 }}
             >

@@ -96,9 +96,9 @@ export function OurMenus() {
 
   return (
     <section id="menu" className="py-20 relative overflow-hidden" ref={ref}>
-      <div className="absolute inset-0 bg-gradient-to-br from-amber-50 via-yellow-50 to-orange-50"></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-[#faf8f3] via-white to-[#f5f5f5]"></div>
       <motion.div
-        className="absolute top-0 left-0 w-96 h-96 bg-gradient-to-br from-amber-300/20 to-yellow-300/20 rounded-full blur-3xl"
+        className="absolute top-0 left-0 w-96 h-96 bg-gradient-to-br from-[#d4af37]/10 to-[#d4af37]/5 rounded-full blur-3xl"
         animate={{
           x: [0, 100, 0],
           y: [0, 50, 0],
@@ -110,7 +110,7 @@ export function OurMenus() {
         }}
       />
       <motion.div
-        className="absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-br from-yellow-300/20 to-orange-300/20 rounded-full blur-3xl"
+        className="absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-br from-[#d4af37]/5 to-[#0b1a45]/5 rounded-full blur-3xl"
         animate={{
           x: [0, -100, 0],
           y: [0, -50, 0],
@@ -135,12 +135,12 @@ export function OurMenus() {
             animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-700 via-yellow-600 to-orange-600">
+            <span className="text-[#0b1a45]">
               Our Menus
             </span>
           </motion.h2>
           <motion.div
-            className="w-32 h-1.5 bg-gradient-to-r from-amber-600 via-yellow-500 to-orange-600 mx-auto mb-6 rounded-full"
+            className="w-32 h-1.5 bg-[#d4af37] mx-auto mb-6 rounded-full"
             initial={{ width: 0 }}
             animate={isInView ? { width: 128 } : { width: 0 }}
             transition={{ duration: 1, delay: 0.4 }}
@@ -149,7 +149,7 @@ export function OurMenus() {
             initial={{ opacity: 0 }}
             animate={isInView ? { opacity: 1 } : { opacity: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="text-xl text-gray-700 max-w-2xl mx-auto font-medium"
+            className="text-xl text-[#0b1a45] max-w-2xl mx-auto font-medium"
           >
             Explore our diverse menu offerings crafted to delight every palate
           </motion.p>
@@ -178,10 +178,10 @@ export function OurMenus() {
           <div className="flex items-center justify-center gap-4 mb-8">
             <button
               onClick={prev}
-              className="p-3 bg-white rounded-full shadow-lg hover:bg-amber-50 transition-colors"
+              className="p-3 bg-white rounded-full shadow-lg hover:bg-[#faf8f3] transition-colors"
               aria-label="Previous menu"
             >
-              <ChevronLeft className="text-amber-600" size={24} />
+              <ChevronLeft className="text-[#d4af37]" size={24} />
             </button>
             <div className="flex gap-2">
               {menuCategories.map((_, index) => (
@@ -189,7 +189,7 @@ export function OurMenus() {
                   key={index}
                   onClick={() => setCurrentIndex(index)}
                   className={`w-2 h-2 rounded-full transition-all ${
-                    index === currentIndex ? 'bg-amber-600 w-8' : 'bg-gray-300'
+                    index === currentIndex ? 'bg-[#d4af37] w-8' : 'bg-gray-300'
                   }`}
                   aria-label={`Go to slide ${index + 1}`}
                 />
@@ -197,10 +197,10 @@ export function OurMenus() {
             </div>
             <button
               onClick={next}
-              className="p-3 bg-white rounded-full shadow-lg hover:bg-amber-50 transition-colors"
+              className="p-3 bg-white rounded-full shadow-lg hover:bg-[#faf8f3] transition-colors"
               aria-label="Next menu"
             >
-              <ChevronRight className="text-amber-600" size={24} />
+              <ChevronRight className="text-[#d4af37]" size={24} />
             </button>
           </div>
 

@@ -17,10 +17,10 @@ export function Hero() {
         />
       </video>
 
-      <div className="absolute inset-0 bg-gradient-to-br from-black/70 via-amber-900/40 to-orange-900/60" />
+      <div className="absolute inset-0 bg-gradient-to-br from-[#0b1a45]/85 via-[#0b1a45]/60 to-black/70" />
 
       <motion.div
-        className="absolute inset-0 bg-gradient-to-t from-amber-500/20 via-transparent to-transparent"
+        className="absolute inset-0 bg-gradient-to-t from-[#d4af37]/20 via-transparent to-transparent"
         animate={{
           opacity: [0.3, 0.5, 0.3],
         }}
@@ -50,7 +50,7 @@ export function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.5 }}
-              className="text-2xl sm:text-3xl md:text-4xl font-display font-bold bg-gradient-to-r from-amber-300 via-orange-400 to-red-400 bg-clip-text text-transparent mb-4 drop-shadow-lg"
+              className="text-2xl sm:text-3xl md:text-4xl font-display font-bold text-[#d4af37] mb-4 drop-shadow-lg"
             >
               Made For You With Love
             </motion.h2>
@@ -63,9 +63,9 @@ export function Hero() {
               <motion.p
                 animate={{
                   textShadow: [
-                    "0 0 20px rgba(251, 191, 36, 0.3)",
-                    "0 0 30px rgba(251, 191, 36, 0.5)",
-                    "0 0 20px rgba(251, 191, 36, 0.3)",
+                    "0 0 20px rgba(212, 175, 55, 0.3)",
+                    "0 0 30px rgba(212, 175, 55, 0.5)",
+                    "0 0 20px rgba(212, 175, 55, 0.3)",
                   ]
                 }}
                 transition={{
@@ -90,9 +90,9 @@ export function Hero() {
                 whileHover={{ scale: 1.08, y: -3 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <div className="absolute inset-0 bg-gradient-to-r from-amber-500 via-orange-500 to-red-500 group-hover:from-amber-600 group-hover:via-orange-600 group-hover:to-red-600 transition-all duration-300"></div>
+                <div className="absolute inset-0 bg-[#d4af37] group-hover:bg-[#c9a332] transition-all duration-300"></div>
                 <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-amber-400 to-orange-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  className="absolute inset-0 bg-[#d4af37]/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                   animate={{
                     x: ["-100%", "100%"],
                   }}
@@ -110,8 +110,8 @@ export function Hero() {
                 whileHover={{ scale: 1.08, y: -3 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <div className="absolute inset-0 bg-white group-hover:bg-gradient-to-r group-hover:from-amber-50 group-hover:to-orange-50 transition-all duration-300"></div>
-                <span className="relative z-10 text-transparent bg-clip-text bg-gradient-to-r from-amber-700 via-orange-700 to-red-700 group-hover:from-amber-800 group-hover:via-orange-800 group-hover:to-red-800">See Menu</span>
+                <div className="absolute inset-0 bg-white group-hover:bg-[#f5f5f5] transition-all duration-300"></div>
+                <span className="relative z-10 text-[#0b1a45] font-bold">See Menu</span>
               </motion.a>
             </motion.div>
           </motion.div>
@@ -129,9 +129,9 @@ export function Hero() {
           ease: "easeInOut"
         }}
       >
-        <div className="w-8 h-12 border-2 border-white/50 rounded-full flex items-start justify-center p-2">
+        <div className="w-8 h-12 border-2 border-[#d4af37]/70 rounded-full flex items-start justify-center p-2">
           <motion.div
-            className="w-1.5 h-3 bg-gradient-to-b from-amber-400 to-orange-500 rounded-full"
+            className="w-1.5 h-3 bg-[#d4af37] rounded-full"
             animate={{
               y: [0, 16, 0],
               opacity: [1, 0, 1],

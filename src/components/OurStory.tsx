@@ -8,9 +8,9 @@ export function OurStory() {
 
   return (
     <section id="story" className="py-16 sm:py-20 lg:py-24 relative overflow-hidden" ref={ref}>
-      <div className="absolute inset-0 bg-gradient-to-br from-amber-50 via-orange-50 to-red-50"></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-[#f5f5f5] via-white to-[#faf8f3]"></div>
       <motion.div
-        className="absolute top-0 left-0 w-96 h-96 bg-gradient-to-br from-amber-300/20 to-orange-300/20 rounded-full blur-3xl"
+        className="absolute top-0 left-0 w-96 h-96 bg-gradient-to-br from-[#d4af37]/10 to-[#d4af37]/5 rounded-full blur-3xl"
         animate={{
           x: [0, 100, 0],
           y: [0, 50, 0],
@@ -22,7 +22,7 @@ export function OurStory() {
         }}
       />
       <motion.div
-        className="absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-br from-orange-300/20 to-red-300/20 rounded-full blur-3xl"
+        className="absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-br from-[#d4af37]/5 to-[#0b1a45]/5 rounded-full blur-3xl"
         animate={{
           x: [0, -100, 0],
           y: [0, -50, 0],
@@ -47,12 +47,12 @@ export function OurStory() {
             animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-700 via-orange-600 to-red-600">
+            <span className="text-[#0b1a45]">
               A Culinary Legacy
             </span>
           </motion.h2>
           <motion.div
-            className="w-32 h-1.5 bg-gradient-to-r from-amber-500 via-orange-500 to-red-500 mx-auto rounded-full"
+            className="w-32 h-1.5 bg-[#d4af37] mx-auto rounded-full"
             initial={{ width: 0 }}
             animate={isInView ? { width: 128 } : { width: 0 }}
             transition={{ duration: 1, delay: 0.4 }}
@@ -65,9 +65,9 @@ export function OurStory() {
             animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <div className="space-y-6 text-gray-700 text-base sm:text-lg leading-relaxed">
+            <div className="space-y-6 text-[#0b1a45] text-base sm:text-lg leading-relaxed">
               <p>
-                Inspired by the culinary excellence of <strong className="text-amber-700">SMT. Chirla Pushpaveni Reddy</strong>,
+                Inspired by the culinary excellence of <strong className="text-[#d4af37]">SMT. Chirla Pushpaveni Reddy</strong>,
                 our journey began with a simple vision: transforming every celebration into an unforgettable experience
                 through the art of exceptional catering.
               </p>
@@ -75,7 +75,7 @@ export function OurStory() {
                 For over two decades, we've mastered the perfect blend of traditional flavors and contemporary presentation.
                 Each event we cater reflects our dedication to quality, creativity, and personalized service that exceeds expectations.
               </p>
-              <p className="text-emerald-700 font-medium">
+              <p className="text-[#0b1a45] font-medium">
                 From intimate gatherings to grand celebrations, we bring passion, precision, and perfection to your special moments.
               </p>
             </div>
@@ -132,9 +132,9 @@ export function OurStory() {
           className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16"
         >
           {[
-            { number: '20+', label: 'Years of Experience', gradient: 'from-emerald-500 to-teal-600', bg: 'from-emerald-50 to-teal-50' },
-            { number: '1000+', label: 'Events Catered', gradient: 'from-amber-500 to-orange-600', bg: 'from-amber-50 to-orange-50' },
-            { number: '100%', label: 'Client Satisfaction', gradient: 'from-rose-500 to-red-600', bg: 'from-rose-50 to-red-50' }
+            { number: '20+', label: 'Years of Experience', gradient: 'from-[#d4af37] to-[#c9a332]', bg: 'from-[#faf8f3] to-[#f5f5f5]' },
+            { number: '1000+', label: 'Events Catered', gradient: 'from-[#0b1a45] to-[#0d2055]', bg: 'from-[#f5f5f5] to-white' },
+            { number: '100%', label: 'Client Satisfaction', gradient: 'from-[#d4af37] to-[#c9a332]', bg: 'from-white to-[#faf8f3]' }
           ].map((stat, index) => (
             <motion.div
               key={stat.label}
@@ -155,7 +155,7 @@ export function OurStory() {
               >
                 {stat.number}
               </motion.div>
-              <div className="text-gray-700 font-semibold text-lg">{stat.label}</div>
+              <div className="text-[#0b1a45] font-semibold text-lg">{stat.label}</div>
               <motion.div
                 className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r ${stat.gradient}`}
                 initial={{ scaleX: 0 }}

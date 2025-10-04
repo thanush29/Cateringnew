@@ -74,13 +74,13 @@ export function Header() {
     }
   };
 
-  const textColor = isScrolled || isNonHomePage ? 'text-gray-800' : 'text-white';
+  const textColor = isScrolled || isNonHomePage ? 'text-[#0b1a45]' : 'text-white';
   const bgColor = isScrolled || isNonHomePage
-    ? 'bg-gradient-to-r from-white via-amber-50 to-white shadow-lg backdrop-blur-sm'
-    : 'bg-gradient-to-r from-transparent via-black/10 to-transparent backdrop-blur-md';
+    ? 'bg-white shadow-lg backdrop-blur-sm'
+    : 'bg-gradient-to-r from-[#0b1a45]/80 via-[#0b1a45]/60 to-[#0b1a45]/80 backdrop-blur-md';
 
   return (
-    <header className={`fixed w-full z-50 transition-all duration-500 ${bgColor} border-b ${isScrolled || isNonHomePage ? 'border-amber-200/50' : 'border-white/10'}`}>
+    <header className={`fixed w-full z-50 transition-all duration-500 ${bgColor} border-b ${isScrolled || isNonHomePage ? 'border-[#d4af37]/30' : 'border-[#d4af37]/20'}`}>
       <nav className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="hidden lg:flex items-center justify-center h-28 gap-12">
           <div className="flex items-center gap-8 flex-1 justify-end">
@@ -94,10 +94,10 @@ export function Header() {
                 <Link
                   to={link.to}
                   onClick={(e) => handleNavClick(link.to, e)}
-                  className={`text-sm font-semibold transition-all duration-300 hover:text-amber-600 hover:scale-110 relative group ${textColor}`}
+                  className={`text-sm font-semibold transition-all duration-300 hover:text-[#d4af37] hover:scale-110 relative group ${textColor}`}
                 >
                   {link.label}
-                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-amber-500 to-orange-500 transition-all duration-300 group-hover:w-full"></span>
+                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#d4af37] transition-all duration-300 group-hover:w-full"></span>
                 </Link>
               </motion.div>
             ))}
@@ -116,7 +116,7 @@ export function Header() {
             >
               {logoUrl ? (
                 <div className="relative">
-                  <div className="absolute inset-0 bg-gradient-to-br from-amber-400 to-orange-500 blur-lg opacity-30 group-hover:opacity-50 transition-opacity duration-300"></div>
+                  <div className="absolute inset-0 bg-[#d4af37]/30 blur-lg opacity-30 group-hover:opacity-50 transition-opacity duration-300"></div>
                   <img
                     src={logoUrl}
                     alt="shanvikcateringevents"
@@ -125,9 +125,9 @@ export function Header() {
                 </div>
               ) : (
                 <div className="relative">
-                  <div className="absolute inset-0 bg-gradient-to-br from-amber-400 to-orange-500 blur-md opacity-50"></div>
-                  <div className="w-16 h-16 bg-gradient-to-br from-amber-500 via-orange-500 to-red-500 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-2xl relative z-10">
-                    <span className="text-white font-bold text-2xl">S</span>
+                  <div className="absolute inset-0 bg-[#d4af37]/30 blur-md opacity-50"></div>
+                  <div className="w-16 h-16 bg-[#d4af37] rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-2xl relative z-10">
+                    <span className="text-[#0b1a45] font-bold text-2xl">S</span>
                   </div>
                 </div>
               )}
@@ -137,10 +137,10 @@ export function Header() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 0.5 }}
-              className={`mt-2 text-xl font-display font-bold transition-all duration-300 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-amber-600 group-hover:to-orange-600 ${
+              className={`mt-2 text-xl font-display font-bold transition-all duration-300 ${
                 isScrolled || isNonHomePage
-                  ? 'text-transparent bg-clip-text bg-gradient-to-r from-amber-700 via-orange-600 to-red-600'
-                  : 'text-white drop-shadow-lg'
+                  ? 'text-[#d4af37]'
+                  : 'text-[#d4af37] drop-shadow-lg'
               }`}
             >
               shanvikcateringevents
@@ -158,10 +158,10 @@ export function Header() {
                 <Link
                   to={link.to}
                   onClick={(e) => handleNavClick(link.to, e)}
-                  className={`text-sm font-semibold transition-all duration-300 hover:text-amber-600 hover:scale-110 relative group ${textColor}`}
+                  className={`text-sm font-semibold transition-all duration-300 hover:text-[#d4af37] hover:scale-110 relative group ${textColor}`}
                 >
                   {link.label}
-                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-amber-500 to-orange-500 transition-all duration-300 group-hover:w-full"></span>
+                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#d4af37] transition-all duration-300 group-hover:w-full"></span>
                 </Link>
               </motion.div>
             ))}
@@ -178,7 +178,7 @@ export function Header() {
             <Link to="/" className="flex items-center gap-3">
               {logoUrl ? (
                 <div className="relative">
-                  <div className="absolute inset-0 bg-gradient-to-br from-amber-400 to-orange-500 blur-md opacity-40"></div>
+                  <div className="absolute inset-0 bg-[#d4af37]/30 blur-md opacity-40"></div>
                   <img
                     src={logoUrl}
                     alt="shanvikcateringevents"
@@ -187,16 +187,16 @@ export function Header() {
                 </div>
               ) : (
                 <div className="relative">
-                  <div className="absolute inset-0 bg-gradient-to-br from-amber-400 to-orange-500 blur-md opacity-50"></div>
-                  <div className="w-12 h-12 bg-gradient-to-br from-amber-500 via-orange-500 to-red-500 rounded-full flex items-center justify-center shadow-xl relative z-10">
-                    <span className="text-white font-bold text-lg">S</span>
+                  <div className="absolute inset-0 bg-[#d4af37]/30 blur-md opacity-50"></div>
+                  <div className="w-12 h-12 bg-[#d4af37] rounded-full flex items-center justify-center shadow-xl relative z-10">
+                    <span className="text-[#0b1a45] font-bold text-lg">S</span>
                   </div>
                 </div>
               )}
             </Link>
 
             <button
-              className={`p-2 transition-all duration-300 rounded-lg hover:bg-amber-100 ${textColor}`}
+              className={`p-2 transition-all duration-300 rounded-lg hover:bg-[#d4af37]/10 ${textColor}`}
               onClick={() => setIsOpen(!isOpen)}
               aria-label="Toggle menu"
             >
@@ -217,13 +217,13 @@ export function Header() {
           >
             <span className={`text-lg font-display font-bold block transition-colors duration-300 ${
               isScrolled || isNonHomePage
-                ? 'text-transparent bg-clip-text bg-gradient-to-r from-amber-700 via-orange-600 to-red-600'
-                : 'text-white drop-shadow-lg'
+                ? 'text-[#d4af37]'
+                : 'text-[#d4af37] drop-shadow-lg'
             }`}>
               shanvikcateringevents
             </span>
             <span className={`text-xs font-medium transition-colors duration-300 ${
-              isScrolled || isNonHomePage ? 'text-amber-700' : 'text-white/90'
+              isScrolled || isNonHomePage ? 'text-[#0b1a45]' : 'text-[#d4af37]/90'
             }`}>
               Turning Moments into Memories
             </span>
@@ -238,7 +238,7 @@ export function Header() {
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3 }}
-            className="lg:hidden bg-gradient-to-br from-white via-amber-50/30 to-orange-50/20 border-t border-amber-200/50 shadow-xl backdrop-blur-lg"
+            className="lg:hidden bg-white border-t border-[#d4af37]/30 shadow-xl backdrop-blur-lg"
           >
             <div className="container mx-auto px-4 py-6 space-y-2">
               {[...leftLinks, ...rightLinks].map((link, index) => (
@@ -251,7 +251,7 @@ export function Header() {
                   <Link
                     to={link.to}
                     onClick={(e) => handleNavClick(link.to, e)}
-                    className="block py-4 px-5 text-gray-800 font-semibold hover:text-white hover:bg-gradient-to-r hover:from-amber-500 hover:to-orange-500 rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-lg border border-transparent hover:border-amber-300"
+                    className="block py-4 px-5 text-[#0b1a45] font-semibold hover:text-white hover:bg-[#0b1a45] rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-lg border border-transparent hover:border-[#d4af37]"
                   >
                     {link.label}
                   </Link>
