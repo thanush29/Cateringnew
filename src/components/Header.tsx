@@ -103,7 +103,7 @@ export function Header() {
             ))}
           </div>
 
-          <Link
+                    <Link
             to="/"
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
             className="flex flex-col items-center justify-center px-12 group"
@@ -132,12 +132,11 @@ export function Header() {
                 </div>
               )}
             </motion.div>
-
             <motion.span
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 0.5 }}
-              className={`mt-2 text-xl font-display font-bold transition-all duration-300 ${
+              className={`mt-0 text-xl font-display font-bold transition-all duration-300 ${
                 isScrolled || isNonHomePage
                   ? 'text-[#d4af37]'
                   : 'text-[#d4af37] drop-shadow-lg'
