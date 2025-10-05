@@ -39,7 +39,7 @@ export function Hero() {
       />
 
       <div className="relative h-full flex items-center justify-center">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center pt-20">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -82,49 +82,13 @@ export function Hero() {
                   repeat: Infinity,
                   ease: "easeInOut"
                 }}
-                className="text-xl sm:text-2xl md:text-3xl text-white mb-12 max-w-4xl mx-auto font-serif leading-relaxed"
+                className="text-xl pt-5 sm:text-2xl md:text-3xl text-white mb-4 max-w-4xl mx-auto font-serif leading-relaxed"
               >
-                Turning Your Moments Into Unforgettable Memories
+                Transform your special occasions with our premium catering and event management services. Creating unforgettable experiences with flavors that delight.
               </motion.p>
             </motion.div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.9 }}
-              className="flex flex-wrap justify-center gap-6 sm:gap-8 md:gap-12 mb-12"
-            >
-              <div className="flex flex-col items-center">
-                <motion.div
-                  className="text-4xl sm:text-5xl md:text-6xl font-bold text-[#d4af37] mb-2"
-                  animate={{ scale: [1, 1.1, 1] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                >
-                  500+
-                </motion.div>
-                <div className="text-white text-sm sm:text-base md:text-lg font-semibold">Events Crafted</div>
-              </div>
-              <div className="flex flex-col items-center">
-                <motion.div
-                  className="text-4xl sm:text-5xl md:text-6xl font-bold text-[#d4af37] mb-2"
-                  animate={{ scale: [1, 1.1, 1] }}
-                  transition={{ duration: 2, repeat: Infinity, delay: 0.3 }}
-                >
-                  50k+
-                </motion.div>
-                <div className="text-white text-sm sm:text-base md:text-lg font-semibold">Happy Guests</div>
-              </div>
-              <div className="flex flex-col items-center">
-                <motion.div
-                  className="text-4xl sm:text-5xl md:text-6xl font-bold text-[#d4af37] mb-2"
-                  animate={{ scale: [1, 1.1, 1] }}
-                  transition={{ duration: 2, repeat: Infinity, delay: 0.6 }}
-                >
-                  5+
-                </motion.div>
-                <div className="text-white text-sm sm:text-base md:text-lg font-semibold">Years Experience</div>
-              </div>
-            </motion.div>
+           
 
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -137,7 +101,7 @@ export function Hero() {
                 whileHover={{ scale: 1.08, y: -3 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <div className="absolute inset-0 bg-gradient-to-r from-[#d4af37] to-[#c9a332] group-hover:from-[#c9a332] group-hover:to-[#d4af37] transition-all duration-300"></div>
+                <div className="absolute  inset-0 bg-gradient-to-r from-[#d4af37] to-[#c9a332] group-hover:from-[#c9a332] group-hover:to-[#d4af37] transition-all duration-300"></div>
                 <motion.div
                   className="absolute inset-0 bg-[#d4af37]/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                   animate={{
