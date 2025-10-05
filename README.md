@@ -201,63 +201,154 @@ Features:
 - Handles errors gracefully
 - Returns WhatsApp deep link for instant messaging
 
-## Setup Instructions
+## Getting Started
 
 ### Prerequisites
 
-- Node.js 18+
-- npm or yarn
-- Supabase account
+- Node.js 18 or higher
+- npm or yarn package manager
+- Supabase account (free tier available)
 
-### Installation
+### Quick Start Guide
 
-1. Clone the repository:
+Follow these steps to get the application running locally:
+
+#### 1. Clone the Repository
+
 ```bash
 git clone <repository-url>
 cd shanvik-catering
 ```
 
-2. Install dependencies:
+#### 2. Install Dependencies
+
 ```bash
 npm install
 ```
 
-3. Set up environment variables:
+This will install all required packages including React, TypeScript, Tailwind CSS, Supabase client, and other dependencies.
 
-Create a `.env` file in the root directory:
+#### 3. Environment Configuration
+
+The `.env` file is already configured with the Supabase connection details:
+
 ```env
-VITE_SUPABASE_URL=your_supabase_project_url
-VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+VITE_SUPABASE_URL=https://0ec90b57d6e95fcbda19832f.supabase.co
+VITE_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 ```
 
-4. Apply database migrations:
+**Note**: The database and all tables are already set up and ready to use.
 
-Run the SQL migration file in your Supabase SQL editor:
-```
-supabase/migrations/100_fresh_schema_rebuild.sql
-```
+#### 4. Database Setup
 
-5. Create admin user:
+The database schema has been applied automatically with the following tables:
+- `admin_users` - Admin authentication
+- `gallery_images` - Event photo gallery
+- `testimonials` - Client reviews
+- `site_content` - Dynamic website content
+- `plan_your_event_submissions` - Event inquiry forms
 
-In Supabase dashboard > Authentication > Users:
-- Create a new user with email/password
-- Copy the user's UUID
-- In SQL editor, run:
+All tables have Row Level Security (RLS) enabled for secure data access.
+
+#### 5. Create an Admin Account
+
+To access the admin dashboard, you need to create an admin user:
+
+**Option A: Using Supabase Dashboard (Recommended)**
+1. Go to your Supabase project dashboard
+2. Navigate to **Authentication** > **Users**
+3. Click **Add user** > **Create new user**
+4. Enter email: `admin@shanvik.com` (or your preferred email)
+5. Enter a secure password
+6. Click **Create user**
+7. Copy the user's UUID from the users list
+8. Go to **SQL Editor** and run:
 ```sql
 INSERT INTO admin_users (id, email)
-VALUES ('user-uuid-here', 'admin@example.com');
+VALUES ('paste-user-uuid-here', 'admin@shanvik.com');
 ```
 
-6. Build and run:
-```bash
-npm run build
+**Option B: Using SQL Only**
+1. Go to **SQL Editor** in Supabase dashboard
+2. Run the following (replace email and password):
+```sql
+-- This creates both auth user and admin entry
+INSERT INTO auth.users (email, encrypted_password, email_confirmed_at, confirmation_token)
+VALUES (
+  'admin@shanvik.com',
+  crypt('your-secure-password', gen_salt('bf')),
+  now(),
+  ''
+);
+
+INSERT INTO admin_users (id, email)
+SELECT id, email FROM auth.users WHERE email = 'admin@shanvik.com';
 ```
 
-### Development
+#### 6. Development Server
+
+Start the development server:
 
 ```bash
 npm run dev
 ```
+
+The application will be available at: `http://localhost:5173`
+
+#### 7. Build for Production
+
+To create an optimized production build:
+
+```bash
+npm run build
+```
+
+This will:
+- Type-check all TypeScript files
+- Bundle and optimize all assets
+- Generate static files in the `dist/` directory
+
+#### 8. Preview Production Build
+
+To preview the production build locally:
+
+```bash
+npm run preview
+```
+
+### Accessing the Admin Dashboard
+
+1. Navigate to: `http://localhost:5173/admin/login`
+2. Enter the admin credentials you created in step 5
+3. Click **Sign In**
+
+You now have access to:
+- Gallery Management
+- Testimonial Management
+- Site Content Management
+- Event Inquiry Viewer
+
+### Troubleshooting
+
+**Cannot connect to database:**
+- Verify the `.env` file exists and has correct credentials
+- Check your internet connection
+- Ensure Supabase project is active
+
+**Admin login fails:**
+- Verify admin user was created in `admin_users` table
+- Check that the UUID matches the auth.users UUID
+- Ensure email/password are correct
+
+**Build errors:**
+- Run `npm install` to ensure all dependencies are installed
+- Clear cache: `rm -rf node_modules .vite && npm install`
+- Check Node.js version: `node --version` (should be 18+)
+
+**TypeScript errors:**
+- Run type check: `npm run typecheck`
+- Ensure all imports are correct
+- Check for missing type definitions
 
 ### Deployment
 
