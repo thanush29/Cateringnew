@@ -115,7 +115,7 @@ export function OurStory() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                   transition={{ duration: 0.6, delay: 0.6 }}
-                  className="text-[#0d2454] text-2xl lg:text-3xl font-bold tracking-wide mb-2.5 text-left"
+                  className="text-[#1e3a8a] text-2xl lg:text-3xl font-bold tracking-wide mb-2.5 text-left"
                 >
                   About Shanvik Caterers & Events
                 </motion.h3>
@@ -138,13 +138,13 @@ export function OurStory() {
                 transition={{ duration: 0.8, delay: 1 }}
                 className="space-y-5"
               >
-                <p className="leading-7 text-[#555] text-base text-justify">
-                  For over <strong className="text-[#0d2454]">12 years</strong>, <strong className="text-[#0d2454]">Shanvik</strong> has been a trusted name behind <strong className="text-[#0d2454]">Chennai's</strong> most memorable celebrations. 
+                <p className="leading-7 text-[#1e3a8a] text-base text-justify space-y-6 text-[#1e3a8a] text-base sm:text-lg leading-relaxed">
+                  For over <strong className="text-[#d4af37]">12 years</strong>, <strong className="text-[#d4af37]">Shanvik</strong> has been a trusted name behind <strong className="text-[#d4af37]">Chennai's</strong> most memorable celebrations. 
                   We began with a simple passion: to serve incredible food that brought people together. 
                   This dedication to culinary excellence quickly established us as one of the region's finest caterers.
                 </p>
                 
-                <p className="leading-7 text-[#555] text-base text-justify">
+                <p className="leading-7 text-[#1e3a8a] text-base text-justify space-y-6 text-[#1e3a8a] text-base sm:text-lg leading-relaxed">
                   However, we saw that a truly perfect event was about more than just the food. It was about the seamless flow, 
                   the stunning ambiance, and the flawless execution of a grand vision. That's why we evolved, blending our 
                   culinary artistry with comprehensive event management to offer a complete, stress-free experience. Today, 
@@ -156,6 +156,7 @@ export function OurStory() {
                   with Incredible Experiences!</strong>
                 </p>
                 
+                <div className="flex justify-center mt-5">
                 <motion.a
                   href="#about"
                   whileHover={{ 
@@ -163,10 +164,11 @@ export function OurStory() {
                     boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)"
                   }}
                   whileTap={{ scale: 0.95 }}
-                  className="inline-block py-3 px-7 bg-[#0d2454] text-white no-underline rounded font-semibold mt-5 transition-all duration-300 text-center uppercase tracking-wide hover:bg-[#071840]"
+                  className="py-3 px-7 bg-[#0d2454] text-white no-underline rounded font-semibold transition-all duration-300 text-center uppercase tracking-wide hover:bg-[#071840]"
                 >
                   Read More
                 </motion.a>
+              </div>
               </motion.div>
             </motion.div>
           </div>
