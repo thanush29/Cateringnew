@@ -133,7 +133,7 @@ export function Footer() {
             <div className="flex items-center gap-2 text-gray-400">
               <span>Crafted with</span>
               <Heart size={14} className="text-red-500 fill-current animate-pulse" />
-              <span>by Thanush, Santhosh, Kathick</span>
+              <span>by Thanush, Santhosh, Karthick Raja</span>
             </div>
           </div>
           <div className="mt-6 flex flex-wrap justify-center gap-4 text-xs text-gray-400">
