@@ -46,6 +46,30 @@ export function Header() {
 
   const handleNavClick = (to: string, e: React.MouseEvent) => {
     setIsOpen(false);
+    
+    // Special handling for the Home link
+    if (to === '/') {
+      e.preventDefault();
+      
+      // If already on home page, scroll to top
+      if (location.pathname === '/') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        // Navigate to home page
+        window.location.href = '/';
+      }
+      return;
+    }
+    
+    // Special handling for Contact Us link
+    if (to === '/contact') {
+      // Add a callback to ensure we scroll to the top after navigation
+      setTimeout(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }, 100);
+      return;
+    }
+    
     if (to.includes('#')) {
       e.preventDefault();
       const hash = to.split('#')[1];

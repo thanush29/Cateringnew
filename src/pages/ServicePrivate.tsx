@@ -159,7 +159,7 @@ export function ServicePrivate() {
                 whileHover={{ y: -10, scale: 1.02 }}
                 className={`bg-gradient-to-br from-white to-[#faf8f3] rounded-2xl shadow-xl p-8 border-2 ${
                   pkg.popular ? 'border-[#d4af37] ring-4 ring-[#d4af37]/20' : 'border-gray-200'
-                } relative`}
+                } relative flex flex-col h-[500px]`}
               >
                 {pkg.popular && (
                   <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-[#d4af37] text-[#1e3a8a] px-6 py-1 rounded-full font-bold text-sm">
@@ -172,7 +172,7 @@ export function ServicePrivate() {
                 <div className="text-4xl font-bold text-[#d4af37] mb-6 text-center">
                   {pkg.price}
                 </div>
-                <ul className="space-y-3 mb-8">
+                <ul className="space-y-3 mb-8 h-60 overflow-auto">
                   {pkg.features.map((feature, idx) => (
                     <li key={idx} className="flex items-start gap-2">
                       <Check className="text-[#d4af37] flex-shrink-0 mt-1" size={20} />
@@ -180,22 +180,24 @@ export function ServicePrivate() {
                     </li>
                   ))}
                 </ul>
-                <Link
-                  to="/"
-                  className={`block text-center px-6 py-3 rounded-xl font-bold transition-all ${
-                    pkg.popular
-                      ? 'bg-[#d4af37] text-[#1e3a8a] hover:bg-[#c9a332]'
-                      : 'bg-[#1e3a8a] text-white hover:bg-[#1d4ed8]'
-                  }`}
-                  onClick={() => {
-                    // Store package information to scroll to contact section
-                    sessionStorage.setItem('scrollToContact', 'true');
-                    sessionStorage.setItem('selectedPackage', pkg.name);
-                    sessionStorage.setItem('eventType', 'Private');
-                  }}
-                >
-                  Select Package
-                </Link>
+                <div className="mt-auto">
+                  <Link
+                    to="/"
+                    className={`block text-center px-6 py-3 rounded-xl font-bold transition-all ${
+                      pkg.popular
+                        ? 'bg-[#d4af37] text-[#1e3a8a] hover:bg-[#c9a332]'
+                        : 'bg-[#1e3a8a] text-white hover:bg-[#1d4ed8]'
+                    }`}
+                    onClick={() => {
+                      // Store package information to scroll to contact section
+                      sessionStorage.setItem('scrollToContact', 'true');
+                      sessionStorage.setItem('selectedPackage', pkg.name);
+                      sessionStorage.setItem('eventType', 'Private');
+                    }}
+                  >
+                    Select Package
+                  </Link>
+                </div>
               </motion.div>
             ))}
           </div>

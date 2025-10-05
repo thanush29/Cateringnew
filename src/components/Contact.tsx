@@ -3,7 +3,7 @@ import { useRef, useState } from 'react';
 import { Phone, Mail, MapPin, Send } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 
-export function Contact() {
+export function Contact({ isStandalone = false }: { isStandalone?: boolean }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
   const [formData, setFormData] = useState({
@@ -50,7 +50,7 @@ export function Contact() {
   };
 
   return (
-    <section id="contact" className="py-16 sm:py-20 lg:py-24 relative overflow-hidden" ref={ref}>
+    <section id="contact" className={`${isStandalone ? 'pt-28 sm:pt-32 lg:pt-36' : 'py-16 sm:py-20 lg:py-24'} relative overflow-hidden`} ref={ref}>
       <div className="absolute inset-0 bg-gradient-to-br from-[#f5f5f5] via-white to-[#faf8f3]"></div>
       <motion.div
         className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-[#1e3a8a]/5 to-[#d4af37]/10 rounded-full blur-3xl"
