@@ -9,52 +9,55 @@ if (!supabaseUrl || !supabaseAnonKey) {
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
+export interface AdminUser {
+  id: string;
+  email: string;
+  created_at: string;
+  last_login: string | null;
+}
+
 export interface GalleryImage {
   id: string;
   title: string;
   alt_text: string;
   image_url: string;
   category: 'Wedding' | 'Corporate' | 'Private' | 'Outdoor' | 'Luxury';
+  display_order: number;
   created_at: string;
 }
 
 export interface Testimonial {
   id: string;
   reviewer_name: string;
+  reviewer_role: string;
   content: string;
-  video_url?: string;
   rating: number;
-  photo_url: string;
+  video_url: string;
+  display_order: number;
+  is_featured: boolean;
   created_at: string;
 }
 
-export interface BlogPost {
+export interface SiteContent {
   id: string;
-  title: string;
-  slug: string;
-  thumbnail_url: string;
-  excerpt: string;
-  content: string;
-  published_at: string;
-  created_at: string;
+  key: string;
+  value: string;
+  content_type: 'text' | 'html' | 'url' | 'json';
   updated_at: string;
 }
 
-export interface ContactInquiry {
+export interface EventSubmission {
   id: string;
   name: string;
   email: string;
   phone: string;
+  event_type: string;
+  event_date: string | null;
+  guest_count: number | null;
+  venue_location: string;
   message: string;
+  budget_range: string;
   via_whatsapp: boolean;
-  created_at: string;
-}
-
-export interface MenuItem {
-  id: string;
-  category: 'Vegetarian' | 'Non-Vegetarian' | 'Desserts';
-  name: string;
-  description: string;
-  image_url: string;
+  status: 'new' | 'contacted' | 'converted' | 'archived';
   created_at: string;
 }

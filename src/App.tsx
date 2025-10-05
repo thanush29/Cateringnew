@@ -5,8 +5,6 @@ import { Footer } from './components/Footer';
 import { Home } from './pages/Home';
 import { Gallery } from './pages/Gallery';
 import { ContactPage } from './pages/ContactPage';
-import { Blog } from './pages/Blog';
-import { BlogPost } from './pages/BlogPost';
 import { ServiceWedding } from './pages/ServiceWedding';
 import { ServiceCorporate } from './pages/ServiceCorporate';
 import { ServicePrivate } from './pages/ServicePrivate';
@@ -31,8 +29,6 @@ function App() {
                     <Route path="/" element={<Home />} />
                     <Route path="/gallery" element={<Gallery />} />
                     <Route path="/contact" element={<ContactPage />} />
-                    <Route path="/blog" element={<Blog />} />
-                    <Route path="/blog/:slug" element={<BlogPost />} />
                     <Route path="/services/wedding" element={<ServiceWedding />} />
                     <Route path="/services/corporate" element={<ServiceCorporate />} />
                     <Route path="/services/private" element={<ServicePrivate />} />

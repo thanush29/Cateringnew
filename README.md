@@ -1,160 +1,352 @@
-# Shanvik Catering Events
+# Shanvik Catering & Event Management
 
-A modern, responsive catering website built with React, Vite, TypeScript, Tailwind CSS, and Framer Motion.
+A modern, full-stack catering and event management website built with React, TypeScript, Tailwind CSS, and Supabase. Features a secure admin dashboard for content management, event inquiry system with WhatsApp integration, and a responsive design optimized for all devices.
 
 ## Features
 
-- **Hero Section**: Full-width video background with animated text
-- **Our Story**: Beautiful parallax image gallery and company history
-- **Catering Services**: Animated service cards for Wedding, Corporate, and Private events
-- **Menu Showcase**: Interactive carousel with multiple menu categories
-- **Gallery**: Filterable image gallery with lightbox view and categories
-- **Testimonials**: Client testimonials slider with Instagram integration
-- **Blog**: Blog listing and detail pages
-- **Contact Form**: Form with WhatsApp integration
-- **Admin Dashboard**: Secure admin panel for content management
+### Public-Facing
+- **Hero Section**: Eye-catching video background with animated text overlay
+- **Our Story**: Company history with beautiful parallax image gallery
+- **Catering Services**: Detailed pages for Wedding, Corporate, and Private events
+- **Gallery**: Filterable image gallery with categories (Wedding, Corporate, Private, Outdoor, Luxury)
+- **Testimonials**: Client reviews with star ratings and video testimonials
+- **Plan Your Event**: Comprehensive event inquiry form with WhatsApp integration
+- **Contact Page**: Multiple contact methods and form submissions
 - **Responsive Design**: Mobile-first design with smooth animations
-- **SEO Optimized**: Meta tags, Open Graph, and semantic HTML
+
+### Admin Dashboard
+- **Gallery Management**: Upload, edit, delete, and organize event photos
+- **Testimonial Management**: Add client reviews with ratings and video URLs
+- **Site Content Management**: Manage dynamic content across the website
+- **Event Inquiry Viewer**: View and manage event planning submissions with status tracking
+- **Secure Authentication**: Email/password authentication via Supabase Auth
+- **Real-time Updates**: Instant CRUD operations with Supabase
+
+### Technical Features
+- **Database**: PostgreSQL via Supabase with Row Level Security (RLS)
+- **Authentication**: Secure admin authentication using Supabase Auth
+- **WhatsApp Integration**: Automated WhatsApp notifications for new event inquiries
+- **Edge Functions**: Serverless functions for WhatsApp webhook processing
+- **SEO Optimized**: Meta tags, semantic HTML, and Open Graph support
+- **Performance**: Lazy-loaded images, code splitting, and optimized bundle size
 
 ## Tech Stack
 
-- React 18
-- TypeScript
-- Vite
-- Tailwind CSS
-- Framer Motion
-- React Router DOM
-- Supabase (Database & Auth)
-- Lucide React (Icons)
+### Frontend
+- **React 18** - UI framework
+- **TypeScript** - Type safety
+- **Vite** - Build tool and dev server
+- **Tailwind CSS** - Utility-first CSS
+- **Framer Motion** - Animations
+- **React Router DOM** - Client-side routing
+- **Lucide React** - Icon library
 
-## Getting Started
+### Backend
+- **Supabase** - Backend-as-a-Service
+  - PostgreSQL database
+  - Authentication
+  - Row Level Security
+  - Edge Functions
+  - Real-time subscriptions
+
+## Project Structure
+
+```
+shanvik-catering/
+├── src/
+│   ├── components/
+│   │   ├── admin/              # Admin dashboard components
+│   │   │   ├── EventSubmissionsViewer.tsx
+│   │   │   ├── GalleryManager.tsx
+│   │   │   ├── ImageUpload.tsx
+│   │   │   ├── SiteContentManager.tsx
+│   │   │   └── TestimonialManager.tsx
+│   │   ├── CateringServices.tsx
+│   │   ├── Contact.tsx
+│   │   ├── Footer.tsx
+│   │   ├── GalleryPreview.tsx
+│   │   ├── Header.tsx
+│   │   ├── Hero.tsx
+│   │   ├── OurStory.tsx
+│   │   ├── PlanYourEvent.tsx
+│   │   ├── ServiceCard.tsx
+│   │   └── Testimonials.tsx
+│   ├── contexts/
+│   │   └── AuthContext.tsx     # Authentication context
+│   ├── lib/
+│   │   └── supabase.ts         # Supabase client & TypeScript types
+│   ├── pages/
+│   │   ├── AdminDashboard.tsx  # Main admin interface
+│   │   ├── AdminLogin.tsx      # Admin authentication
+│   │   ├── ContactPage.tsx
+│   │   ├── Gallery.tsx
+│   │   ├── Home.tsx
+│   │   ├── NotFound.tsx
+│   │   ├── ServiceCorporate.tsx
+│   │   ├── ServicePrivate.tsx
+│   │   └── ServiceWedding.tsx
+│   ├── utils/
+│   │   └── imageUpload.ts      # Image upload utilities
+│   ├── App.tsx                 # Main app component
+│   └── main.tsx                # Entry point
+├── supabase/
+│   ├── functions/
+│   │   └── whatsapp-webhook/   # WhatsApp integration
+│   │       └── index.ts
+│   └── migrations/
+│       └── 100_fresh_schema_rebuild.sql  # Database schema
+├── public/
+│   └── Site-logo.png           # Logo asset
+└── package.json
+```
+
+## Database Schema
+
+### Tables
+
+#### 1. admin_users
+Stores admin user information for dashboard access.
+- `id` (uuid, PK)
+- `email` (text, unique)
+- `created_at` (timestamptz)
+- `last_login` (timestamptz)
+
+#### 2. gallery_images
+Event photography organized by category.
+- `id` (uuid, PK)
+- `title` (text)
+- `alt_text` (text)
+- `image_url` (text)
+- `category` (text) - Wedding, Corporate, Private, Outdoor, Luxury
+- `display_order` (integer)
+- `created_at` (timestamptz)
+
+#### 3. testimonials
+Client reviews and video testimonials.
+- `id` (uuid, PK)
+- `reviewer_name` (text)
+- `reviewer_role` (text)
+- `content` (text)
+- `rating` (integer, 1-5)
+- `video_url` (text)
+- `display_order` (integer)
+- `is_featured` (boolean)
+- `created_at` (timestamptz)
+
+#### 4. site_content
+Dynamic site content managed through admin.
+- `id` (uuid, PK)
+- `key` (text, unique)
+- `value` (text)
+- `content_type` (text) - text, html, url, json
+- `updated_at` (timestamptz)
+
+#### 5. plan_your_event_submissions
+Event planning inquiry submissions.
+- `id` (uuid, PK)
+- `name` (text)
+- `email` (text)
+- `phone` (text)
+- `event_type` (text)
+- `event_date` (date)
+- `guest_count` (integer)
+- `venue_location` (text)
+- `message` (text)
+- `budget_range` (text)
+- `via_whatsapp` (boolean)
+- `status` (text) - new, contacted, converted, archived
+- `created_at` (timestamptz)
+
+### Row Level Security (RLS)
+
+All tables have RLS enabled with the following policies:
+
+**Public Access:**
+- `gallery_images`: Read access for all images
+- `testimonials`: Read access for all testimonials
+- `site_content`: Read access for all content
+- `plan_your_event_submissions`: Insert only (form submissions)
+
+**Admin Access:**
+- Authenticated admins have full CRUD access to all tables
+- Admin verification via `admin_users` table check
+- Secure authentication using Supabase Auth
+
+### Indexes
+
+Performance optimized with indexes on:
+- `gallery_images`: category, created_at, display_order
+- `testimonials`: created_at, display_order, is_featured
+- `site_content`: key
+- `plan_your_event_submissions`: status, created_at, via_whatsapp
+
+## WhatsApp Integration
+
+The system includes automated WhatsApp notifications for new event inquiries.
+
+### How It Works
+
+1. Client submits event planning form with WhatsApp option enabled
+2. Form data saved to `plan_your_event_submissions` table
+3. Edge function `whatsapp-webhook` processes the submission
+4. Formatted message sent to WhatsApp number: **+91 98406 50939**
+
+### Edge Function
+
+Located at: `supabase/functions/whatsapp-webhook/index.ts`
+
+Features:
+- CORS-enabled for cross-origin requests
+- Formats submission data into readable WhatsApp message
+- Handles errors gracefully
+- Returns WhatsApp deep link for instant messaging
+
+## Setup Instructions
 
 ### Prerequisites
 
 - Node.js 18+
 - npm or yarn
+- Supabase account
 
 ### Installation
 
-1. Install dependencies:
+1. Clone the repository:
+```bash
+git clone <repository-url>
+cd shanvik-catering
+```
+
+2. Install dependencies:
 ```bash
 npm install
 ```
 
-2. Start the development server:
-```bash
-npm run dev
+3. Set up environment variables:
+
+Create a `.env` file in the root directory:
+```env
+VITE_SUPABASE_URL=your_supabase_project_url
+VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
 ```
 
-3. Build for production:
+4. Apply database migrations:
+
+Run the SQL migration file in your Supabase SQL editor:
+```
+supabase/migrations/100_fresh_schema_rebuild.sql
+```
+
+5. Create admin user:
+
+In Supabase dashboard > Authentication > Users:
+- Create a new user with email/password
+- Copy the user's UUID
+- In SQL editor, run:
+```sql
+INSERT INTO admin_users (id, email)
+VALUES ('user-uuid-here', 'admin@example.com');
+```
+
+6. Build and run:
 ```bash
 npm run build
 ```
 
-4. Preview production build:
+### Development
+
 ```bash
-npm run preview
+npm run dev
 ```
 
-## Database Setup
+### Deployment
 
-The project uses Supabase for database and authentication. The schema migration file is located at:
-
-```
-supabase/migrations/001_initial_schema.sql
-```
-
-### Tables:
-- `gallery_images` - Event photos organized by category
-- `testimonials` - Client reviews and video testimonials
-- `blog_posts` - Blog articles with SEO-friendly slugs
-- `contact_inquiries` - Contact form submissions
-- `menu_items` - Menu items by category
-
-## Admin Panel
-
-Access the admin dashboard at `/admin/login`
-
-### Demo Credentials:
-- Email: `admin@shanvikcateringevents.com`
-- Password: `admin@ShanvikEventsCatering`
-
-### Admin Features:
-- Upload and manage gallery images
-- Add/edit testimonials
-- Create and publish blog posts
-- View contact inquiries
-- Manage menu items
-
-## WhatsApp Integration
-
-The contact form includes WhatsApp integration. When users check the "Connect via WhatsApp" option, it opens WhatsApp with a pre-filled message to: **+91 98406 50939**
-
-## Pages
-
-- `/` - Home page with all sections
-- `/gallery` - Photo gallery with category filters
-- `/blog` - Blog post listing
-- `/blog/:slug` - Individual blog post
-- `/admin/login` - Admin login
-- `/admin/dashboard` - Admin dashboard
-
-## Deployment
-
-### Recommended Platforms:
+The project is configured for deployment on:
 - **Frontend**: Vercel, Netlify, or Cloudflare Pages
-- **Database**: Supabase (already configured)
+- **Database**: Supabase (hosted)
+- **Edge Functions**: Supabase Edge Functions
 
-### Environment Variables:
-```
-VITE_SUPABASE_URL=your_supabase_url
-VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
-```
+Configuration file included: `vercel.json`
 
-## Customization
+## Admin Access
 
-### Colors:
-The project uses an amber color scheme. To change colors, update the Tailwind config:
+Access the admin dashboard at: `/admin/login`
 
-```js
-// tailwind.config.js
-theme: {
-  extend: {
-    colors: {
-      primary: {...}, // Your custom colors
-    }
-  }
-}
-```
+Use the credentials created during setup to log in and manage:
+- Gallery images
+- Testimonials
+- Site content
+- Event inquiries
 
-### Content:
-- Update copy in component files
-- Replace placeholder images with actual photos
-- Update contact information in Contact component
-- Modify menu items and service descriptions
+## CRUD Operations
 
-## Performance
+### Gallery Management
+- **Create**: Upload images with title, alt text, category, and display order
+- **Read**: View all gallery images sorted by display order
+- **Update**: Edit image details and reorder images
+- **Delete**: Remove images from gallery
 
-- Lazy-loaded images
-- Optimized video background with poster
-- Code splitting with React Router
-- Framer Motion for smooth animations
-- Tailwind CSS for minimal bundle size
+### Testimonial Management
+- **Create**: Add testimonials with name, role, rating, content, video URL
+- **Read**: View all testimonials with featured status
+- **Update**: Edit testimonial details and featured status
+- **Delete**: Remove testimonials
 
-## Accessibility
+### Site Content Management
+- **Create**: Add new content keys with values and types
+- **Read**: View all site content entries
+- **Update**: Edit content values (keys are immutable)
+- **Delete**: Remove content entries
 
-- Semantic HTML elements
-- ARIA labels on interactive elements
-- Keyboard navigation support
+### Event Inquiry Management
+- **Read**: View all event inquiries with filters by status
+- **Update**: Change inquiry status (new → contacted → converted → archived)
+- **Delete**: Remove processed inquiries
+
+## SEO Optimization
+
+- Semantic HTML5 structure
+- Meta tags for description and keywords
+- Open Graph tags for social sharing
 - Alt text for all images
-- Proper color contrast ratios
+- Proper heading hierarchy
+- Mobile-responsive design
+- Fast loading with lazy-loaded images
 
-## Contact
+## Security Features
 
-Phone: +91 98406 50939
-Email: info@shanvikcateringevents.com
-Instagram: @shanvikcateringevents
+- Row Level Security (RLS) on all database tables
+- Admin authentication via Supabase Auth
+- JWT token verification
+- Secure password hashing
+- Environment variables for sensitive data
+- Input sanitization on all forms
+- CORS configuration on edge functions
+
+## Performance Optimizations
+
+- Code splitting with React Router
+- Lazy-loaded images
+- Optimized video backgrounds with posters
+- Framer Motion for GPU-accelerated animations
+- Tailwind CSS for minimal CSS bundle
+- Database indexes on frequently queried columns
+- Edge functions for serverless scalability
+
+## Contact Information
+
+- **Phone**: +91 98406 50939
+- **Email**: info@shanvikcateringevents.com
+- **Instagram**: @shanvikcateringevents
+- **Website**: shanvikcateringevents.com
+
+## Credits
+
+Developed by:
+- **Thanush** - Frontend Development
+- **Santhosh** - Backend Development & Database Design
+- **Kathick** - UI/UX Design & Integration
 
 ---
 
-Made by Thanush, Santhosh, Kathick
+© 2024 Shanvik Catering & Event Management. All rights reserved.

@@ -5,7 +5,11 @@ import { supabase, GalleryImage } from '../../lib/supabase';
 import ImageUpload from './ImageUpload';
 import { uploadImage, deleteImage } from '../../utils/imageUpload';
 
-export function GalleryManager() {
+interface GalleryManagerProps {
+  onUpdate: () => void;
+}
+
+export function GalleryManager({ onUpdate }: GalleryManagerProps) {
   const [images, setImages] = useState<GalleryImage[]>([]);
   const [isAddingNew, setIsAddingNew] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -13,7 +17,8 @@ export function GalleryManager() {
     title: '',
     alt_text: '',
     image_url: '',
-    category: 'Wedding' as GalleryImage['category']
+    category: 'Wedding' as GalleryImage['category'],
+    display_order: 0
   });
 
   useEffect(() => {
@@ -24,11 +29,13 @@ export function GalleryManager() {
     const { data, error } = await supabase
       .from('gallery_images')
       .select('*')
+      .order('display_order', { ascending: true })
       .order('created_at', { ascending: false });
 
     if (!error && data) {
       setImages(data);
     }
+    onUpdate();
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -64,7 +71,8 @@ export function GalleryManager() {
       title: image.title,
       alt_text: image.alt_text,
       image_url: image.image_url,
-      category: image.category
+      category: image.category,
+      display_order: image.display_order
     });
     setIsAddingNew(true);
   };
@@ -97,7 +105,8 @@ export function GalleryManager() {
       title: '',
       alt_text: '',
       image_url: '',
-      category: 'Wedding'
+      category: 'Wedding',
+      display_order: 0
     });
   };
 

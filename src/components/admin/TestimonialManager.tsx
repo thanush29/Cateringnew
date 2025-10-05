@@ -2,19 +2,23 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Plus, Trash2, CreditCard as Edit2, X, Save, Star } from 'lucide-react';
 import { supabase, Testimonial } from '../../lib/supabase';
-import ImageUpload from './ImageUpload';
-import { uploadImage, deleteImage } from '../../utils/imageUpload';
 
-export function TestimonialManager() {
+interface TestimonialManagerProps {
+  onUpdate: () => void;
+}
+
+export function TestimonialManager({ onUpdate }: TestimonialManagerProps) {
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
   const [isAddingNew, setIsAddingNew] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     reviewer_name: '',
+    reviewer_role: '',
     content: '',
     rating: 5,
-    photo_url: '',
-    video_url: ''
+    video_url: '',
+    display_order: 0,
+    is_featured: false
   });
 
   useEffect(() => {
@@ -25,11 +29,13 @@ export function TestimonialManager() {
     const { data, error } = await supabase
       .from('testimonials')
       .select('*')
+      .order('display_order', { ascending: true })
       .order('created_at', { ascending: false });
 
     if (!error && data) {
       setTestimonials(data);
     }
+    onUpdate();
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -63,21 +69,18 @@ export function TestimonialManager() {
     setEditingId(testimonial.id);
     setFormData({
       reviewer_name: testimonial.reviewer_name,
+      reviewer_role: testimonial.reviewer_role,
       content: testimonial.content,
       rating: testimonial.rating,
-      photo_url: testimonial.photo_url,
-      video_url: testimonial.video_url || ''
+      video_url: testimonial.video_url || '',
+      display_order: testimonial.display_order,
+      is_featured: testimonial.is_featured
     });
     setIsAddingNew(true);
   };
 
   const handleDelete = async (id: string) => {
     if (confirm('Are you sure you want to delete this testimonial?')) {
-      const testimonialToDelete = testimonials.find(t => t.id === id);
-      if (testimonialToDelete?.photo_url) {
-        await deleteImage(testimonialToDelete.photo_url);
-      }
-
       const { error } = await supabase
         .from('testimonials')
         .delete()
@@ -89,18 +92,15 @@ export function TestimonialManager() {
     }
   };
 
-  const handlePhotoUpload = async (file: File) => {
-    const imageUrl = await uploadImage(file, 'testimonials');
-    setFormData({ ...formData, photo_url: imageUrl });
-  };
-
   const resetForm = () => {
     setFormData({
       reviewer_name: '',
+      reviewer_role: '',
       content: '',
       rating: 5,
-      photo_url: '',
-      video_url: ''
+      video_url: '',
+      display_order: 0,
+      is_featured: false
     });
   };
 
@@ -140,6 +140,16 @@ export function TestimonialManager() {
               />
             </div>
             <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Reviewer Role</label>
+              <input
+                type="text"
+                value={formData.reviewer_role}
+                onChange={(e) => setFormData({ ...formData, reviewer_role: e.target.value })}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500"
+                placeholder="e.g., CEO, Bride, Event Manager"
+              />
+            </div>
+            <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Rating</label>
               <div className="flex gap-2">
                 {[1, 2, 3, 4, 5].map((star) => (
@@ -157,6 +167,15 @@ export function TestimonialManager() {
                 ))}
               </div>
             </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Display Order</label>
+              <input
+                type="number"
+                value={formData.display_order}
+                onChange={(e) => setFormData({ ...formData, display_order: parseInt(e.target.value) })}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500"
+              />
+            </div>
             <div className="md:col-span-2">
               <label className="block text-sm font-medium text-gray-700 mb-2">Content</label>
               <textarea
@@ -168,31 +187,25 @@ export function TestimonialManager() {
               />
             </div>
             <div>
-              <ImageUpload
-                onUpload={handlePhotoUpload}
-                currentImageUrl={formData.photo_url}
-                label="Upload Reviewer Photo"
-              />
-              <div className="mt-2">
-                <label className="block text-sm font-medium text-gray-700 mb-2">Or paste URL</label>
-                <input
-                  type="url"
-                  value={formData.photo_url}
-                  onChange={(e) => setFormData({ ...formData, photo_url: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500"
-                  placeholder="https://..."
-                />
-              </div>
-            </div>
-            <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Video URL (optional)</label>
               <input
                 type="url"
                 value={formData.video_url}
                 onChange={(e) => setFormData({ ...formData, video_url: e.target.value })}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500"
-                placeholder="https://..."
+                placeholder="https://youtube.com/... or https://instagram.com/..."
               />
+            </div>
+            <div className="flex items-center">
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={formData.is_featured}
+                  onChange={(e) => setFormData({ ...formData, is_featured: e.target.checked })}
+                  className="w-5 h-5 text-amber-600 rounded focus:ring-2 focus:ring-amber-500"
+                />
+                <span className="text-sm font-medium text-gray-700">Featured on Homepage</span>
+              </label>
             </div>
           </div>
           <button
@@ -211,22 +224,24 @@ export function TestimonialManager() {
             key={testimonial.id}
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="bg-white rounded-lg shadow-md p-6"
+            className="bg-white rounded-lg shadow-md p-6 relative"
           >
+            {testimonial.is_featured && (
+              <div className="absolute top-4 right-4">
+                <span className="bg-amber-500 text-white text-xs px-2 py-1 rounded-full">
+                  Featured
+                </span>
+              </div>
+            )}
             <div className="flex items-start gap-4 mb-4">
-              {testimonial.photo_url ? (
-                <img
-                  src={testimonial.photo_url}
-                  alt={testimonial.reviewer_name}
-                  className="w-16 h-16 rounded-full object-cover"
-                />
-              ) : (
-                <div className="w-16 h-16 rounded-full bg-amber-100 flex items-center justify-center text-amber-700 font-bold text-xl">
-                  {testimonial.reviewer_name.charAt(0)}
-                </div>
-              )}
+              <div className="w-16 h-16 rounded-full bg-amber-100 flex items-center justify-center text-amber-700 font-bold text-xl">
+                {testimonial.reviewer_name.charAt(0)}
+              </div>
               <div className="flex-1">
                 <h3 className="font-semibold text-gray-800">{testimonial.reviewer_name}</h3>
+                {testimonial.reviewer_role && (
+                  <p className="text-sm text-gray-500">{testimonial.reviewer_role}</p>
+                )}
                 <div className="flex gap-1 mt-1">
                   {[...Array(5)].map((_, i) => (
                     <Star
@@ -239,6 +254,9 @@ export function TestimonialManager() {
               </div>
             </div>
             <p className="text-gray-600 mb-4 italic">"{testimonial.content}"</p>
+            {testimonial.video_url && (
+              <p className="text-xs text-gray-400 mb-4 truncate">Video: {testimonial.video_url}</p>
+            )}
             <div className="flex gap-2">
               <button
                 onClick={() => handleEdit(testimonial)}
