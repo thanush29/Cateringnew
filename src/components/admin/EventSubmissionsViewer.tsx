@@ -1,92 +1,86 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Trash2, Calendar, Users, MapPin, DollarSign, MessageSquare } from 'lucide-react';
-import { supabase, EventSubmission } from '../../lib/supabase';
+import { Trash2, Calendar, DollarSign, MessageSquare, Loader2 } from 'lucide-react';
+import { supabase } from '../../lib/supabase';
+
+interface EventInquiry {
+  id: string;
+  full_name: string;
+  email: string;
+  phone: string;
+  event_type: string;
+  event_date: string;
+  budget_range: string | null;
+  additional_details: string | null;
+  status: 'new' | 'contacted' | 'converted' | 'archived';
+  created_at: string;
+}
 
 interface EventSubmissionsViewerProps {
   onUpdate: () => void;
 }
 
 export function EventSubmissionsViewer({ onUpdate }: EventSubmissionsViewerProps) {
-  const [submissions, setSubmissions] = useState<EventSubmission[]>([]);
-  const [filter, setFilter] = useState<EventSubmission['status'] | 'all'>('all');
+  const [inquiries, setInquiries] = useState<EventInquiry[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    fetchSubmissions();
+    fetchInquiries();
   }, []);
 
-  const fetchSubmissions = async () => {
+  const fetchInquiries = async () => {
+    setIsLoading(true);
+    
     const { data, error } = await supabase
-      .from('plan_your_event_submissions')
+      .from('event_inquiries')
       .select('*')
       .order('created_at', { ascending: false });
 
-    if (!error && data) {
-      setSubmissions(data);
+    if (error) {
+      console.error('Error fetching inquiries:', error);
+    } else if (data) {
+      console.log('Fetched inquiries:', data);
+      setInquiries(data);
     }
+    
+    setIsLoading(false);
     onUpdate();
   };
 
   const handleDelete = async (id: string) => {
-    if (confirm('Are you sure you want to delete this submission?')) {
+    if (confirm('Are you sure you want to delete this inquiry?')) {
       const { error } = await supabase
-        .from('plan_your_event_submissions')
+        .from('event_inquiries')
         .delete()
         .eq('id', id);
 
-      if (!error) {
-        fetchSubmissions();
+      if (error) {
+        console.error('Error deleting inquiry:', error);
+        alert('Failed to delete inquiry');
+      } else {
+        fetchInquiries();
       }
     }
   };
 
-  const handleStatusChange = async (id: string, status: EventSubmission['status']) => {
-    const { error } = await supabase
-      .from('plan_your_event_submissions')
-      .update({ status })
-      .eq('id', id);
-
-    if (!error) {
-      fetchSubmissions();
-    }
-  };
-
-  const filteredSubmissions = filter === 'all'
-    ? submissions
-    : submissions.filter(s => s.status === filter);
-
-  const statusColors = {
-    new: 'bg-blue-100 text-blue-800',
-    contacted: 'bg-yellow-100 text-yellow-800',
-    converted: 'bg-green-100 text-green-800',
-    archived: 'bg-gray-100 text-gray-800'
-  };
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center py-12">
+        <Loader2 size={48} className="animate-spin text-amber-600" />
+      </div>
+    );
+  }
 
   return (
     <div>
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
         <h2 className="text-2xl font-bold text-gray-800">Event Inquiries</h2>
-        <div className="flex gap-2 flex-wrap">
-          {['all', 'new', 'contacted', 'converted', 'archived'].map((status) => (
-            <button
-              key={status}
-              onClick={() => setFilter(status as typeof filter)}
-              className={`px-4 py-2 rounded-lg transition-colors capitalize ${
-                filter === status
-                  ? 'bg-amber-600 text-white'
-                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-              }`}
-            >
-              {status}
-            </button>
-          ))}
-        </div>
       </div>
 
       <div className="space-y-4">
-        {filteredSubmissions.map((submission) => (
+        {inquiries.map((inquiry) => (
           <motion.div
-            key={submission.id}
+            key={inquiry.id}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             className="bg-white rounded-lg shadow-md p-6"
@@ -94,112 +88,87 @@ export function EventSubmissionsViewer({ onUpdate }: EventSubmissionsViewerProps
             <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4 mb-4">
               <div className="flex-1">
                 <div className="flex items-center gap-3 mb-2">
-                  <h3 className="text-xl font-semibold text-gray-800">{submission.name}</h3>
-                  <span className={`text-xs px-3 py-1 rounded-full ${statusColors[submission.status]}`}>
-                    {submission.status}
-                  </span>
+                  <h3 className="text-xl font-semibold text-gray-800">{inquiry.full_name}</h3>
                 </div>
                 <div className="space-y-1 text-sm text-gray-600">
-                  <p>Email: {submission.email}</p>
-                  <p>Phone: {submission.phone}</p>
+                  <p>Email: <a href={`mailto:${inquiry.email}`} className="text-blue-600 hover:underline">{inquiry.email}</a></p>
+                  <p>Phone: <a href={`tel:${inquiry.phone}`} className="text-blue-600 hover:underline">{inquiry.phone}</a></p>
                   <p className="text-xs text-gray-400">
-                    Submitted: {new Date(submission.created_at).toLocaleString()}
+                    Submitted: {new Date(inquiry.created_at).toLocaleString('en-US', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric',
+                      hour: '2-digit',
+                      minute: '2-digit'
+                    })}
                   </p>
                 </div>
               </div>
               <div className="flex gap-2">
-                <select
-                  value={submission.status}
-                  onChange={(e) => handleStatusChange(submission.id, e.target.value as EventSubmission['status'])}
-                  className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 text-sm"
-                >
-                  <option value="new">New</option>
-                  <option value="contacted">Contacted</option>
-                  <option value="converted">Converted</option>
-                  <option value="archived">Archived</option>
-                </select>
                 <button
-                  onClick={() => handleDelete(submission.id)}
+                  onClick={() => handleDelete(inquiry.id)}
                   className="flex items-center gap-2 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors"
+                  title="Delete inquiry"
                 >
                   <Trash2 size={16} />
                 </button>
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
               <div className="flex items-start gap-2">
-                <Calendar className="text-amber-600 mt-1" size={18} />
+                <Calendar className="text-amber-600 mt-1 flex-shrink-0" size={18} />
                 <div>
                   <p className="text-xs text-gray-500">Event Type</p>
-                  <p className="font-medium text-gray-800">{submission.event_type}</p>
+                  <p className="font-medium text-gray-800">{inquiry.event_type}</p>
                 </div>
               </div>
-              {submission.event_date && (
-                <div className="flex items-start gap-2">
-                  <Calendar className="text-amber-600 mt-1" size={18} />
-                  <div>
-                    <p className="text-xs text-gray-500">Event Date</p>
-                    <p className="font-medium text-gray-800">
-                      {new Date(submission.event_date).toLocaleDateString()}
-                    </p>
-                  </div>
+              
+              <div className="flex items-start gap-2">
+                <Calendar className="text-amber-600 mt-1 flex-shrink-0" size={18} />
+                <div>
+                  <p className="text-xs text-gray-500">Event Date</p>
+                  <p className="font-medium text-gray-800">
+                    {new Date(inquiry.event_date).toLocaleDateString('en-US', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric'
+                    })}
+                  </p>
                 </div>
-              )}
-              {submission.guest_count && (
+              </div>
+
+              {inquiry.budget_range && (
                 <div className="flex items-start gap-2">
-                  <Users className="text-amber-600 mt-1" size={18} />
-                  <div>
-                    <p className="text-xs text-gray-500">Guest Count</p>
-                    <p className="font-medium text-gray-800">{submission.guest_count}</p>
-                  </div>
-                </div>
-              )}
-              {submission.budget_range && (
-                <div className="flex items-start gap-2">
-                  <DollarSign className="text-amber-600 mt-1" size={18} />
+                  <DollarSign className="text-amber-600 mt-1 flex-shrink-0" size={18} />
                   <div>
                     <p className="text-xs text-gray-500">Budget Range</p>
-                    <p className="font-medium text-gray-800">{submission.budget_range}</p>
+                    <p className="font-medium text-gray-800">{inquiry.budget_range}</p>
                   </div>
                 </div>
               )}
             </div>
 
-            {submission.venue_location && (
-              <div className="flex items-start gap-2 mb-4">
-                <MapPin className="text-amber-600 mt-1" size={18} />
-                <div>
-                  <p className="text-xs text-gray-500">Venue Location</p>
-                  <p className="font-medium text-gray-800">{submission.venue_location}</p>
-                </div>
-              </div>
-            )}
-
-            {submission.message && (
+            {inquiry.additional_details && (
               <div className="flex items-start gap-2 bg-gray-50 rounded-lg p-4">
-                <MessageSquare className="text-amber-600 mt-1" size={18} />
+                <MessageSquare className="text-amber-600 mt-1 flex-shrink-0" size={18} />
                 <div className="flex-1">
-                  <p className="text-xs text-gray-500 mb-1">Message</p>
-                  <p className="text-gray-700">{submission.message}</p>
+                  <p className="text-xs text-gray-500 mb-1">Additional Details</p>
+                  <p className="text-gray-700 whitespace-pre-wrap">{inquiry.additional_details}</p>
                 </div>
-              </div>
-            )}
-
-            {submission.via_whatsapp && (
-              <div className="mt-4">
-                <span className="inline-flex items-center gap-2 text-sm bg-green-100 text-green-800 px-3 py-1 rounded-full">
-                  WhatsApp notification requested
-                </span>
               </div>
             )}
           </motion.div>
         ))}
       </div>
 
-      {filteredSubmissions.length === 0 && (
+      {inquiries.length === 0 && !isLoading && (
         <div className="text-center py-12 text-gray-500">
-          <p>No submissions found.</p>
+          <Calendar size={48} className="mx-auto mb-4 opacity-50" />
+          <p className="text-lg font-medium">No inquiries yet</p>
+          <p className="text-sm mt-2">
+            Event inquiries will appear here when customers submit the form
+          </p>
         </div>
       )}
     </div>
