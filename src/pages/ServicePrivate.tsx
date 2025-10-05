@@ -96,12 +96,17 @@ export function ServicePrivate() {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            <a
-              href="/#contact"
+            <Link
+              to="/"
               className="inline-block bg-[#d4af37] text-[#1e3a8a] px-10 py-4 rounded-xl hover:bg-[#c9a332] transition-all font-bold shadow-2xl text-lg hover:scale-105"
+              onClick={() => {
+                // Store information to scroll to contact section
+                sessionStorage.setItem('scrollToContact', 'true');
+                sessionStorage.setItem('eventType', 'Private');
+              }}
             >
               Plan Your Private Party
-            </a>
+            </Link>
           </motion.div>
         </div>
       </div>
@@ -175,16 +180,22 @@ export function ServicePrivate() {
                     </li>
                   ))}
                 </ul>
-                <a
-                  href="/#contact"
+                <Link
+                  to="/"
                   className={`block text-center px-6 py-3 rounded-xl font-bold transition-all ${
                     pkg.popular
                       ? 'bg-[#d4af37] text-[#1e3a8a] hover:bg-[#c9a332]'
                       : 'bg-[#1e3a8a] text-white hover:bg-[#1d4ed8]'
                   }`}
+                  onClick={() => {
+                    // Store package information to scroll to contact section
+                    sessionStorage.setItem('scrollToContact', 'true');
+                    sessionStorage.setItem('selectedPackage', pkg.name);
+                    sessionStorage.setItem('eventType', 'Private');
+                  }}
                 >
                   Select Package
-                </a>
+                </Link>
               </motion.div>
             ))}
           </div>

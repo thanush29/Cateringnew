@@ -86,7 +86,7 @@ export function OurStory() {
               </motion.div>
 
               {/* Profile container */}
-              <div className="relative w-full h-[500px] z-[2]">
+              <div className="relative w-full h-[500px] z-[2] ">
                 <motion.div
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
@@ -155,20 +155,6 @@ export function OurStory() {
                   <strong>Shanvik Caterers & Events – Turning Your Celebrations into Cherished Memories 
                   with Incredible Experiences!</strong>
                 </p>
-                
-                <div className="flex justify-center mt-5">
-                <motion.a
-                  href="#about"
-                  whileHover={{ 
-                    y: -2,
-                    boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)"
-                  }}
-                  whileTap={{ scale: 0.95 }}
-                  className="py-3 px-7 bg-[#0d2454] text-white no-underline rounded font-semibold transition-all duration-300 text-center uppercase tracking-wide hover:bg-[#071840]"
-                >
-                  Read More
-                </motion.a>
-              </div>
               </motion.div>
             </motion.div>
           </div>

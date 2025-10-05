@@ -6,13 +6,70 @@ import { supabase } from '../lib/supabase';
 export function PlanYourEvent() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
+  
+  // Check for selected package data from session storage
+  const getInitialFormData = () => {
+    // Get selected package and event type if coming from package selection
+    const selectedPackage = sessionStorage.getItem('selectedPackage');
+    const eventType = sessionStorage.getItem('eventType');
+    
+    if (selectedPackage) {
+      // Clear it so it doesn't persist on refresh
+      sessionStorage.removeItem('selectedPackage');
+      sessionStorage.removeItem('eventType');
+      
+      // Pre-populate based on the package name
+      let budgetRange = '';
+      
+      // Set budget range based on package name and event type
+      if (eventType === 'Wedding') {
+        if (selectedPackage === 'Basic') {
+          budgetRange = '₹2,50,000 - ₹5,00,000';
+        } else if (selectedPackage === 'Standard') {
+          budgetRange = '₹5,00,000 - ₹10,00,000';
+        } else if (selectedPackage === 'Premium') {
+          budgetRange = '₹10,00,000+';
+        }
+      } else if (eventType === 'Corporate') {
+        if (selectedPackage === 'Basic') {
+          budgetRange = '₹1,00,000 - ₹2,50,000';
+        } else if (selectedPackage === 'Standard') {
+          budgetRange = '₹2,50,000 - ₹5,00,000';
+        } else if (selectedPackage === 'Premium') {
+          budgetRange = '₹5,00,000+';
+        }
+      } else { // Private events
+        if (selectedPackage === 'Basic') {
+          budgetRange = '₹50,000 - ₹1,00,000';
+        } else if (selectedPackage === 'Standard') {
+          budgetRange = '₹1,00,000 - ₹2,00,000';
+        } else if (selectedPackage === 'Premium') {
+          budgetRange = '₹2,00,000+';
+        }
+      }
+      
+      return {
+        fullName: '',
+        email: '',
+        phone: '',
+        eventType: eventType || '',
+        eventDate: '',
+        budgetRange: budgetRange,
+      };
+    }
+    
+    // Default values if no package was selected
+    return {
+      fullName: '',
+      email: '',
+      phone: '',
+      eventType: '',
+      eventDate: '',
+      budgetRange: '',
+    };
+  };
   const [formData, setFormData] = useState({
-    fullName: '',
-    email: '',
-    phone: '',
-    eventType: '',
-    eventDate: '',
-    budgetRange: '',
+    ...getInitialFormData(),
     additionalDetails: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -62,7 +119,7 @@ export function PlanYourEvent() {
   };
 
   return (
-    <section className="py-16 sm:py-20 lg:py-24 relative overflow-hidden" ref={ref}>
+    <section id="contact" className="py-16 sm:py-20 lg:py-24 relative overflow-hidden scroll-mt-20" ref={ref}>
       <div className="absolute inset-0 bg-gradient-to-br from-[#1e3a8a] via-[#1d4ed8] to-[#2563eb]"></div>
       <motion.div
         className="absolute top-0 left-0 w-96 h-96 bg-[#d4af37]/10 rounded-full blur-3xl"
