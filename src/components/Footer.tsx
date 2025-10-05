@@ -36,7 +36,7 @@ export function Footer() {
             </p>
             <div className="flex items-center gap-2 text-[#d4af37]">
               <Heart size={16} className="fill-current" />
-              <span className="text-sm font-medium">Made with love since 2000</span>
+              <span className="text-sm font-medium">Made with love since 2013</span>
             </div>
           </motion.div>
 
@@ -51,14 +51,28 @@ export function Footer() {
               {[
                 { href: '/#story', label: 'Our Story' },
                 { href: '/#services', label: 'Services' },
-                { href: '/#menu', label: 'Our Menu' },
                 { href: '/gallery', label: 'Gallery' },
-                { href: '/blog', label: 'Blog' },
-                { href: '/#contact', label: 'Contact Us' }
+                { href: '/#testimonials', label: 'Testimonials' },
+                { href: '/contact', label: 'Contact Us' }
               ].map((link) => (
                 <li key={link.href}>
                   <a
                     href={link.href}
+                    onClick={(e) => {
+                      // If it's a hash link and we're on the homepage
+                      if (link.href.includes('#') && window.location.pathname === '/') {
+                        e.preventDefault();
+                        const hash = link.href.split('#')[1];
+                        const element = document.querySelector(`#${hash}`);
+                        if (element) {
+                          element.scrollIntoView({ behavior: 'smooth' });
+                        }
+                      } else if (link.href.includes('#') && window.location.pathname !== '/') {
+                        // If it's a hash link but we're not on homepage, navigate to home with hash
+                        window.location.href = link.href;
+                      }
+                      // For non-hash links, let the browser handle navigation normally
+                    }}
                     className="text-gray-300 hover:text-[#d4af37] transition-all duration-300 hover:translate-x-2 inline-flex items-center group"
                   >
                     <span className="w-0 group-hover:w-2 h-0.5 bg-[#d4af37] mr-0 group-hover:mr-2 transition-all duration-300"></span>
@@ -130,11 +144,6 @@ export function Footer() {
             <p className="text-gray-400">
               © {currentYear} <span className="text-[#d4af37] font-semibold">shanvikcateringevents</span>. All Rights Reserved
             </p>
-            <div className="flex items-center gap-2 text-gray-400">
-              <span>Crafted with</span>
-              <Heart size={14} className="text-red-500 fill-current animate-pulse" />
-              <span>by Thanush, Santhosh, Karthick Raja</span>
-            </div>
           </div>
           <div className="mt-6 flex flex-wrap justify-center gap-4 text-xs text-gray-400">
             <a href="/privacy" className="hover:text-[#d4af37] transition-colors">Privacy Policy</a>

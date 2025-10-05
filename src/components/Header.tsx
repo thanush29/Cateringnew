@@ -63,10 +63,7 @@ export function Header() {
     
     // Special handling for Contact Us link
     if (to === '/contact') {
-      // Add a callback to ensure we scroll to the top after navigation
-      setTimeout(() => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }, 100);
+      // Let the normal navigation happen (no preventDefault)
       return;
     }
     
