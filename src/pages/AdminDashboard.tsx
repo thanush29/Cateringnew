@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { LogOut, Image, MessageSquare, Mail, Phone } from 'lucide-react';
+import { LogOut, Image, MessageSquare, Mail, Phone, BarChart3 } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { supabase } from '../lib/supabase';
 import { GalleryManager } from '../components/admin/GalleryManager';
 import { TestimonialManager } from '../components/admin/TestimonialManager';
 import { EventSubmissionsViewer } from '../components/admin/EventSubmissionsViewer';
 import { ContactInquiriesManager } from '../components/admin/ContactInquiriesManager';
+import { AnalyticsDashboard } from '../components/admin/AnalyticsDashboard';
 
 export function AdminDashboard() {
   const navigate = useNavigate();
@@ -18,7 +19,7 @@ export function AdminDashboard() {
     eventSubmissions: 0,
     contactInquiries: 0
   });
-  const [activeTab, setActiveTab] = useState<'gallery' | 'testimonials' | 'submissions' | 'contacts'>('gallery');
+  const [activeTab, setActiveTab] = useState<'analytics' | 'gallery' | 'testimonials' | 'submissions' | 'contacts'>('analytics');
 
   useEffect(() => {
     if (!user) {
@@ -50,6 +51,7 @@ export function AdminDashboard() {
   };
 
   const tabs = [
+    { id: 'analytics', label: 'Analytics', icon: BarChart3, count: stats.galleryImages + stats.testimonials + stats.eventSubmissions + stats.contactInquiries },
     { id: 'gallery', label: 'Gallery', icon: Image, count: stats.galleryImages },
     { id: 'testimonials', label: 'Testimonials', icon: MessageSquare, count: stats.testimonials },
     { id: 'submissions', label: 'Event Inquiries', icon: Mail, count: stats.eventSubmissions },
@@ -107,7 +109,7 @@ export function AdminDashboard() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8"
+          className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8"
         >
           {tabs.map((tab, index) => {
             const Icon = tab.icon;
@@ -148,6 +150,7 @@ export function AdminDashboard() {
           transition={{ duration: 0.3 }}
           className="bg-white rounded-xl shadow-lg p-6"
         >
+          {activeTab === 'analytics' && <AnalyticsDashboard onUpdate={fetchStats} />}
           {activeTab === 'gallery' && <GalleryManager onUpdate={fetchStats} />}
           {activeTab === 'testimonials' && <TestimonialManager onUpdate={fetchStats} />}
           {activeTab === 'submissions' && <EventSubmissionsViewer onUpdate={fetchStats} />}

@@ -22,7 +22,6 @@ interface EventSubmissionsViewerProps {
 
 export function EventSubmissionsViewer({ onUpdate }: EventSubmissionsViewerProps) {
   const [inquiries, setInquiries] = useState<EventInquiry[]>([]);
-  const [filter, setFilter] = useState<EventInquiry['status'] | 'all'>('all');
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -64,31 +63,6 @@ export function EventSubmissionsViewer({ onUpdate }: EventSubmissionsViewerProps
     }
   };
 
-  const handleStatusChange = async (id: string, status: EventInquiry['status']) => {
-    const { error } = await supabase
-      .from('event_inquiries')
-      .update({ status })
-      .eq('id', id);
-
-    if (error) {
-      console.error('Error updating status:', error);
-      alert('Failed to update status');
-    } else {
-      fetchInquiries();
-    }
-  };
-
-  const filteredInquiries = filter === 'all'
-    ? inquiries
-    : inquiries.filter(i => i.status === filter);
-
-  const statusColors = {
-    new: 'bg-blue-100 text-blue-800',
-    contacted: 'bg-yellow-100 text-yellow-800',
-    converted: 'bg-green-100 text-green-800',
-    archived: 'bg-gray-100 text-gray-800'
-  };
-
   if (isLoading) {
     return (
       <div className="flex items-center justify-center py-12">
@@ -101,31 +75,10 @@ export function EventSubmissionsViewer({ onUpdate }: EventSubmissionsViewerProps
     <div>
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
         <h2 className="text-2xl font-bold text-gray-800">Event Inquiries</h2>
-        <div className="flex gap-2 flex-wrap">
-          {(['all', 'new', 'contacted', 'converted', 'archived'] as const).map((status) => {
-            const count = status === 'all' 
-              ? inquiries.length 
-              : inquiries.filter(i => i.status === status).length;
-            
-            return (
-              <button
-                key={status}
-                onClick={() => setFilter(status)}
-                className={`px-4 py-2 rounded-lg transition-colors capitalize ${
-                  filter === status
-                    ? 'bg-amber-600 text-white'
-                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                }`}
-              >
-                {status} ({count})
-              </button>
-            );
-          })}
-        </div>
       </div>
 
       <div className="space-y-4">
-        {filteredInquiries.map((inquiry) => (
+        {inquiries.map((inquiry) => (
           <motion.div
             key={inquiry.id}
             initial={{ opacity: 0, y: 20 }}
@@ -136,9 +89,6 @@ export function EventSubmissionsViewer({ onUpdate }: EventSubmissionsViewerProps
               <div className="flex-1">
                 <div className="flex items-center gap-3 mb-2">
                   <h3 className="text-xl font-semibold text-gray-800">{inquiry.full_name}</h3>
-                  <span className={`text-xs px-3 py-1 rounded-full ${statusColors[inquiry.status]}`}>
-                    {inquiry.status}
-                  </span>
                 </div>
                 <div className="space-y-1 text-sm text-gray-600">
                   <p>Email: <a href={`mailto:${inquiry.email}`} className="text-blue-600 hover:underline">{inquiry.email}</a></p>
@@ -155,16 +105,6 @@ export function EventSubmissionsViewer({ onUpdate }: EventSubmissionsViewerProps
                 </div>
               </div>
               <div className="flex gap-2">
-                <select
-                  value={inquiry.status}
-                  onChange={(e) => handleStatusChange(inquiry.id, e.target.value as EventInquiry['status'])}
-                  className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 text-sm"
-                >
-                  <option value="new">New</option>
-                  <option value="contacted">Contacted</option>
-                  <option value="converted">Converted</option>
-                  <option value="archived">Archived</option>
-                </select>
                 <button
                   onClick={() => handleDelete(inquiry.id)}
                   className="flex items-center gap-2 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors"
@@ -222,18 +162,12 @@ export function EventSubmissionsViewer({ onUpdate }: EventSubmissionsViewerProps
         ))}
       </div>
 
-      {filteredInquiries.length === 0 && !isLoading && (
+      {inquiries.length === 0 && !isLoading && (
         <div className="text-center py-12 text-gray-500">
           <Calendar size={48} className="mx-auto mb-4 opacity-50" />
-          <p className="text-lg font-medium">
-            {filter === 'all' 
-              ? 'No inquiries yet' 
-              : `No ${filter} inquiries`}
-          </p>
+          <p className="text-lg font-medium">No inquiries yet</p>
           <p className="text-sm mt-2">
-            {filter === 'all' 
-              ? 'Event inquiries will appear here when customers submit the form'
-              : `No inquiries with "${filter}" status`}
+            Event inquiries will appear here when customers submit the form
           </p>
         </div>
       )}

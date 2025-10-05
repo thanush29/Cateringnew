@@ -20,7 +20,6 @@ interface ContactInquiriesManagerProps {
 
 export function ContactInquiriesManager({ onUpdate }: ContactInquiriesManagerProps) {
   const [inquiries, setInquiries] = useState<ContactInquiry[]>([]);
-  const [filter, setFilter] = useState<ContactInquiry['status'] | 'all'>('all');
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -62,31 +61,6 @@ export function ContactInquiriesManager({ onUpdate }: ContactInquiriesManagerPro
     }
   };
 
-  const handleStatusChange = async (id: string, status: ContactInquiry['status']) => {
-    const { error } = await supabase
-      .from('contact_inquiries')
-      .update({ status })
-      .eq('id', id);
-
-    if (error) {
-      console.error('Error updating status:', error);
-      alert('Failed to update status');
-    } else {
-      fetchInquiries();
-    }
-  };
-
-  const filteredInquiries = filter === 'all'
-    ? inquiries
-    : inquiries.filter(i => i.status === filter);
-
-  const statusColors = {
-    new: 'bg-blue-100 text-blue-800',
-    contacted: 'bg-yellow-100 text-yellow-800',
-    resolved: 'bg-green-100 text-green-800',
-    archived: 'bg-gray-100 text-gray-800'
-  };
-
   if (isLoading) {
     return (
       <div className="flex items-center justify-center py-12">
@@ -102,31 +76,10 @@ export function ContactInquiriesManager({ onUpdate }: ContactInquiriesManagerPro
           <h2 className="text-2xl font-bold text-gray-800">Contact Inquiries</h2>
           <p className="text-sm text-gray-600">Manage customer messages from the contact form</p>
         </div>
-        <div className="flex gap-2 flex-wrap">
-          {(['all', 'new', 'contacted', 'resolved', 'archived'] as const).map((status) => {
-            const count = status === 'all' 
-              ? inquiries.length 
-              : inquiries.filter(i => i.status === status).length;
-            
-            return (
-              <button
-                key={status}
-                onClick={() => setFilter(status)}
-                className={`px-4 py-2 rounded-lg transition-colors capitalize ${
-                  filter === status
-                    ? 'bg-amber-600 text-white'
-                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                }`}
-              >
-                {status} ({count})
-              </button>
-            );
-          })}
-        </div>
       </div>
 
       <div className="space-y-4">
-        {filteredInquiries.map((inquiry) => (
+        {inquiries.map((inquiry) => (
           <motion.div
             key={inquiry.id}
             initial={{ opacity: 0, y: 20 }}
@@ -137,9 +90,6 @@ export function ContactInquiriesManager({ onUpdate }: ContactInquiriesManagerPro
               <div className="flex-1">
                 <div className="flex items-center gap-3 mb-2">
                   <h3 className="text-xl font-semibold text-gray-800">{inquiry.name}</h3>
-                  <span className={`text-xs px-3 py-1 rounded-full ${statusColors[inquiry.status]}`}>
-                    {inquiry.status}
-                  </span>
                   {inquiry.via_whatsapp && (
                     <span className="text-xs px-3 py-1 rounded-full bg-green-100 text-green-800">
                       WhatsApp
@@ -178,16 +128,6 @@ export function ContactInquiriesManager({ onUpdate }: ContactInquiriesManagerPro
                 </div>
               </div>
               <div className="flex gap-2">
-                <select
-                  value={inquiry.status}
-                  onChange={(e) => handleStatusChange(inquiry.id, e.target.value as ContactInquiry['status'])}
-                  className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 text-sm"
-                >
-                  <option value="new">New</option>
-                  <option value="contacted">Contacted</option>
-                  <option value="resolved">Resolved</option>
-                  <option value="archived">Archived</option>
-                </select>
                 <button
                   onClick={() => handleDelete(inquiry.id)}
                   className="flex items-center gap-2 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors"
@@ -209,18 +149,12 @@ export function ContactInquiriesManager({ onUpdate }: ContactInquiriesManagerPro
         ))}
       </div>
 
-      {filteredInquiries.length === 0 && !isLoading && (
+      {inquiries.length === 0 && !isLoading && (
         <div className="text-center py-12 text-gray-500">
           <Mail size={48} className="mx-auto mb-4 opacity-50" />
-          <p className="text-lg font-medium">
-            {filter === 'all' 
-              ? 'No contact inquiries yet' 
-              : `No ${filter} inquiries`}
-          </p>
+          <p className="text-lg font-medium">No contact inquiries yet</p>
           <p className="text-sm mt-2">
-            {filter === 'all' 
-              ? 'Contact inquiries will appear here when customers submit the contact form'
-              : `No inquiries with "${filter}" status`}
+            Contact inquiries will appear here when customers submit the contact form
           </p>
         </div>
       )}

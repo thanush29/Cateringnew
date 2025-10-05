@@ -35,7 +35,7 @@ export function OurStory() {
         }}
       />
       
-      <div className="absolute right-[-75px] bottom-[250px] w-[350px] h-[350px] opacity-10 z-[3] bg-[url('/chef-logo.png')] bg-no-repeat bg-bottom bg-contain"></div>
+      <div className="absolute right-[-75px] bottom-[250px] w-[350px] h-[350px] opacity-10 z-[3] bg-[url('/chef-logo.png')] bg-no-repeat bg-bottom bg-contain hidden lg:block"></div>
       
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <motion.div
@@ -70,11 +70,11 @@ export function OurStory() {
               initial={{ opacity: 0, x: -50 }}
               animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="relative flex-[0_0_42%] min-h-[500px] w-full lg:w-auto"
+              className="relative flex-[0_0_100%] lg:flex-[0_0_42%] min-h-[400px] lg:min-h-[500px] w-full flex items-center justify-center"
             >
               {/* Rotating network sphere */}
               <motion.div
-                className="absolute w-[120%] h-[120%] left-[-10%] top-[-10%] z-[1] pointer-events-none opacity-70"
+                className="absolute w-[100%] h-[100%] lg:w-[120%] lg:h-[120%] left-0 top-0 lg:left-[-10%] lg:top-[-10%] z-[1] pointer-events-none opacity-70"
                 animate={{ rotate: 360 }}
                 transition={{ duration: 80, repeat: Infinity, ease: "linear" }}
               >
@@ -86,13 +86,13 @@ export function OurStory() {
               </motion.div>
 
               {/* Profile container */}
-              <div className="relative w-full h-[500px] z-[2]">
+              <div className="relative w-full h-[400px] lg:h-[500px] z-[2] flex items-center justify-center">
                 <motion.div
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
                   transition={{ duration: 1.2, ease: "easeOut" }}
                   whileHover={{ scale: 1.05 }}
-                  className="absolute w-[330px] h-[330px] rounded-full border-[14px] border-[#27ae60] top-[calc(20%-20px)] left-[18%] transform -translate-x-1/2 -translate-y-1/2 z-[5] bg-white shadow-[0_10px_30px_rgba(39,174,96,0.3)] overflow-hidden group"
+                  className="w-[280px] h-[280px] sm:w-[330px] sm:h-[330px] rounded-full border-[12px] sm:border-[14px] border-[#27ae60] z-[5] bg-white shadow-[0_10px_30px_rgba(39,174,96,0.3)] overflow-hidden group"
                 >
                   <motion.img 
                     src="/owner logo.jpg" 
@@ -108,7 +108,7 @@ export function OurStory() {
               initial={{ opacity: 0, x: 50 }}
               animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
               transition={{ duration: 0.8, delay: 0.4 }}
-              className="flex-[0_0_58%] pr-0 lg:pr-5 relative z-[3] w-full"
+              className="flex-[0_0_100%] lg:flex-[0_0_58%] pr-0 lg:pr-5 relative z-[3] w-full"
             >
               <div className="mb-5">
                 <motion.h3
@@ -138,13 +138,13 @@ export function OurStory() {
                 transition={{ duration: 0.8, delay: 1 }}
                 className="space-y-5"
               >
-                <p className="leading-7 text-[#1e3a8a] text-base text-justify space-y-6 text-[#1e3a8a] text-base sm:text-lg leading-relaxed">
+                <p className="leading-7 text-[#1e3a8a] text-base text-justify space-y-6 text-base sm:text-lg leading-relaxed">
                   For over <strong className="text-[#d4af37]">12 years</strong>, <strong className="text-[#d4af37]">Shanvik</strong> has been a trusted name behind <strong className="text-[#d4af37]">Chennai's</strong> most memorable celebrations. 
                   We began with a simple passion: to serve incredible food that brought people together. 
                   This dedication to culinary excellence quickly established us as one of the region's finest caterers.
                 </p>
                 
-                <p className="leading-7 text-[#1e3a8a] text-base text-justify space-y-6 text-[#1e3a8a] text-base sm:text-lg leading-relaxed">
+                <p className="leading-7 text-[#1e3a8a] text-base text-justify space-y-6 text-base sm:text-lg leading-relaxed">
                   However, we saw that a truly perfect event was about more than just the food. It was about the seamless flow, 
                   the stunning ambiance, and the flawless execution of a grand vision. That's why we evolved, blending our 
                   culinary artistry with comprehensive event management to offer a complete, stress-free experience. Today, 
