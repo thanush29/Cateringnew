@@ -1,28 +1,26 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Trash2, Calendar, DollarSign, MessageSquare, Loader2 } from 'lucide-react';
+import { Trash2, Mail, Phone, MessageSquare, Loader2 } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 
-interface EventInquiry {
+interface ContactInquiry {
   id: string;
-  full_name: string;
+  name: string;
   email: string;
-  phone: string;
-  event_type: string;
-  event_date: string;
-  budget_range: string | null;
-  additional_details: string | null;
-  status: 'new' | 'contacted' | 'converted' | 'archived';
+  phone: string | null;
+  message: string;
+  via_whatsapp: boolean;
+  status: 'new' | 'contacted' | 'resolved' | 'archived';
   created_at: string;
 }
 
-interface EventSubmissionsViewerProps {
+interface ContactInquiriesManagerProps {
   onUpdate: () => void;
 }
 
-export function EventSubmissionsViewer({ onUpdate }: EventSubmissionsViewerProps) {
-  const [inquiries, setInquiries] = useState<EventInquiry[]>([]);
-  const [filter, setFilter] = useState<EventInquiry['status'] | 'all'>('all');
+export function ContactInquiriesManager({ onUpdate }: ContactInquiriesManagerProps) {
+  const [inquiries, setInquiries] = useState<ContactInquiry[]>([]);
+  const [filter, setFilter] = useState<ContactInquiry['status'] | 'all'>('all');
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -33,14 +31,14 @@ export function EventSubmissionsViewer({ onUpdate }: EventSubmissionsViewerProps
     setIsLoading(true);
     
     const { data, error } = await supabase
-      .from('event_inquiries')
+      .from('contact_inquiries')
       .select('*')
       .order('created_at', { ascending: false });
 
     if (error) {
-      console.error('Error fetching inquiries:', error);
+      console.error('Error fetching contact inquiries:', error);
     } else if (data) {
-      console.log('Fetched inquiries:', data);
+      console.log('Fetched contact inquiries:', data);
       setInquiries(data);
     }
     
@@ -49,9 +47,9 @@ export function EventSubmissionsViewer({ onUpdate }: EventSubmissionsViewerProps
   };
 
   const handleDelete = async (id: string) => {
-    if (confirm('Are you sure you want to delete this inquiry?')) {
+    if (confirm('Are you sure you want to delete this contact inquiry?')) {
       const { error } = await supabase
-        .from('event_inquiries')
+        .from('contact_inquiries')
         .delete()
         .eq('id', id);
 
@@ -64,9 +62,9 @@ export function EventSubmissionsViewer({ onUpdate }: EventSubmissionsViewerProps
     }
   };
 
-  const handleStatusChange = async (id: string, status: EventInquiry['status']) => {
+  const handleStatusChange = async (id: string, status: ContactInquiry['status']) => {
     const { error } = await supabase
-      .from('event_inquiries')
+      .from('contact_inquiries')
       .update({ status })
       .eq('id', id);
 
@@ -85,7 +83,7 @@ export function EventSubmissionsViewer({ onUpdate }: EventSubmissionsViewerProps
   const statusColors = {
     new: 'bg-blue-100 text-blue-800',
     contacted: 'bg-yellow-100 text-yellow-800',
-    converted: 'bg-green-100 text-green-800',
+    resolved: 'bg-green-100 text-green-800',
     archived: 'bg-gray-100 text-gray-800'
   };
 
@@ -100,9 +98,12 @@ export function EventSubmissionsViewer({ onUpdate }: EventSubmissionsViewerProps
   return (
     <div>
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
-        <h2 className="text-2xl font-bold text-gray-800">Event Inquiries</h2>
+        <div>
+          <h2 className="text-2xl font-bold text-gray-800">Contact Inquiries</h2>
+          <p className="text-sm text-gray-600">Manage customer messages from the contact form</p>
+        </div>
         <div className="flex gap-2 flex-wrap">
-          {(['all', 'new', 'contacted', 'converted', 'archived'] as const).map((status) => {
+          {(['all', 'new', 'contacted', 'resolved', 'archived'] as const).map((status) => {
             const count = status === 'all' 
               ? inquiries.length 
               : inquiries.filter(i => i.status === status).length;
@@ -135,15 +136,37 @@ export function EventSubmissionsViewer({ onUpdate }: EventSubmissionsViewerProps
             <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4 mb-4">
               <div className="flex-1">
                 <div className="flex items-center gap-3 mb-2">
-                  <h3 className="text-xl font-semibold text-gray-800">{inquiry.full_name}</h3>
+                  <h3 className="text-xl font-semibold text-gray-800">{inquiry.name}</h3>
                   <span className={`text-xs px-3 py-1 rounded-full ${statusColors[inquiry.status]}`}>
                     {inquiry.status}
                   </span>
+                  {inquiry.via_whatsapp && (
+                    <span className="text-xs px-3 py-1 rounded-full bg-green-100 text-green-800">
+                      WhatsApp
+                    </span>
+                  )}
                 </div>
                 <div className="space-y-1 text-sm text-gray-600">
-                  <p>Email: <a href={`mailto:${inquiry.email}`} className="text-blue-600 hover:underline">{inquiry.email}</a></p>
-                  <p>Phone: <a href={`tel:${inquiry.phone}`} className="text-blue-600 hover:underline">{inquiry.phone}</a></p>
-                  <p className="text-xs text-gray-400">
+                  <div className="flex items-center gap-2">
+                    <Mail size={16} className="text-amber-600" />
+                    <a href={`mailto:${inquiry.email}`} className="text-blue-600 hover:underline">
+                      {inquiry.email}
+                    </a>
+                  </div>
+                  {inquiry.phone && (
+                    <div className="flex items-center gap-2">
+                      <Phone size={16} className="text-amber-600" />
+                      <a 
+                        href={inquiry.via_whatsapp ? `https://wa.me/${inquiry.phone.replace(/\D/g, '')}` : `tel:${inquiry.phone}`} 
+                        className="text-blue-600 hover:underline"
+                        target={inquiry.via_whatsapp ? '_blank' : undefined}
+                        rel={inquiry.via_whatsapp ? 'noopener noreferrer' : undefined}
+                      >
+                        {inquiry.phone}
+                      </a>
+                    </div>
+                  )}
+                  <p className="text-xs text-gray-400 mt-2">
                     Submitted: {new Date(inquiry.created_at).toLocaleString('en-US', {
                       year: 'numeric',
                       month: 'long',
@@ -157,12 +180,12 @@ export function EventSubmissionsViewer({ onUpdate }: EventSubmissionsViewerProps
               <div className="flex gap-2">
                 <select
                   value={inquiry.status}
-                  onChange={(e) => handleStatusChange(inquiry.id, e.target.value as EventInquiry['status'])}
+                  onChange={(e) => handleStatusChange(inquiry.id, e.target.value as ContactInquiry['status'])}
                   className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 text-sm"
                 >
                   <option value="new">New</option>
                   <option value="contacted">Contacted</option>
-                  <option value="converted">Converted</option>
+                  <option value="resolved">Resolved</option>
                   <option value="archived">Archived</option>
                 </select>
                 <button
@@ -175,64 +198,28 @@ export function EventSubmissionsViewer({ onUpdate }: EventSubmissionsViewerProps
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
-              <div className="flex items-start gap-2">
-                <Calendar className="text-amber-600 mt-1 flex-shrink-0" size={18} />
-                <div>
-                  <p className="text-xs text-gray-500">Event Type</p>
-                  <p className="font-medium text-gray-800">{inquiry.event_type}</p>
-                </div>
+            <div className="flex items-start gap-2 bg-gray-50 rounded-lg p-4">
+              <MessageSquare className="text-amber-600 mt-1 flex-shrink-0" size={18} />
+              <div className="flex-1">
+                <p className="text-xs text-gray-500 mb-1">Message</p>
+                <p className="text-gray-700 whitespace-pre-wrap">{inquiry.message}</p>
               </div>
-              
-              <div className="flex items-start gap-2">
-                <Calendar className="text-amber-600 mt-1 flex-shrink-0" size={18} />
-                <div>
-                  <p className="text-xs text-gray-500">Event Date</p>
-                  <p className="font-medium text-gray-800">
-                    {new Date(inquiry.event_date).toLocaleDateString('en-US', {
-                      year: 'numeric',
-                      month: 'long',
-                      day: 'numeric'
-                    })}
-                  </p>
-                </div>
-              </div>
-
-              {inquiry.budget_range && (
-                <div className="flex items-start gap-2">
-                  <DollarSign className="text-amber-600 mt-1 flex-shrink-0" size={18} />
-                  <div>
-                    <p className="text-xs text-gray-500">Budget Range</p>
-                    <p className="font-medium text-gray-800">{inquiry.budget_range}</p>
-                  </div>
-                </div>
-              )}
             </div>
-
-            {inquiry.additional_details && (
-              <div className="flex items-start gap-2 bg-gray-50 rounded-lg p-4">
-                <MessageSquare className="text-amber-600 mt-1 flex-shrink-0" size={18} />
-                <div className="flex-1">
-                  <p className="text-xs text-gray-500 mb-1">Additional Details</p>
-                  <p className="text-gray-700 whitespace-pre-wrap">{inquiry.additional_details}</p>
-                </div>
-              </div>
-            )}
           </motion.div>
         ))}
       </div>
 
       {filteredInquiries.length === 0 && !isLoading && (
         <div className="text-center py-12 text-gray-500">
-          <Calendar size={48} className="mx-auto mb-4 opacity-50" />
+          <Mail size={48} className="mx-auto mb-4 opacity-50" />
           <p className="text-lg font-medium">
             {filter === 'all' 
-              ? 'No inquiries yet' 
+              ? 'No contact inquiries yet' 
               : `No ${filter} inquiries`}
           </p>
           <p className="text-sm mt-2">
             {filter === 'all' 
-              ? 'Event inquiries will appear here when customers submit the form'
+              ? 'Contact inquiries will appear here when customers submit the contact form'
               : `No inquiries with "${filter}" status`}
           </p>
         </div>

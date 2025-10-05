@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { LogOut, Image, MessageSquare, Mail, FileText } from 'lucide-react';
+import { LogOut, Image, MessageSquare, Mail, Phone } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { supabase } from '../lib/supabase';
 import { GalleryManager } from '../components/admin/GalleryManager';
 import { TestimonialManager } from '../components/admin/TestimonialManager';
 import { EventSubmissionsViewer } from '../components/admin/EventSubmissionsViewer';
-import { SiteContentManager } from '../components/admin/SiteContentManager';
+import { ContactInquiriesManager } from '../components/admin/ContactInquiriesManager';
 
 export function AdminDashboard() {
   const navigate = useNavigate();
@@ -16,9 +16,9 @@ export function AdminDashboard() {
     galleryImages: 0,
     testimonials: 0,
     eventSubmissions: 0,
-    siteContent: 0
+    contactInquiries: 0
   });
-  const [activeTab, setActiveTab] = useState<'gallery' | 'testimonials' | 'content' | 'submissions'>('gallery');
+  const [activeTab, setActiveTab] = useState<'gallery' | 'testimonials' | 'submissions' | 'contacts'>('gallery');
 
   useEffect(() => {
     if (!user) {
@@ -29,18 +29,18 @@ export function AdminDashboard() {
   }, [user, navigate]);
 
   const fetchStats = async () => {
-    const [gallery, testimonials, submissions, content] = await Promise.all([
+    const [gallery, testimonials, submissions, contacts] = await Promise.all([
       supabase.from('gallery_images').select('id', { count: 'exact', head: true }),
       supabase.from('testimonials').select('id', { count: 'exact', head: true }),
-      supabase.from('plan_your_event_submissions').select('id', { count: 'exact', head: true }),
-      supabase.from('site_content').select('id', { count: 'exact', head: true })
+      supabase.from('event_inquiries').select('id', { count: 'exact', head: true }),
+      supabase.from('contact_inquiries').select('id', { count: 'exact', head: true })
     ]);
 
     setStats({
       galleryImages: gallery.count || 0,
       testimonials: testimonials.count || 0,
       eventSubmissions: submissions.count || 0,
-      siteContent: content.count || 0
+      contactInquiries: contacts.count || 0
     });
   };
 
@@ -52,8 +52,8 @@ export function AdminDashboard() {
   const tabs = [
     { id: 'gallery', label: 'Gallery', icon: Image, count: stats.galleryImages },
     { id: 'testimonials', label: 'Testimonials', icon: MessageSquare, count: stats.testimonials },
-    { id: 'content', label: 'Site Content', icon: FileText, count: stats.siteContent },
-    { id: 'submissions', label: 'Event Inquiries', icon: Mail, count: stats.eventSubmissions }
+    { id: 'submissions', label: 'Event Inquiries', icon: Mail, count: stats.eventSubmissions },
+    { id: 'contacts', label: 'Contact Inquiries', icon: Phone, count: stats.contactInquiries }
   ];
 
   return (
@@ -150,8 +150,8 @@ export function AdminDashboard() {
         >
           {activeTab === 'gallery' && <GalleryManager onUpdate={fetchStats} />}
           {activeTab === 'testimonials' && <TestimonialManager onUpdate={fetchStats} />}
-          {activeTab === 'content' && <SiteContentManager onUpdate={fetchStats} />}
           {activeTab === 'submissions' && <EventSubmissionsViewer onUpdate={fetchStats} />}
+          {activeTab === 'contacts' && <ContactInquiriesManager onUpdate={fetchStats} />}
         </motion.div>
       </div>
     </div>

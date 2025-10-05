@@ -9,13 +9,13 @@ export const uploadImage = async (
   let fileName: string;
   if (folder === 'logo') {
     const { data: files } = await supabase.storage
-      .from('images')
+      .from('gallery-images')
       .list('logo');
 
     if (files && files.length > 0) {
       for (const oldFile of files) {
         await supabase.storage
-          .from('images')
+          .from('gallery-images')
           .remove([`logo/${oldFile.name}`]);
       }
     }
@@ -26,7 +26,7 @@ export const uploadImage = async (
   }
 
   const { data, error } = await supabase.storage
-    .from('images')
+    .from('gallery-images')
     .upload(fileName, file, {
       cacheControl: '3600',
       upsert: folder === 'logo'
@@ -37,7 +37,7 @@ export const uploadImage = async (
   }
 
   const { data: { publicUrl } } = supabase.storage
-    .from('images')
+    .from('gallery-images')
     .getPublicUrl(data.path);
 
   return publicUrl;
@@ -48,11 +48,11 @@ export const deleteImage = async (imageUrl: string): Promise<void> => {
     return;
   }
 
-  const path = imageUrl.split('/images/')[1];
+  const path = imageUrl.split('/gallery-images/')[1];
   if (!path) return;
 
   const { error } = await supabase.storage
-    .from('images')
+    .from('gallery-images')
     .remove([path]);
 
   if (error) {

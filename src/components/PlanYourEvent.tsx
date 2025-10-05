@@ -24,12 +24,8 @@ export function PlanYourEvent() {
     setSubmitStatus('idle');
 
     try {
-      const message = encodeURIComponent(
-        `🎉 New Event Inquiry\n\nName: ${formData.fullName}\nEmail: ${formData.email}\nPhone: ${formData.phone}\nEvent Type: ${formData.eventType}\nEvent Date: ${formData.eventDate}\nBudget: ${formData.budgetRange}\n\nDetails: ${formData.additionalDetails}`
-      );
-      window.open(`https://wa.me/919840650939?text=${message}`, '_blank');
-
-      const { error } = await supabase
+      // Insert to Supabase FIRST
+      const { data, error } = await supabase
         .from('event_inquiries')
         .insert([{
           full_name: formData.fullName,
@@ -38,10 +34,19 @@ export function PlanYourEvent() {
           event_type: formData.eventType,
           event_date: formData.eventDate,
           budget_range: formData.budgetRange,
-          additional_details: formData.additionalDetails
+          additional_details: formData.additionalDetails || null
         }]);
 
-      if (error) throw error;
+      if (error) {
+        console.error('Supabase error details:', error);
+        throw error;
+      }
+
+      // Only open WhatsApp after successful database insert
+      const message = encodeURIComponent(
+        `🎉 New Event Inquiry\n\nName: ${formData.fullName}\nEmail: ${formData.email}\nPhone: ${formData.phone}\nEvent Type: ${formData.eventType}\nEvent Date: ${formData.eventDate}\nBudget: ${formData.budgetRange}\n\nDetails: ${formData.additionalDetails}`
+      );
+      window.open(`https://wa.me/919840650939?text=${message}`, '_blank');
 
       setSubmitStatus('success');
       setFormData({
@@ -264,7 +269,7 @@ export function PlanYourEvent() {
 
             {submitStatus === 'error' && (
               <div className="mt-6 bg-red-50 text-red-700 p-4 rounded-xl border-2 border-red-200">
-                Something went wrong. Please try again or contact us directly.
+                <strong>Something went wrong.</strong> Please check the browser console for details, or contact us directly via WhatsApp.
               </div>
             )}
 

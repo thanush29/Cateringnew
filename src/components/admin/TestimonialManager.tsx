@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Plus, Trash2, CreditCard as Edit2, X, Save, Star } from 'lucide-react';
+import { Plus, Trash2, Edit2, X, Save, Star, Loader2, Upload } from 'lucide-react';
 import { supabase, Testimonial } from '../../lib/supabase';
+import ImageUpload from './ImageUpload';
+import { uploadImage, deleteImage } from '../../utils/imageUpload';
 
 interface TestimonialManagerProps {
   onUpdate: () => void;
@@ -11,14 +13,14 @@ export function TestimonialManager({ onUpdate }: TestimonialManagerProps) {
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
   const [isAddingNew, setIsAddingNew] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
+  const [isUploading, setIsUploading] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     reviewer_name: '',
-    reviewer_role: '',
     content: '',
     rating: 5,
-    video_url: '',
-    display_order: 0,
-    is_featured: false
+    photo_url: ''
   });
 
   useEffect(() => {
@@ -29,7 +31,6 @@ export function TestimonialManager({ onUpdate }: TestimonialManagerProps) {
     const { data, error } = await supabase
       .from('testimonials')
       .select('*')
-      .order('display_order', { ascending: true })
       .order('created_at', { ascending: false });
 
     if (!error && data) {
@@ -40,28 +41,38 @@ export function TestimonialManager({ onUpdate }: TestimonialManagerProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError(null);
+    setIsSaving(true);
 
-    if (editingId) {
-      const { error } = await supabase
-        .from('testimonials')
-        .update(formData)
-        .eq('id', editingId);
+    try {
+      if (editingId) {
+        const { error } = await supabase
+          .from('testimonials')
+          .update(formData)
+          .eq('id', editingId);
 
-      if (!error) {
-        fetchTestimonials();
+        if (error) throw error;
+
+        await fetchTestimonials();
         setEditingId(null);
         resetForm();
-      }
-    } else {
-      const { error } = await supabase
-        .from('testimonials')
-        .insert([formData]);
+        setIsAddingNew(false);
+      } else {
+        const { error } = await supabase
+          .from('testimonials')
+          .insert([formData]);
 
-      if (!error) {
-        fetchTestimonials();
+        if (error) throw error;
+
+        await fetchTestimonials();
         setIsAddingNew(false);
         resetForm();
       }
+    } catch (err: any) {
+      setError(err.message || 'Failed to save testimonial');
+      console.error('Save error:', err);
+    } finally {
+      setIsSaving(false);
     }
   };
 
@@ -69,39 +80,60 @@ export function TestimonialManager({ onUpdate }: TestimonialManagerProps) {
     setEditingId(testimonial.id);
     setFormData({
       reviewer_name: testimonial.reviewer_name,
-      reviewer_role: testimonial.reviewer_role,
       content: testimonial.content,
       rating: testimonial.rating,
-      video_url: testimonial.video_url || '',
-      display_order: testimonial.display_order,
-      is_featured: testimonial.is_featured
+      photo_url: testimonial.photo_url || ''
     });
     setIsAddingNew(true);
+    setError(null);
   };
 
   const handleDelete = async (id: string) => {
     if (confirm('Are you sure you want to delete this testimonial?')) {
-      const { error } = await supabase
-        .from('testimonials')
-        .delete()
-        .eq('id', id);
+      try {
+        const testimonialToDelete = testimonials.find(t => t.id === id);
+        if (testimonialToDelete?.photo_url) {
+          await deleteImage(testimonialToDelete.photo_url);
+        }
 
-      if (!error) {
-        fetchTestimonials();
+        const { error } = await supabase
+          .from('testimonials')
+          .delete()
+          .eq('id', id);
+
+        if (error) throw error;
+
+        await fetchTestimonials();
+      } catch (err: any) {
+        alert('Failed to delete testimonial: ' + err.message);
+        console.error('Delete error:', err);
       }
+    }
+  };
+
+  const handleImageUpload = async (file: File) => {
+    setError(null);
+    setIsUploading(true);
+    
+    try {
+      const imageUrl = await uploadImage(file, 'testimonials');
+      setFormData({ ...formData, photo_url: imageUrl });
+    } catch (err: any) {
+      setError(err.message || 'Failed to upload photo');
+      console.error('Upload error:', err);
+    } finally {
+      setIsUploading(false);
     }
   };
 
   const resetForm = () => {
     setFormData({
       reviewer_name: '',
-      reviewer_role: '',
       content: '',
       rating: 5,
-      video_url: '',
-      display_order: 0,
-      is_featured: false
+      photo_url: ''
     });
+    setError(null);
   };
 
   return (
@@ -128,36 +160,38 @@ export function TestimonialManager({ onUpdate }: TestimonialManagerProps) {
           onSubmit={handleSubmit}
           className="bg-gray-50 rounded-lg p-6 mb-6"
         >
+          {error && (
+            <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded-lg">
+              {error}
+            </div>
+          )}
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Reviewer Name</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Reviewer Name <span className="text-red-500">*</span>
+              </label>
               <input
                 type="text"
                 required
                 value={formData.reviewer_name}
                 onChange={(e) => setFormData({ ...formData, reviewer_name: e.target.value })}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500"
+                placeholder="e.g., John Doe"
               />
             </div>
+
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Reviewer Role</label>
-              <input
-                type="text"
-                value={formData.reviewer_role}
-                onChange={(e) => setFormData({ ...formData, reviewer_role: e.target.value })}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500"
-                placeholder="e.g., CEO, Bride, Event Manager"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Rating</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Rating <span className="text-red-500">*</span>
+              </label>
               <div className="flex gap-2">
                 {[1, 2, 3, 4, 5].map((star) => (
                   <button
                     key={star}
                     type="button"
                     onClick={() => setFormData({ ...formData, rating: star })}
-                    className="focus:outline-none"
+                    className="focus:outline-none transition-transform hover:scale-110"
                   >
                     <Star
                       size={32}
@@ -166,54 +200,86 @@ export function TestimonialManager({ onUpdate }: TestimonialManagerProps) {
                   </button>
                 ))}
               </div>
+              <p className="text-xs text-gray-500 mt-1">Click stars to set rating</p>
             </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Display Order</label>
-              <input
-                type="number"
-                value={formData.display_order}
-                onChange={(e) => setFormData({ ...formData, display_order: parseInt(e.target.value) })}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500"
-              />
-            </div>
+
             <div className="md:col-span-2">
-              <label className="block text-sm font-medium text-gray-700 mb-2">Content</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Photo (Optional)
+              </label>
+              <ImageUpload
+                onUpload={handleImageUpload}
+                currentImageUrl={formData.photo_url}
+                label="Upload Reviewer Photo"
+              />
+              
+              {isUploading && (
+                <div className="mt-2 flex items-center gap-2 text-blue-600">
+                  <Loader2 size={16} className="animate-spin" />
+                  <span className="text-sm">Uploading photo...</span>
+                </div>
+              )}
+
+              {formData.photo_url && (
+                <div className="mt-3 flex items-center gap-3 p-2 bg-green-50 border border-green-200 rounded-lg">
+                  <img 
+                    src={formData.photo_url} 
+                    alt="Preview" 
+                    className="w-16 h-16 object-cover rounded-full"
+                  />
+                  <p className="text-sm text-green-700 font-medium">Photo uploaded successfully</p>
+                </div>
+              )}
+              
+              <div className="mt-3">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Or paste photo URL
+                </label>
+                <input
+                  type="url"
+                  value={formData.photo_url}
+                  onChange={(e) => setFormData({ ...formData, photo_url: e.target.value })}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500"
+                  placeholder="https://example.com/photo.jpg"
+                  disabled={isUploading}
+                />
+              </div>
+            </div>
+
+            <div className="md:col-span-2">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Review Content <span className="text-red-500">*</span>
+              </label>
               <textarea
                 required
                 rows={4}
                 value={formData.content}
                 onChange={(e) => setFormData({ ...formData, content: e.target.value })}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500"
+                placeholder="Write the testimonial content here..."
               />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Video URL (optional)</label>
-              <input
-                type="url"
-                value={formData.video_url}
-                onChange={(e) => setFormData({ ...formData, video_url: e.target.value })}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500"
-                placeholder="https://youtube.com/... or https://instagram.com/..."
-              />
-            </div>
-            <div className="flex items-center">
-              <label className="flex items-center gap-2 cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={formData.is_featured}
-                  onChange={(e) => setFormData({ ...formData, is_featured: e.target.checked })}
-                  className="w-5 h-5 text-amber-600 rounded focus:ring-2 focus:ring-amber-500"
-                />
-                <span className="text-sm font-medium text-gray-700">Featured on Homepage</span>
-              </label>
+              <p className="text-xs text-gray-500 mt-1">
+                {formData.content.length} characters
+              </p>
             </div>
           </div>
+
           <button
             type="submit"
-            className="mt-4 flex items-center gap-2 bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition-colors"
+            disabled={isSaving || isUploading}
+            className="mt-6 flex items-center gap-2 bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
           >
-            <Save size={20} />
-            {editingId ? 'Update' : 'Save'} Testimonial
+            {isSaving ? (
+              <>
+                <Loader2 size={20} className="animate-spin" />
+                Saving...
+              </>
+            ) : (
+              <>
+                <Save size={20} />
+                {editingId ? 'Update' : 'Save'} Testimonial
+              </>
+            )}
           </button>
         </motion.form>
       )}
@@ -224,24 +290,26 @@ export function TestimonialManager({ onUpdate }: TestimonialManagerProps) {
             key={testimonial.id}
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="bg-white rounded-lg shadow-md p-6 relative"
+            className="bg-white rounded-lg shadow-md p-6"
           >
-            {testimonial.is_featured && (
-              <div className="absolute top-4 right-4">
-                <span className="bg-amber-500 text-white text-xs px-2 py-1 rounded-full">
-                  Featured
-                </span>
-              </div>
-            )}
             <div className="flex items-start gap-4 mb-4">
-              <div className="w-16 h-16 rounded-full bg-amber-100 flex items-center justify-center text-amber-700 font-bold text-xl">
-                {testimonial.reviewer_name.charAt(0)}
+              <div className="flex-shrink-0">
+                {testimonial.photo_url ? (
+                  <img
+                    src={testimonial.photo_url}
+                    alt={testimonial.reviewer_name}
+                    className="w-16 h-16 rounded-full object-cover border-2 border-amber-200"
+                  />
+                ) : (
+                  <div className="w-16 h-16 rounded-full bg-amber-100 flex items-center justify-center text-amber-700 font-bold text-xl border-2 border-amber-200">
+                    {testimonial.reviewer_name.charAt(0).toUpperCase()}
+                  </div>
+                )}
               </div>
               <div className="flex-1">
-                <h3 className="font-semibold text-gray-800">{testimonial.reviewer_name}</h3>
-                {testimonial.reviewer_role && (
-                  <p className="text-sm text-gray-500">{testimonial.reviewer_role}</p>
-                )}
+                <h3 className="font-semibold text-gray-800 text-lg">
+                  {testimonial.reviewer_name}
+                </h3>
                 <div className="flex gap-1 mt-1">
                   {[...Array(5)].map((_, i) => (
                     <Star
@@ -253,10 +321,19 @@ export function TestimonialManager({ onUpdate }: TestimonialManagerProps) {
                 </div>
               </div>
             </div>
-            <p className="text-gray-600 mb-4 italic">"{testimonial.content}"</p>
-            {testimonial.video_url && (
-              <p className="text-xs text-gray-400 mb-4 truncate">Video: {testimonial.video_url}</p>
-            )}
+            
+            <p className="text-gray-600 mb-4 italic leading-relaxed">
+              "{testimonial.content}"
+            </p>
+            
+            <div className="text-xs text-gray-400 mb-4">
+              Added on {new Date(testimonial.created_at).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+              })}
+            </div>
+
             <div className="flex gap-2">
               <button
                 onClick={() => handleEdit(testimonial)}
@@ -277,9 +354,11 @@ export function TestimonialManager({ onUpdate }: TestimonialManagerProps) {
         ))}
       </div>
 
-      {testimonials.length === 0 && (
+      {testimonials.length === 0 && !isAddingNew && (
         <div className="text-center py-12 text-gray-500">
-          <p>No testimonials yet. Add your first testimonial!</p>
+          <Star size={48} className="mx-auto mb-4 opacity-50" />
+          <p className="text-lg font-medium">No testimonials yet</p>
+          <p className="text-sm mt-2">Click "Add Testimonial" to create your first review</p>
         </div>
       )}
     </div>
