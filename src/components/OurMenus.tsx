@@ -110,7 +110,7 @@ export function OurMenus() {
         }}
       />
       <motion.div
-        className="absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-br from-[#d4af37]/5 to-[#0b1a45]/5 rounded-full blur-3xl"
+        className="absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-br from-[#d4af37]/5 to-[#1e3a8a]/5 rounded-full blur-3xl"
         animate={{
           x: [0, -100, 0],
           y: [0, -50, 0],
@@ -135,7 +135,7 @@ export function OurMenus() {
             animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <span className="text-[#0b1a45]">
+            <span className="text-[#1e3a8a]">
               Our Menus
             </span>
           </motion.h2>
@@ -149,7 +149,7 @@ export function OurMenus() {
             initial={{ opacity: 0 }}
             animate={isInView ? { opacity: 1 } : { opacity: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="text-xl text-[#0b1a45] max-w-2xl mx-auto font-medium"
+            className="text-xl text-[#1e3a8a] max-w-2xl mx-auto font-medium"
           >
             Explore our diverse menu offerings crafted to delight every palate
           </motion.p>

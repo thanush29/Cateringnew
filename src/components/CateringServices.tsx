@@ -50,7 +50,7 @@ export function CateringServices() {
     <section id="services" className="py-16 sm:py-20 lg:py-24 relative overflow-hidden" ref={ref}>
       <div className="absolute inset-0 bg-gradient-to-br from-white via-[#f5f5f5] to-[#faf8f3]"></div>
       <motion.div
-        className="absolute top-20 right-0 w-96 h-96 bg-gradient-to-br from-[#0b1a45]/5 to-[#d4af37]/10 rounded-full blur-3xl"
+        className="absolute top-20 right-0 w-96 h-96 bg-gradient-to-br from-[#1e3a8a]/5 to-[#d4af37]/10 rounded-full blur-3xl"
         animate={{
           scale: [1, 1.2, 1],
           rotate: [0, 90, 0],
@@ -62,7 +62,7 @@ export function CateringServices() {
         }}
       />
       <motion.div
-        className="absolute bottom-20 left-0 w-96 h-96 bg-gradient-to-br from-[#d4af37]/10 to-[#0b1a45]/5 rounded-full blur-3xl"
+        className="absolute bottom-20 left-0 w-96 h-96 bg-gradient-to-br from-[#d4af37]/10 to-[#1e3a8a]/5 rounded-full blur-3xl"
         animate={{
           scale: [1, 1.3, 1],
           rotate: [0, -90, 0],
@@ -87,7 +87,7 @@ export function CateringServices() {
             animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <span className="text-[#0b1a45]">
+            <span className="text-[#1e3a8a]">
               Catering Services
             </span>
           </motion.h2>
@@ -101,7 +101,7 @@ export function CateringServices() {
             initial={{ opacity: 0 }}
             animate={isInView ? { opacity: 1 } : { opacity: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="text-lg sm:text-xl text-[#0b1a45] max-w-2xl mx-auto font-medium"
+            className="text-lg sm:text-xl text-[#1e3a8a] max-w-2xl mx-auto font-medium"
           >
             From intimate gatherings to grand celebrations, we create memorable culinary experiences
           </motion.p>
@@ -127,7 +127,7 @@ export function CateringServices() {
           className="relative bg-gradient-to-br from-[#faf8f3] via-white to-[#f5f5f5] rounded-3xl p-8 sm:p-10 md:p-14 shadow-2xl overflow-hidden"
         >
           <div className="absolute top-0 right-0 w-64 h-64 bg-[#d4af37]/10 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#0b1a45]/5 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#1e3a8a]/5 rounded-full blur-3xl"></div>
 
           <div className="relative">
             <motion.div
@@ -137,10 +137,10 @@ export function CateringServices() {
             >
               <Sparkles className="text-[#d4af37]" size={48} />
             </motion.div>
-            <h3 className="text-3xl sm:text-4xl font-display font-bold text-center text-[#0b1a45] mb-4">
+            <h3 className="text-3xl sm:text-4xl font-display font-bold text-center text-[#1e3a8a] mb-4">
               Why Choose Us?
             </h3>
-            <p className="text-center text-[#0b1a45] mb-10 max-w-2xl mx-auto">
+            <p className="text-center text-[#1e3a8a] mb-10 max-w-2xl mx-auto">
               Experience the perfect blend of tradition, quality, and innovation
             </p>
 
@@ -156,7 +156,7 @@ export function CateringServices() {
                   title: 'Fresh, Local Ingredients',
                   description: 'We source the finest local ingredients to ensure quality and freshness',
                   icon: '🌿',
-                  color: 'from-[#0b1a45] to-[#0d2055]'
+                  color: 'from-[#1e3a8a] to-[#1d4ed8]'
                 },
                 {
                   title: 'Experienced Professionals',
@@ -177,10 +177,10 @@ export function CateringServices() {
                   <div className={`w-16 h-16 bg-gradient-to-br ${item.color} rounded-2xl flex items-center justify-center mb-4 text-3xl shadow-md group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 mx-auto`}>
                     {item.icon}
                   </div>
-                  <h4 className="font-display font-bold text-lg text-[#0b1a45] mb-3 text-center group-hover:text-[#d4af37] transition-colors">
+                  <h4 className="font-display font-bold text-lg text-[#1e3a8a] mb-3 text-center group-hover:text-[#d4af37] transition-colors">
                     {item.title}
                   </h4>
-                  <p className="text-[#0b1a45] text-sm text-center leading-relaxed">
+                  <p className="text-[#1e3a8a] text-sm text-center leading-relaxed">
                     {item.description}
                   </p>
                 </motion.div>

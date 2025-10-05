@@ -2,12 +2,11 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { supabase } from '../lib/supabase';
+import logoImage from '/Site-logo.png';
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [logoUrl, setLogoUrl] = useState<string>('');
   const location = useLocation();
 
   const isNonHomePage = location.pathname !== '/';
@@ -21,35 +20,18 @@ export function Header() {
   }, []);
 
   useEffect(() => {
-    fetchLogo();
-  }, []);
-
-  const fetchLogo = async () => {
-    const { data, error } = await supabase
-      .from('site_settings')
-      .select('value')
-      .eq('key', 'logo_url')
-      .maybeSingle();
-
-    if (!error && data && data.value) {
-      setLogoUrl(data.value);
-    }
-  };
-
-  useEffect(() => {
     setIsOpen(false);
   }, [location]);
 
   const leftLinks = [
+    { to: '/', label: 'Home' },
     { to: '/#story', label: 'Our Story' },
-    { to: '/#services', label: 'Catering Services' },
-    { to: '/#menu', label: 'Our Menu' },
+    { to: '/#services', label: 'Our Services' },
   ];
 
   const rightLinks = [
     { to: '/gallery', label: 'Gallery' },
     { to: '/#testimonials', label: 'Testimonials' },
-    { to: '/blog', label: 'Blog' },
     { to: '/#contact', label: 'Contact Us' },
   ];
 
@@ -63,6 +45,7 @@ export function Header() {
   };
 
   const handleNavClick = (to: string, e: React.MouseEvent) => {
+    setIsOpen(false);
     if (to.includes('#')) {
       e.preventDefault();
       const hash = to.split('#')[1];
@@ -74,16 +57,29 @@ export function Header() {
     }
   };
 
-  const textColor = isScrolled || isNonHomePage ? 'text-[#0b1a45]' : 'text-white';
+  const textColor = isScrolled || isNonHomePage ? 'text-[#1e3a8a]' : 'text-white';
   const bgColor = isScrolled || isNonHomePage
     ? 'bg-white shadow-lg backdrop-blur-sm'
-    : 'bg-gradient-to-r from-[#0b1a45]/80 via-[#0b1a45]/60 to-[#0b1a45]/80 backdrop-blur-md';
+    : 'bg-gradient-to-r from-[#1e3a8a]/80 via-[#1e3a8a]/60 to-[#1e3a8a]/80 backdrop-blur-md';
 
   return (
     <header className={`fixed w-full z-50 transition-all duration-500 ${bgColor} border-b ${isScrolled || isNonHomePage ? 'border-[#d4af37]/30' : 'border-[#d4af37]/20'}`}>
+      <div className="relative">
+        <div className="absolute top-3 left-1/2 transform -translate-x-1/2 text-center z-10">
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="flex flex-col leading-none"
+          >
+            <span className="text-[#d4af37] text-xs sm:text-sm font-semibold tracking-wide">Turning Moments</span>
+            <span className="text-[#1e3a8a] text-xs sm:text-sm font-semibold tracking-wide">into Memories</span>
+          </motion.div>
+        </div>
+      </div>
       <nav className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="hidden lg:flex items-center justify-center h-28 gap-12">
-          <div className="flex items-center gap-8 flex-1 justify-end">
+        <div className="hidden lg:flex items-center justify-center h-28 gap-8 xl:gap-12 pt-10">
+          <div className="flex items-center gap-6 xl:gap-8 flex-1 justify-end">
             {leftLinks.map((link, index) => (
               <motion.div
                 key={link.to}
@@ -94,7 +90,7 @@ export function Header() {
                 <Link
                   to={link.to}
                   onClick={(e) => handleNavClick(link.to, e)}
-                  className={`text-sm font-semibold transition-all duration-300 hover:text-[#d4af37] hover:scale-110 relative group ${textColor}`}
+                  className={`text-sm font-semibold transition-all duration-300 hover:text-[#d4af37] hover:scale-105 relative group ${textColor}`}
                 >
                   {link.label}
                   <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#d4af37] transition-all duration-300 group-hover:w-full"></span>
@@ -103,50 +99,41 @@ export function Header() {
             ))}
           </div>
 
-                    <Link
+          <Link
             to="/"
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            className="flex flex-col items-center justify-center px-12 group"
+            className="flex flex-col items-center justify-center px-8 xl:px-12 group"
           >
             <motion.div
               initial={{ opacity: 0, scale: 0.5, rotate: -10 }}
               animate={{ opacity: 1, scale: 1, rotate: 0 }}
               transition={{ duration: 0.7, type: "spring" }}
-              className="relative"
+              className="relative flex items-center gap-3"
             >
-              {logoUrl ? (
-                <div className="relative">
-                  <div className="absolute inset-0 bg-[#d4af37]/30 blur-lg opacity-30 group-hover:opacity-50 transition-opacity duration-300"></div>
-                  <img
-                    src={logoUrl}
-                    alt="shanvikcateringevents"
-                    className="h-20 w-auto relative z-10 group-hover:scale-110 transition-transform duration-300 drop-shadow-xl"
-                  />
-                </div>
-              ) : (
-                <div className="relative">
-                  <div className="absolute inset-0 bg-[#d4af37]/30 blur-md opacity-50"></div>
-                  <div className="w-16 h-16 bg-[#d4af37] rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-2xl relative z-10">
-                    <span className="text-[#0b1a45] font-bold text-2xl">S</span>
-                  </div>
-                </div>
-              )}
+              <div className="relative">
+                <div className="absolute inset-0 bg-[#d4af37]/30 blur-lg opacity-30 group-hover:opacity-50 transition-opacity duration-300"></div>
+                <img
+                  src={logoImage}
+                  alt="Shanvik Catering & Events"
+                  className="h-16 w-auto relative z-10 group-hover:scale-110 transition-transform duration-300 drop-shadow-xl"
+                />
+              </div>
+              <motion.span
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.3, duration: 0.5 }}
+                className={`text-base font-display font-bold transition-all duration-300 whitespace-nowrap ${
+                  isScrolled || isNonHomePage
+                    ? 'text-[#d4af37]'
+                    : 'text-[#d4af37] drop-shadow-lg'
+                }`}
+              >
+                Shanvik Catering & Events
+              </motion.span>
             </motion.div>
-            <motion.span
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3, duration: 0.5 }}
-              className={`mt-0 text-xl font-display font-bold transition-all duration-300 ${
-                isScrolled || isNonHomePage
-                  ? 'text-[#d4af37]'
-                  : 'text-[#d4af37] drop-shadow-lg'
-              }`}
-            >
-              shanvikcateringevents
-            </motion.span>
           </Link>
 
-          <div className="flex items-center gap-8 flex-1">
+          <div className="flex items-center gap-6 xl:gap-8 flex-1">
             {rightLinks.map((link, index) => (
               <motion.div
                 key={link.to}
@@ -157,7 +144,7 @@ export function Header() {
                 <Link
                   to={link.to}
                   onClick={(e) => handleNavClick(link.to, e)}
-                  className={`text-sm font-semibold transition-all duration-300 hover:text-[#d4af37] hover:scale-110 relative group ${textColor}`}
+                  className={`text-sm font-semibold transition-all duration-300 hover:text-[#d4af37] hover:scale-105 relative group ${textColor}`}
                 >
                   {link.label}
                   <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#d4af37] transition-all duration-300 group-hover:w-full"></span>
@@ -168,46 +155,32 @@ export function Header() {
         </div>
 
         <motion.div
-          className="lg:hidden flex items-center justify-between py-3"
+          className="lg:hidden flex items-center justify-between py-2 pt-12"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5 }}
         >
           <Link to="/" className="flex items-center gap-2">
-            {logoUrl ? (
-              <div className="relative">
-                <div className="absolute inset-0 bg-[#d4af37]/30 blur-md opacity-40"></div>
-                <img
-                  src={logoUrl}
-                  alt="shanvikcateringevents"
-                  className="h-12 w-auto relative z-10 drop-shadow-lg"
-                />
-              </div>
-            ) : (
-              <div className="relative">
-                <div className="absolute inset-0 bg-[#d4af37]/30 blur-md opacity-50"></div>
-                <div className="w-10 h-10 bg-[#d4af37] rounded-full flex items-center justify-center shadow-xl relative z-10">
-                  <span className="text-[#0b1a45] font-bold text-base">S</span>
-                </div>
-              </div>
-            )}
+            <div className="relative">
+              <div className="absolute inset-0 bg-[#d4af37]/30 blur-md opacity-40"></div>
+              <img
+                src={logoImage}
+                alt="Shanvik Catering & Events"
+                className="h-10 w-auto relative z-10 drop-shadow-lg"
+              />
+            </div>
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.2, duration: 0.5 }}
               className="flex flex-col"
             >
-              <span className={`text-base font-display font-bold leading-tight transition-colors duration-300 ${
+              <span className={`text-sm font-display font-bold leading-tight transition-colors duration-300 ${
                 isScrolled || isNonHomePage
                   ? 'text-[#d4af37]'
                   : 'text-[#d4af37] drop-shadow-lg'
               }`}>
                 Shanvik Catering & Events
-              </span>
-              <span className={`text-[10px] font-medium leading-tight transition-colors duration-300 ${
-                isScrolled || isNonHomePage ? 'text-[#0b1a45]/80' : 'text-[#d4af37]/90'
-              }`}>
-                Turning Moments into Memories
               </span>
             </motion.div>
           </Link>
@@ -221,7 +194,7 @@ export function Header() {
               animate={{ rotate: isOpen ? 90 : 0 }}
               transition={{ duration: 0.3 }}
             >
-              {isOpen ? <X size={26} /> : <Menu size={26} />}
+              {isOpen ? <X size={24} /> : <Menu size={24} />}
             </motion.div>
           </button>
         </motion.div>
@@ -247,7 +220,7 @@ export function Header() {
                   <Link
                     to={link.to}
                     onClick={(e) => handleNavClick(link.to, e)}
-                    className="block py-3.5 px-5 text-[#0b1a45] font-semibold hover:text-white hover:bg-gradient-to-r hover:from-[#0b1a45] hover:to-[#0d2055] rounded-xl transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg border border-[#d4af37]/20 hover:border-[#d4af37]"
+                    className="block py-3.5 px-5 text-[#1e3a8a] font-semibold hover:text-white hover:bg-gradient-to-r hover:from-[#1e3a8a] hover:to-[#1d4ed8] rounded-xl transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg border border-[#d4af37]/20 hover:border-[#d4af37]"
                   >
                     {link.label}
                   </Link>

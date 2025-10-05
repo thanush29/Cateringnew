@@ -1,30 +1,12 @@
 import { Instagram, Facebook, Linkedin, Mail, Phone, MapPin, Heart } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { useState, useEffect } from 'react';
-import { supabase } from '../lib/supabase';
+import logoImage from '/Site-logo.png';
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
-  const [logoUrl, setLogoUrl] = useState<string>('');
-
-  useEffect(() => {
-    fetchLogo();
-  }, []);
-
-  const fetchLogo = async () => {
-    const { data, error } = await supabase
-      .from('site_settings')
-      .select('value')
-      .eq('key', 'logo_url')
-      .maybeSingle();
-
-    if (!error && data && data.value) {
-      setLogoUrl(data.value);
-    }
-  };
 
   return (
-    <footer className="relative bg-[#0b1a45] text-white overflow-hidden">
+    <footer className="relative bg-[#1e3a8a] text-white overflow-hidden">
       <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAxMCAwIEwgMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0icmdiYSgyNTUsMjU1LDI1NSwwLjAzKSIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyaWQpIi8+PC9zdmc+')] opacity-50"></div>
 
       <div className="relative container mx-auto px-4 sm:px-6 lg:px-8 py-16">
@@ -36,19 +18,13 @@ export function Footer() {
             transition={{ duration: 0.5 }}
           >
             <div className="flex items-center gap-3 mb-4">
-              {logoUrl ? (
-                <img
-                  src={logoUrl}
-                  alt="shanvikcateringevents"
-                  className="h-12 w-auto"
-                />
-              ) : (
-                <div className="w-12 h-12 bg-[#d4af37] rounded-full flex items-center justify-center shadow-lg">
-                  <span className="text-[#0b1a45] font-bold text-xl">S</span>
-                </div>
-              )}
+              <img
+                src={logoImage}
+                alt="Shanvik Catering & Events"
+                className="h-12 w-auto"
+              />
               <div>
-                <h3 className="text-xl font-display font-bold text-white">shanvikcateringevents</h3>
+                <h3 className="text-xl font-display font-bold text-white">Shanvik Catering & Events</h3>
                 <p className="text-[#d4af37] text-xs">Turning Moments into Memories</p>
               </div>
             </div>

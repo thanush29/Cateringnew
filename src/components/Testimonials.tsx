@@ -66,7 +66,7 @@ export function Testimonials() {
     <section id="testimonials" className="py-20 relative overflow-hidden" ref={ref}>
       <div className="absolute inset-0 bg-gradient-to-br from-white via-[#faf8f3] to-[#f5f5f5]"></div>
       <motion.div
-        className="absolute top-20 left-0 w-96 h-96 bg-gradient-to-br from-[#0b1a45]/5 to-[#d4af37]/10 rounded-full blur-3xl"
+        className="absolute top-20 left-0 w-96 h-96 bg-gradient-to-br from-[#1e3a8a]/5 to-[#d4af37]/10 rounded-full blur-3xl"
         animate={{
           x: [0, 100, 0],
           y: [0, 50, 0],
@@ -78,7 +78,7 @@ export function Testimonials() {
         }}
       />
       <motion.div
-        className="absolute bottom-20 right-0 w-96 h-96 bg-gradient-to-br from-[#d4af37]/10 to-[#0b1a45]/5 rounded-full blur-3xl"
+        className="absolute bottom-20 right-0 w-96 h-96 bg-gradient-to-br from-[#d4af37]/10 to-[#1e3a8a]/5 rounded-full blur-3xl"
         animate={{
           x: [0, -100, 0],
           y: [0, -50, 0],
@@ -103,7 +103,7 @@ export function Testimonials() {
             animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <span className="text-[#0b1a45]">
+            <span className="text-[#1e3a8a]">
               What Our Clients Say
             </span>
           </motion.h2>
@@ -138,7 +138,7 @@ export function Testimonials() {
                   </div>
                 )}
                 <div className="flex-1">
-                  <h3 className="font-bold text-xl text-[#0b1a45] mb-2">
+                  <h3 className="font-bold text-xl text-[#1e3a8a] mb-2">
                     {currentTestimonial?.reviewer_name}
                   </h3>
                   <div className="flex gap-1">
@@ -153,7 +153,7 @@ export function Testimonials() {
                 </div>
               </div>
               <div className="text-7xl text-[#d4af37] mb-4 leading-none opacity-70">"</div>
-              <p className="text-xl text-[#0b1a45]/90 mb-6 italic leading-relaxed font-medium">
+              <p className="text-xl text-[#1e3a8a]/90 mb-6 italic leading-relaxed font-medium">
                 {currentTestimonial?.content}
               </p>
             </motion.div>
@@ -198,10 +198,10 @@ export function Testimonials() {
           initial={{ opacity: 0, y: 30, scale: 0.95 }}
           animate={isInView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 30, scale: 0.95 }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          className="relative text-center bg-[#0b1a45] rounded-3xl shadow-2xl p-10 overflow-hidden group"
+          className="relative text-center bg-[#1e3a8a] rounded-3xl shadow-2xl p-10 overflow-hidden group"
         >
           <motion.div
-            className="absolute inset-0 bg-[#0d2055] opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+            className="absolute inset-0 bg-[#1d4ed8] opacity-0 group-hover:opacity-100 transition-opacity duration-500"
             animate={{
               backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
             }}
@@ -236,7 +236,7 @@ export function Testimonials() {
               href="https://instagram.com/shanvikcateringevents"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-block bg-[#d4af37] text-[#0b1a45] px-10 py-4 rounded-xl hover:bg-[#c9a332] transition-all font-bold shadow-2xl text-lg"
+              className="inline-block bg-[#d4af37] text-[#1e3a8a] px-10 py-4 rounded-xl hover:bg-[#c9a332] transition-all font-bold shadow-2xl text-lg"
               whileHover={{ scale: 1.08, y: -3 }}
               whileTap={{ scale: 0.95 }}
             >

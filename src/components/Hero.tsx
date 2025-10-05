@@ -1,6 +1,13 @@
 import { motion } from 'framer-motion';
 
 export function Hero() {
+  const scrollToSection = (id: string) => {
+    const element = document.querySelector(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <section className="relative h-screen w-full overflow-hidden">
       <video
@@ -17,7 +24,7 @@ export function Hero() {
         />
       </video>
 
-      <div className="absolute inset-0 bg-gradient-to-br from-[#0b1a45]/85 via-[#0b1a45]/60 to-black/70" />
+      <div className="absolute inset-0 bg-gradient-to-br from-[#1e3a8a]/85 via-[#1e3a8a]/60 to-black/70" />
 
       <motion.div
         className="absolute inset-0 bg-gradient-to-t from-[#d4af37]/20 via-transparent to-transparent"
@@ -39,26 +46,28 @@ export function Hero() {
             transition={{ duration: 0.8 }}
           >
             <motion.h1
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-bold text-white mb-6 drop-shadow-2xl"
+              className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-display font-bold text-white mb-4 drop-shadow-2xl tracking-wider"
               initial={{ opacity: 0, scale: 0.8, y: -50 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.2, type: "spring", stiffness: 100 }}
             >
-              Turning Moments into Memories
+              SHANVIK
             </motion.h1>
+
             <motion.h2
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.5 }}
-              className="text-2xl sm:text-3xl md:text-4xl font-display font-bold text-[#d4af37] mb-4 drop-shadow-lg"
+              className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-display font-semibold text-[#d4af37] mb-3 drop-shadow-lg"
             >
-              Made For You With Love
+              Catering & Event Management
             </motion.h2>
+
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, delay: 0.7 }}
-              className="inline-block"
+              className="inline-block mb-8"
             >
               <motion.p
                 animate={{
@@ -73,24 +82,62 @@ export function Hero() {
                   repeat: Infinity,
                   ease: "easeInOut"
                 }}
-                className="text-lg sm:text-xl md:text-2xl text-white mb-12 max-w-3xl mx-auto italic leading-relaxed font-medium"
+                className="text-xl sm:text-2xl md:text-3xl text-white mb-12 max-w-4xl mx-auto font-serif leading-relaxed"
               >
-                BIRTHDAY - SOCIAL EVENTS - MEETINGS-WEDDINGS ANNIVERSARIES ALL TYPE OF MAKEUP AND CANDID CAMERAZ AND STAGE DECORATION
+                Turning Your Moments Into Unforgettable Memories
               </motion.p>
             </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.9 }}
+              className="flex flex-wrap justify-center gap-6 sm:gap-8 md:gap-12 mb-12"
+            >
+              <div className="flex flex-col items-center">
+                <motion.div
+                  className="text-4xl sm:text-5xl md:text-6xl font-bold text-[#d4af37] mb-2"
+                  animate={{ scale: [1, 1.1, 1] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                >
+                  500+
+                </motion.div>
+                <div className="text-white text-sm sm:text-base md:text-lg font-semibold">Events Crafted</div>
+              </div>
+              <div className="flex flex-col items-center">
+                <motion.div
+                  className="text-4xl sm:text-5xl md:text-6xl font-bold text-[#d4af37] mb-2"
+                  animate={{ scale: [1, 1.1, 1] }}
+                  transition={{ duration: 2, repeat: Infinity, delay: 0.3 }}
+                >
+                  50k+
+                </motion.div>
+                <div className="text-white text-sm sm:text-base md:text-lg font-semibold">Happy Guests</div>
+              </div>
+              <div className="flex flex-col items-center">
+                <motion.div
+                  className="text-4xl sm:text-5xl md:text-6xl font-bold text-[#d4af37] mb-2"
+                  animate={{ scale: [1, 1.1, 1] }}
+                  transition={{ duration: 2, repeat: Infinity, delay: 0.6 }}
+                >
+                  5+
+                </motion.div>
+                <div className="text-white text-sm sm:text-base md:text-lg font-semibold">Years Experience</div>
+              </div>
+            </motion.div>
+
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 1 }}
-              className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+              transition={{ duration: 0.8, delay: 1.1 }}
             >
-              <motion.a
-                href="#contact"
-                className="relative px-8 py-4 text-base sm:text-lg font-bold text-white rounded-xl overflow-hidden w-full sm:w-auto group shadow-2xl"
+              <motion.button
+                onClick={() => scrollToSection('#contact')}
+                className="relative px-10 py-5 text-lg sm:text-xl font-bold text-white rounded-xl overflow-hidden group shadow-2xl"
                 whileHover={{ scale: 1.08, y: -3 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <div className="absolute inset-0 bg-[#d4af37] group-hover:bg-[#c9a332] transition-all duration-300"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-[#d4af37] to-[#c9a332] group-hover:from-[#c9a332] group-hover:to-[#d4af37] transition-all duration-300"></div>
                 <motion.div
                   className="absolute inset-0 bg-[#d4af37]/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                   animate={{
@@ -102,17 +149,8 @@ export function Hero() {
                     ease: "linear"
                   }}
                 ></motion.div>
-                <span className="relative z-10">Book a Tasting</span>
-              </motion.a>
-              <motion.a
-                href="#menu"
-                className="relative px-8 py-4 text-base sm:text-lg font-bold rounded-xl overflow-hidden w-full sm:w-auto group shadow-2xl"
-                whileHover={{ scale: 1.08, y: -3 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <div className="absolute inset-0 bg-white group-hover:bg-[#f5f5f5] transition-all duration-300"></div>
-                <span className="relative z-10 text-[#0b1a45] font-bold">See Menu</span>
-              </motion.a>
+                <span className="relative z-10">Plan Your Event Today</span>
+              </motion.button>
             </motion.div>
           </motion.div>
         </div>

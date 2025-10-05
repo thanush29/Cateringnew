@@ -36,7 +36,7 @@ export function ServiceCard({ title, description, icon, features }: ServiceCardP
     >
       <div className="absolute inset-0 bg-gradient-to-br from-[#faf8f3] via-white to-[#f5f5f5] opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
       <motion.div
-        className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-[#d4af37]/10 to-[#0b1a45]/10 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+        className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-[#d4af37]/10 to-[#1e3a8a]/10 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
         animate={{
           scale: [1, 1.5, 1],
         }}
@@ -72,11 +72,11 @@ export function ServiceCard({ title, description, icon, features }: ServiceCardP
         </motion.div>
 
         <h3 className="text-2xl font-display font-bold mb-3 transition-all duration-300">
-          <span className="text-[#0b1a45] group-hover:text-[#d4af37]">
+          <span className="text-[#1e3a8a] group-hover:text-[#d4af37]">
             {title}
           </span>
         </h3>
-        <p className="text-[#0b1a45]/80 mb-6 text-base leading-relaxed group-hover:text-[#0b1a45] transition-colors">{description}</p>
+        <p className="text-[#1e3a8a]/80 mb-6 text-base leading-relaxed group-hover:text-[#1e3a8a] transition-colors">{description}</p>
 
         <div className="space-y-3 flex-grow mb-6">
           {features.map((feature, index) => (
@@ -92,9 +92,9 @@ export function ServiceCard({ title, description, icon, features }: ServiceCardP
                 whileHover={{ scale: 1.3, rotate: 360 }}
                 transition={{ duration: 0.3 }}
               >
-                <CheckCircle className="text-[#d4af37] flex-shrink-0 mt-0.5 group-hover:text-[#0b1a45] transition-colors" size={18} />
+                <CheckCircle className="text-[#d4af37] flex-shrink-0 mt-0.5 group-hover:text-[#1e3a8a] transition-colors" size={18} />
               </motion.div>
-              <span className="text-sm text-[#0b1a45] transition-colors">{feature}</span>
+              <span className="text-sm text-[#1e3a8a] transition-colors">{feature}</span>
             </motion.div>
           ))}
         </div>
@@ -105,7 +105,7 @@ export function ServiceCard({ title, description, icon, features }: ServiceCardP
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
-          <div className="absolute inset-0 bg-[#0b1a45] group-hover/btn:bg-[#0d2055] transition-all duration-300"></div>
+          <div className="absolute inset-0 bg-[#1e3a8a] group-hover/btn:bg-[#1d4ed8] transition-all duration-300"></div>
           <motion.div
             className="absolute inset-0 bg-[#d4af37]/20"
             animate={{

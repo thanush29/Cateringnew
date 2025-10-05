@@ -53,7 +53,7 @@ export function Contact() {
     <section id="contact" className="py-16 sm:py-20 lg:py-24 relative overflow-hidden" ref={ref}>
       <div className="absolute inset-0 bg-gradient-to-br from-[#f5f5f5] via-white to-[#faf8f3]"></div>
       <motion.div
-        className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-[#0b1a45]/5 to-[#d4af37]/10 rounded-full blur-3xl"
+        className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-[#1e3a8a]/5 to-[#d4af37]/10 rounded-full blur-3xl"
         animate={{
           x: [0, -50, 0],
           y: [0, 50, 0],
@@ -77,7 +77,7 @@ export function Contact() {
             animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <span className="text-[#0b1a45]">
+            <span className="text-[#1e3a8a]">
               Let's Plan Your Perfect Event
             </span>
           </motion.h2>
@@ -91,7 +91,7 @@ export function Contact() {
             initial={{ opacity: 0 }}
             animate={isInView ? { opacity: 1 } : { opacity: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="text-lg sm:text-xl text-[#0b1a45] max-w-2xl mx-auto font-medium"
+            className="text-lg sm:text-xl text-[#1e3a8a] max-w-2xl mx-auto font-medium"
           >
             Get in touch with us to discuss your catering needs
           </motion.p>
@@ -109,32 +109,32 @@ export function Contact() {
                   <Phone className="text-[#d4af37]" size={24} />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-[#0b1a45] mb-1">Phone</h3>
-                  <a href="tel:+919840650939" className="text-[#0b1a45] hover:text-[#d4af37] transition-colors">
+                  <h3 className="font-semibold text-[#1e3a8a] mb-1">Phone</h3>
+                  <a href="tel:+919840650939" className="text-[#1e3a8a] hover:text-[#d4af37] transition-colors">
                     +91 98406 50939
                   </a>
                 </div>
               </div>
 
               <div className="flex items-start gap-4">
-                <div className="p-3 bg-gradient-to-br from-[#0b1a45]/20 to-[#0b1a45]/10 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105">
-                  <Mail className="text-[#0b1a45]" size={24} />
+                <div className="p-3 bg-gradient-to-br from-[#1e3a8a]/20 to-[#1e3a8a]/10 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105">
+                  <Mail className="text-[#1e3a8a]" size={24} />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-[#0b1a45] mb-1">Email</h3>
-                  <a href="mailto:info@shanvikcateringevents.com" className="text-[#0b1a45] hover:text-[#d4af37] transition-colors">
+                  <h3 className="font-semibold text-[#1e3a8a] mb-1">Email</h3>
+                  <a href="mailto:info@shanvikcateringevents.com" className="text-[#1e3a8a] hover:text-[#d4af37] transition-colors">
                     info@shanvikcateringevents.com
                   </a>
                 </div>
               </div>
 
               <div className="flex items-start gap-4">
-                <div className="p-3 bg-gradient-to-br from-[#d4af37]/20 to-[#0b1a45]/10 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105">
-                  <MapPin className="text-[#0b1a45]" size={24} />
+                <div className="p-3 bg-gradient-to-br from-[#d4af37]/20 to-[#1e3a8a]/10 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105">
+                  <MapPin className="text-[#1e3a8a]" size={24} />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-[#0b1a45] mb-1">Location</h3>
-                  <p className="text-[#0b1a45]">
+                  <h3 className="font-semibold text-[#1e3a8a] mb-1">Location</h3>
+                  <p className="text-[#1e3a8a]">
                     Chennai, Tamil Nadu, India
                   </p>
                 </div>
@@ -163,7 +163,7 @@ export function Contact() {
             <form onSubmit={handleSubmit} className="bg-gradient-to-br from-white/90 to-white/80 backdrop-blur-sm rounded-2xl shadow-2xl p-8 border border-[#d4af37]/30 hover:border-[#d4af37]/50 transition-all duration-300">
               <div className="space-y-6">
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-[#0b1a45] mb-2">
+                  <label htmlFor="name" className="block text-sm font-medium text-[#1e3a8a] mb-2">
                     Name *
                   </label>
                   <input
@@ -177,7 +177,7 @@ export function Contact() {
                 </div>
 
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-[#0b1a45] mb-2">
+                  <label htmlFor="email" className="block text-sm font-medium text-[#1e3a8a] mb-2">
                     Email *
                   </label>
                   <input
@@ -191,7 +191,7 @@ export function Contact() {
                 </div>
 
                 <div>
-                  <label htmlFor="phone" className="block text-sm font-medium text-[#0b1a45] mb-2">
+                  <label htmlFor="phone" className="block text-sm font-medium text-[#1e3a8a] mb-2">
                     Phone Number *
                   </label>
                   <input
@@ -205,7 +205,7 @@ export function Contact() {
                 </div>
 
                 <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-[#0b1a45] mb-2">
+                  <label htmlFor="message" className="block text-sm font-medium text-[#1e3a8a] mb-2">
                     Message *
                   </label>
                   <textarea
@@ -226,7 +226,7 @@ export function Contact() {
                     onChange={(e) => setFormData({ ...formData, viaWhatsApp: e.target.checked })}
                     className="w-4 h-4 text-[#d4af37] border-gray-300 rounded focus:ring-[#d4af37]"
                   />
-                  <label htmlFor="whatsapp" className="ml-2 text-sm text-[#0b1a45]">
+                  <label htmlFor="whatsapp" className="ml-2 text-sm text-[#1e3a8a]">
                     Connect via WhatsApp
                   </label>
                 </div>
@@ -246,7 +246,7 @@ export function Contact() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full bg-gradient-to-r from-[#0b1a45] to-[#0d2055] text-white px-8 py-4 rounded-xl font-bold hover:from-[#0d2055] hover:to-[#0b1a45] transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                  className="w-full bg-gradient-to-r from-[#1e3a8a] to-[#1d4ed8] text-white px-8 py-4 rounded-xl font-bold hover:from-[#1d4ed8] hover:to-[#1e3a8a] transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
                 >
                   <Send size={20} />
                   {isSubmitting ? 'Sending...' : 'Send Message'}

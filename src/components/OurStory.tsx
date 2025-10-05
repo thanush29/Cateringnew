@@ -22,7 +22,7 @@ export function OurStory() {
         }}
       />
       <motion.div
-        className="absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-br from-[#d4af37]/5 to-[#0b1a45]/5 rounded-full blur-3xl"
+        className="absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-br from-[#d4af37]/5 to-[#1e3a8a]/5 rounded-full blur-3xl"
         animate={{
           x: [0, -100, 0],
           y: [0, -50, 0],
@@ -47,7 +47,7 @@ export function OurStory() {
             animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <span className="text-[#0b1a45]">
+            <span className="text-[#1e3a8a]">
               A Culinary Legacy
             </span>
           </motion.h2>
@@ -65,7 +65,7 @@ export function OurStory() {
             animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <div className="space-y-6 text-[#0b1a45] text-base sm:text-lg leading-relaxed">
+            <div className="space-y-6 text-[#1e3a8a] text-base sm:text-lg leading-relaxed">
               <p>
                 Inspired by the culinary excellence of <strong className="text-[#d4af37]">SMT. Chirla Pushpaveni Reddy</strong>,
                 our journey began with a simple vision: transforming every celebration into an unforgettable experience
@@ -75,7 +75,7 @@ export function OurStory() {
                 For over two decades, we've mastered the perfect blend of traditional flavors and contemporary presentation.
                 Each event we cater reflects our dedication to quality, creativity, and personalized service that exceeds expectations.
               </p>
-              <p className="text-[#0b1a45] font-medium">
+              <p className="text-[#1e3a8a] font-medium">
                 From intimate gatherings to grand celebrations, we bring passion, precision, and perfection to your special moments.
               </p>
             </div>
@@ -133,7 +133,7 @@ export function OurStory() {
         >
           {[
             { number: '20+', label: 'Years of Experience', gradient: 'from-[#d4af37] to-[#c9a332]', bg: 'from-[#faf8f3] to-[#f5f5f5]' },
-            { number: '1000+', label: 'Events Catered', gradient: 'from-[#0b1a45] to-[#0d2055]', bg: 'from-[#f5f5f5] to-white' },
+            { number: '1000+', label: 'Events Catered', gradient: 'from-[#1e3a8a] to-[#1d4ed8]', bg: 'from-[#f5f5f5] to-white' },
             { number: '100%', label: 'Client Satisfaction', gradient: 'from-[#d4af37] to-[#c9a332]', bg: 'from-white to-[#faf8f3]' }
           ].map((stat, index) => (
             <motion.div
@@ -155,7 +155,7 @@ export function OurStory() {
               >
                 {stat.number}
               </motion.div>
-              <div className="text-[#0b1a45] font-semibold text-lg">{stat.label}</div>
+              <div className="text-[#1e3a8a] font-semibold text-lg">{stat.label}</div>
               <motion.div
                 className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r ${stat.gradient}`}
                 initial={{ scaleX: 0 }}

@@ -20,7 +20,7 @@ export function MenuCard({ category, description, imageUrl }: MenuCardProps) {
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
         />
       </div>
-      <div className="absolute inset-0 bg-gradient-to-t from-[#0b1a45]/95 via-[#0b1a45]/60 to-transparent group-hover:from-[#0b1a45] group-hover:via-[#0b1a45]/70 transition-all duration-500 flex flex-col justify-end p-6">
+      <div className="absolute inset-0 bg-gradient-to-t from-[#1e3a8a]/95 via-[#1e3a8a]/60 to-transparent group-hover:from-[#1e3a8a] group-hover:via-[#1e3a8a]/70 transition-all duration-500 flex flex-col justify-end p-6">
         <motion.div
           className="absolute top-4 right-4 w-16 h-16 bg-[#d4af37]/20 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
         />
