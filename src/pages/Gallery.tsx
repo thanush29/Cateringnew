@@ -12,6 +12,7 @@ const defaultImages: GalleryImage[] = [
     alt_text: 'Wedding catering setup',
     image_url: 'https://images.pexels.com/photos/1024359/pexels-photo-1024359.jpeg?auto=compress&cs=tinysrgb&w=800',
     category: 'Wedding',
+    display_order: 1,
     created_at: new Date().toISOString()
   },
   {
@@ -20,6 +21,7 @@ const defaultImages: GalleryImage[] = [
     alt_text: 'Corporate event catering',
     image_url: 'https://images.pexels.com/photos/1267320/pexels-photo-1267320.jpeg?auto=compress&cs=tinysrgb&w=800',
     category: 'Corporate',
+    display_order: 2,
     created_at: new Date().toISOString()
   },
   {
@@ -28,6 +30,7 @@ const defaultImages: GalleryImage[] = [
     alt_text: 'Private party catering',
     image_url: 'https://images.pexels.com/photos/1395964/pexels-photo-1395964.jpeg?auto=compress&cs=tinysrgb&w=800',
     category: 'Private',
+    display_order: 3,
     created_at: new Date().toISOString()
   },
   {
@@ -36,6 +39,7 @@ const defaultImages: GalleryImage[] = [
     alt_text: 'Outdoor catering setup',
     image_url: 'https://images.pexels.com/photos/2291367/pexels-photo-2291367.jpeg?auto=compress&cs=tinysrgb&w=800',
     category: 'Outdoor',
+    display_order: 4,
     created_at: new Date().toISOString()
   },
   {
@@ -44,6 +48,7 @@ const defaultImages: GalleryImage[] = [
     alt_text: 'Luxury event catering',
     image_url: 'https://images.pexels.com/photos/1126359/pexels-photo-1126359.jpeg?auto=compress&cs=tinysrgb&w=800',
     category: 'Luxury',
+    display_order: 5,
     created_at: new Date().toISOString()
   },
   {
@@ -52,6 +57,7 @@ const defaultImages: GalleryImage[] = [
     alt_text: 'Wedding reception catering',
     image_url: 'https://images.pexels.com/photos/1616113/pexels-photo-1616113.jpeg?auto=compress&cs=tinysrgb&w=800',
     category: 'Wedding',
+    display_order: 6,
     created_at: new Date().toISOString()
   },
   {
@@ -60,6 +66,7 @@ const defaultImages: GalleryImage[] = [
     alt_text: 'Corporate meeting catering',
     image_url: 'https://images.pexels.com/photos/3184192/pexels-photo-3184192.jpeg?auto=compress&cs=tinysrgb&w=800',
     category: 'Corporate',
+    display_order: 7,
     created_at: new Date().toISOString()
   },
   {
@@ -68,6 +75,7 @@ const defaultImages: GalleryImage[] = [
     alt_text: 'Anniversary celebration',
     image_url: 'https://images.pexels.com/photos/2291367/pexels-photo-2291367.jpeg?auto=compress&cs=tinysrgb&w=800',
     category: 'Private',
+    display_order: 8,
     created_at: new Date().toISOString()
   },
   {
@@ -76,6 +84,7 @@ const defaultImages: GalleryImage[] = [
     alt_text: 'Outdoor garden party',
     image_url: 'https://images.pexels.com/photos/1395967/pexels-photo-1395967.jpeg?auto=compress&cs=tinysrgb&w=800',
     category: 'Outdoor',
+    display_order: 9,
     created_at: new Date().toISOString()
   },
   {
@@ -84,6 +93,7 @@ const defaultImages: GalleryImage[] = [
     alt_text: 'Luxury gala dinner',
     image_url: 'https://images.pexels.com/photos/2788792/pexels-photo-2788792.jpeg?auto=compress&cs=tinysrgb&w=800',
     category: 'Luxury',
+    display_order: 10,
     created_at: new Date().toISOString()
   }
 ];
