@@ -2,8 +2,9 @@ import { Hero } from '../components/Hero';
 import { OurStory } from '../components/OurStory';
 import { CateringServices } from '../components/CateringServices';
 import { OurMenus } from '../components/OurMenus';
+import { GalleryPreview } from '../components/GalleryPreview';
 import { Testimonials } from '../components/Testimonials';
-import { Contact } from '../components/Contact';
+import { PlanYourEvent } from '../components/PlanYourEvent';
 
 export function Home() {
   return (
@@ -12,8 +13,9 @@ export function Home() {
       <OurStory />
       <CateringServices />
       <OurMenus />
+      <GalleryPreview />
       <Testimonials />
-      <Contact />
+      <PlanYourEvent />
     </>
   );
 }

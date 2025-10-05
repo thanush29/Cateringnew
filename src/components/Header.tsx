@@ -32,7 +32,7 @@ export function Header() {
   const rightLinks = [
     { to: '/gallery', label: 'Gallery' },
     { to: '/#testimonials', label: 'Testimonials' },
-    { to: '/#contact', label: 'Contact Us' },
+    { to: '/contact', label: 'Contact Us' },
   ];
 
   const scrollToSection = (hash: string) => {

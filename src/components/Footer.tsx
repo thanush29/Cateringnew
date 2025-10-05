@@ -28,8 +28,11 @@ export function Footer() {
                 <p className="text-[#d4af37] text-xs">Turning Moments into Memories</p>
               </div>
             </div>
-            <p className="text-gray-300 text-sm leading-relaxed mb-4">
-              Creating unforgettable culinary experiences with passion, tradition, and excellence for over two decades.
+            <p className="text-gray-300 text-sm leading-relaxed mb-2">
+              Creating unforgettable culinary experiences with passion, tradition, and excellence.
+            </p>
+            <p className="text-[#d4af37] text-sm font-medium mb-4">
+              Turning moments into memories since 2000
             </p>
             <div className="flex items-center gap-2 text-[#d4af37]">
               <Heart size={16} className="fill-current" />
@@ -76,15 +79,15 @@ export function Footer() {
             <ul className="space-y-4">
               <li className="flex items-start gap-3 text-gray-300 hover:text-[#d4af37] transition-colors group">
                 <MapPin size={20} className="text-[#d4af37] mt-1 flex-shrink-0 group-hover:scale-110 transition-transform" />
-                <span className="text-sm">123 Culinary Street, Food District, City 12345</span>
+                <span className="text-sm">Chennai, Tamil Nadu, India</span>
               </li>
               <li className="flex items-center gap-3 text-gray-300 hover:text-[#d4af37] transition-colors group">
                 <Phone size={20} className="text-[#d4af37] flex-shrink-0 group-hover:scale-110 transition-transform" />
-                <a href="tel:+1234567890" className="text-sm">+1 (234) 567-890</a>
+                <a href="tel:+919840650939" className="text-sm">+91 98406 50939</a>
               </li>
               <li className="flex items-center gap-3 text-gray-300 hover:text-[#d4af37] transition-colors group">
                 <Mail size={20} className="text-[#d4af37] flex-shrink-0 group-hover:scale-110 transition-transform" />
-                <a href="mailto:info@shanvikcatering.com" className="text-sm">info@shanvikcatering.com</a>
+                <a href="mailto:info@shanvikcateringevents.com" className="text-sm">info@shanvikcateringevents.com</a>
               </li>
             </ul>
           </motion.div>

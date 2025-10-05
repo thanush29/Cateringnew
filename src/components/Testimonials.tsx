@@ -13,6 +13,16 @@ export function Testimonials() {
     fetchTestimonials();
   }, []);
 
+  useEffect(() => {
+    if (displayTestimonials.length <= 1) return;
+
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % displayTestimonials.length);
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [displayTestimonials.length]);
+
   const fetchTestimonials = async () => {
     const { data, error } = await supabase
       .from('testimonials')

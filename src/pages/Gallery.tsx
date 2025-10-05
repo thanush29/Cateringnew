@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { X } from 'lucide-react';
+import { X, Search } from 'lucide-react';
 import { supabase, GalleryImage } from '../lib/supabase';
 
 const categories = ['All', 'Wedding', 'Corporate', 'Private', 'Outdoor', 'Luxury'];
@@ -90,6 +90,7 @@ const defaultImages: GalleryImage[] = [
 
 export function Gallery() {
   const [selectedCategory, setSelectedCategory] = useState('All');
+  const [searchQuery, setSearchQuery] = useState('');
   const [images, setImages] = useState<GalleryImage[]>([]);
   const [lightboxImage, setLightboxImage] = useState<GalleryImage | null>(null);
 
@@ -110,15 +111,20 @@ export function Gallery() {
     }
   };
 
-  const filteredImages = selectedCategory === 'All'
-    ? images
-    : images.filter(img => img.category === selectedCategory);
+  const filteredImages = images
+    .filter(img => selectedCategory === 'All' || img.category === selectedCategory)
+    .filter(img =>
+      searchQuery === '' ||
+      img.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      img.alt_text.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      img.category.toLowerCase().includes(searchQuery.toLowerCase())
+    );
 
   return (
     <div className="min-h-screen pt-20">
-      <div className="bg-gradient-to-br from-rose-600 via-pink-600 to-purple-600 text-white py-20 relative overflow-hidden">
+      <div className="bg-gradient-to-br from-[#1e3a8a] via-[#1d4ed8] to-[#2563eb] text-white py-20 relative overflow-hidden">
         <motion.div
-          className="absolute inset-0 bg-gradient-to-r from-pink-500/20 to-purple-500/20"
+          className="absolute inset-0 bg-[#1e3a8a]/20"
           animate={{
             backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
           }}
@@ -154,6 +160,24 @@ export function Gallery() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
+          className="max-w-xl mx-auto mb-12"
+        >
+          <div className="relative">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[#1e3a8a]" size={24} />
+            <input
+              type="text"
+              placeholder="Search gallery..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full pl-14 pr-4 py-4 rounded-xl border-2 border-gray-200 focus:border-[#d4af37] focus:ring-2 focus:ring-[#d4af37]/20 transition-all text-[#1e3a8a] font-medium"
+            />
+          </div>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
           className="flex flex-wrap justify-center gap-4 mb-16"
         >
           {categories.map((category, index) => (
@@ -167,8 +191,8 @@ export function Gallery() {
               onClick={() => setSelectedCategory(category)}
               className={`px-8 py-3 rounded-full font-bold transition-all duration-300 ${
                 selectedCategory === category
-                  ? 'bg-gradient-to-r from-rose-600 via-pink-600 to-purple-600 text-white shadow-xl'
-                  : 'bg-gradient-to-r from-gray-100 to-gray-200 text-gray-700 hover:from-pink-100 hover:to-purple-100 hover:text-purple-700 shadow-md'
+                  ? 'bg-gradient-to-r from-[#d4af37] to-[#c9a332] text-[#1e3a8a] shadow-xl'
+                  : 'bg-gradient-to-r from-gray-100 to-gray-200 text-gray-700 hover:from-[#d4af37]/20 hover:to-[#c9a332]/20 hover:text-[#1e3a8a] shadow-md'
               }`}
             >
               {category}
@@ -183,8 +207,8 @@ export function Gallery() {
               initial={{ opacity: 0, y: 30, scale: 0.9 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               transition={{ duration: 0.5, delay: index * 0.05 }}
-              whileHover={{ scale: 1.08, y: -10 }}
-              className="relative aspect-square rounded-2xl overflow-hidden shadow-xl cursor-pointer group border-4 border-transparent hover:border-pink-300"
+              whileHover={{ scale: 1.05, y: -10 }}
+              className="relative aspect-square rounded-2xl overflow-hidden shadow-xl cursor-pointer group border-4 border-transparent hover:border-[#d4af37]"
               onClick={() => setLightboxImage(image)}
             >
               <img
@@ -194,7 +218,7 @@ export function Gallery() {
                 loading="lazy"
               />
               <motion.div
-                className="absolute inset-0 bg-gradient-to-br from-rose-600/70 via-pink-600/70 to-purple-600/70 opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center"
+                className="absolute inset-0 bg-gradient-to-br from-[#1e3a8a]/80 to-[#d4af37]/80 opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center"
                 initial={{ opacity: 0 }}
                 whileHover={{ opacity: 1 }}
               >

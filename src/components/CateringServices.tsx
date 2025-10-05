@@ -1,7 +1,7 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
-import { Heart, Briefcase, Users, Sparkles } from 'lucide-react';
-import { ServiceCard } from './ServiceCard';
+import { Heart, Briefcase, Users, Sparkles, ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export function CateringServices() {
   const ref = useRef(null);
@@ -11,38 +11,20 @@ export function CateringServices() {
     {
       title: 'Wedding Catering',
       description: 'Make your special day unforgettable with our bespoke wedding catering services.',
-      icon: <Heart size={48} />,
-      features: [
-        'Customized menu planning',
-        'Traditional & contemporary cuisines',
-        'Elegant presentation and service',
-        'Complete event coordination',
-        'Special dietary accommodations'
-      ]
+      icon: Heart,
+      link: '/services/wedding'
     },
     {
       title: 'Corporate Events',
       description: 'Professional catering solutions for business gatherings and corporate functions.',
-      icon: <Briefcase size={48} />,
-      features: [
-        'Business lunch packages',
-        'Conference & seminar catering',
-        'Office celebrations',
-        'Networking event solutions',
-        'Timely and efficient service'
-      ]
+      icon: Briefcase,
+      link: '/services/corporate'
     },
     {
       title: 'Private Parties',
       description: 'Celebrate life\'s moments with our personalized party catering services.',
-      icon: <Users size={48} />,
-      features: [
-        'Birthday celebrations',
-        'Anniversary parties',
-        'Family reunions',
-        'Intimate gatherings',
-        'Themed menu options'
-      ]
+      icon: Users,
+      link: '/services/private'
     }
   ];
 
@@ -108,16 +90,41 @@ export function CateringServices() {
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-          {services.map((service, index) => (
-            <motion.div
-              key={service.title}
-              initial={{ opacity: 0, y: 30 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-              transition={{ duration: 0.8, delay: index * 0.2 }}
-            >
-              <ServiceCard {...service} />
-            </motion.div>
-          ))}
+          {services.map((service, index) => {
+            const Icon = service.icon;
+            return (
+              <motion.div
+                key={service.title}
+                initial={{ opacity: 0, y: 30 }}
+                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+                transition={{ duration: 0.8, delay: index * 0.2 }}
+              >
+                <Link to={service.link}>
+                  <motion.div
+                    whileHover={{ y: -10, scale: 1.02 }}
+                    transition={{ type: "spring", stiffness: 300 }}
+                    className="bg-gradient-to-br from-white to-[#faf8f3] rounded-2xl shadow-xl p-8 h-full border-2 border-transparent hover:border-[#d4af37] transition-all duration-300 group cursor-pointer"
+                  >
+                    <div className="flex items-center justify-center mb-6">
+                      <div className="p-4 bg-gradient-to-br from-[#d4af37]/20 to-[#d4af37]/10 rounded-2xl group-hover:from-[#d4af37] group-hover:to-[#c9a332] transition-all duration-300">
+                        <Icon className="text-[#d4af37] group-hover:text-white transition-colors" size={48} />
+                      </div>
+                    </div>
+                    <h3 className="text-2xl font-display font-bold text-[#1e3a8a] mb-4 text-center group-hover:text-[#d4af37] transition-colors">
+                      {service.title}
+                    </h3>
+                    <p className="text-[#1e3a8a] text-center mb-6 leading-relaxed">
+                      {service.description}
+                    </p>
+                    <div className="flex items-center justify-center gap-2 text-[#d4af37] font-semibold group-hover:gap-4 transition-all">
+                      <span>Learn More</span>
+                      <ArrowRight size={20} />
+                    </div>
+                  </motion.div>
+                </Link>
+              </motion.div>
+            );
+          })}
         </div>
 
         <motion.div

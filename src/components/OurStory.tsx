@@ -64,6 +64,26 @@ export function OurStory() {
             initial={{ opacity: 0, x: -50 }}
             animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
             transition={{ duration: 0.8, delay: 0.2 }}
+            className="relative order-2 lg:order-1"
+          >
+            <motion.div
+              whileHover={{ scale: 1.03, rotate: 1 }}
+              transition={{ type: "spring", stiffness: 300 }}
+              className="rounded-2xl overflow-hidden shadow-2xl mb-4"
+            >
+              <img
+                src="https://images.pexels.com/photos/1058277/pexels-photo-1058277.jpeg?auto=compress&cs=tinysrgb&w=600"
+                alt="Portrait"
+                className="w-full h-96 object-cover"
+              />
+            </motion.div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="order-1 lg:order-2"
           >
             <div className="space-y-6 text-[#1e3a8a] text-base sm:text-lg leading-relaxed">
               <p>
@@ -80,6 +100,28 @@ export function OurStory() {
               </p>
             </div>
           </motion.div>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center mt-12">
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+          >
+            <div className="space-y-6 text-[#1e3a8a] text-base sm:text-lg leading-relaxed">
+              <h3 className="text-2xl sm:text-3xl font-display font-bold text-[#1e3a8a] mb-4">
+                Our Journey
+              </h3>
+              <p>
+                What started as a passion project has grown into one of the most trusted catering services in the region.
+                Our commitment to excellence and attention to detail has made us the preferred choice for countless memorable events.
+              </p>
+              <p>
+                Every dish we serve tells a story of tradition, innovation, and the love we pour into our craft.
+                We don't just cater events; we create experiences that linger in memories long after the last bite.
+              </p>
+            </div>
+          </motion.div>
 
           <motion.div
             initial={{ opacity: 0, x: 50 }}
@@ -87,41 +129,30 @@ export function OurStory() {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="relative"
           >
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-2 gap-4">
               <motion.div
                 whileHover={{ scale: 1.05, rotate: 2 }}
                 transition={{ type: "spring", stiffness: 300 }}
                 className="rounded-xl overflow-hidden shadow-xl"
               >
                 <img
-                  src="https://images.pexels.com/photos/1126728/pexels-photo-1126728.jpeg?auto=compress&cs=tinysrgb&w=400"
-                  alt="Traditional cooking"
-                  className="w-full h-40 object-cover"
+                  src="https://images.pexels.com/photos/1640774/pexels-photo-1640774.jpeg?auto=compress&cs=tinysrgb&w=400"
+                  alt="Journey moment 1"
+                  className="w-full h-48 object-cover"
                 />
               </motion.div>
               <motion.div
                 whileHover={{ scale: 1.05, rotate: -2 }}
                 transition={{ type: "spring", stiffness: 300 }}
-                className="rounded-xl overflow-hidden shadow-xl mt-6"
+                className="rounded-xl overflow-hidden shadow-xl"
               >
                 <img
-                  src="https://images.pexels.com/photos/1640774/pexels-photo-1640774.jpeg?auto=compress&cs=tinysrgb&w=400"
-                  alt="Catering event"
-                  className="w-full h-40 object-cover"
+                  src="https://images.pexels.com/photos/1267320/pexels-photo-1267320.jpeg?auto=compress&cs=tinysrgb&w=400"
+                  alt="Journey moment 2"
+                  className="w-full h-48 object-cover"
                 />
               </motion.div>
             </div>
-            <motion.div
-              whileHover={{ scale: 1.03 }}
-              transition={{ type: "spring", stiffness: 300 }}
-              className="rounded-xl overflow-hidden shadow-2xl mt-3"
-            >
-              <img
-                src="https://images.pexels.com/photos/1267320/pexels-photo-1267320.jpeg?auto=compress&cs=tinysrgb&w=600"
-                alt="Food preparation"
-                className="w-full h-48 object-cover"
-              />
-            </motion.div>
           </motion.div>
         </div>
 
@@ -129,39 +160,26 @@ export function OurStory() {
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
           transition={{ duration: 0.8, delay: 0.6 }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mt-16"
         >
           {[
-            { number: '20+', label: 'Years of Experience', gradient: 'from-[#d4af37] to-[#c9a332]', bg: 'from-[#faf8f3] to-[#f5f5f5]' },
-            { number: '1000+', label: 'Events Catered', gradient: 'from-[#1e3a8a] to-[#1d4ed8]', bg: 'from-[#f5f5f5] to-white' },
-            { number: '100%', label: 'Client Satisfaction', gradient: 'from-[#d4af37] to-[#c9a332]', bg: 'from-white to-[#faf8f3]' }
-          ].map((stat, index) => (
+            { title: 'Premium Quality', icon: '⭐', description: 'Only the finest ingredients' },
+            { title: 'Expert Team', icon: '👨‍🍳', description: 'Skilled culinary professionals' },
+            { title: 'Personal Touch', icon: '❤️', description: 'Customized to your vision' },
+            { title: 'Memorable Moments', icon: '✨', description: 'Creating lasting impressions' },
+            { title: '500+ Successful Events', icon: '🎉', description: 'Proven track record' }
+          ].map((feature, index) => (
             <motion.div
-              key={stat.label}
+              key={feature.title}
               initial={{ opacity: 0, y: 30, scale: 0.9 }}
               animate={isInView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 30, scale: 0.9 }}
               transition={{ duration: 0.6, delay: 0.7 + index * 0.1 }}
               whileHover={{ scale: 1.05, y: -8 }}
-              className={`text-center p-8 rounded-2xl shadow-xl bg-gradient-to-br ${stat.bg} border border-white/50 backdrop-blur-sm relative overflow-hidden group`}
+              className="text-center p-6 rounded-2xl shadow-xl bg-gradient-to-br from-white to-[#faf8f3] border border-[#d4af37]/20 backdrop-blur-sm relative overflow-hidden group"
             >
-              <motion.div
-                className={`absolute inset-0 bg-gradient-to-br ${stat.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-300`}
-              />
-              <motion.div
-                initial={{ scale: 0 }}
-                animate={isInView ? { scale: 1 } : { scale: 0 }}
-                transition={{ duration: 0.5, delay: 0.9 + index * 0.1, type: "spring" }}
-                className={`text-4xl sm:text-5xl font-display font-bold mb-3 text-transparent bg-clip-text bg-gradient-to-r ${stat.gradient}`}
-              >
-                {stat.number}
-              </motion.div>
-              <div className="text-[#1e3a8a] font-semibold text-lg">{stat.label}</div>
-              <motion.div
-                className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r ${stat.gradient}`}
-                initial={{ scaleX: 0 }}
-                whileHover={{ scaleX: 1 }}
-                transition={{ duration: 0.3 }}
-              />
+              <div className="text-4xl mb-3">{feature.icon}</div>
+              <h4 className="font-display font-bold text-lg text-[#1e3a8a] mb-2">{feature.title}</h4>
+              <p className="text-sm text-[#1e3a8a]/80">{feature.description}</p>
             </motion.div>
           ))}
         </motion.div>
