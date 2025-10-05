@@ -9,6 +9,38 @@ export function Testimonials() {
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
 
+  // Define default testimonials BEFORE using them
+  const defaultTestimonials: Testimonial[] = [
+    {
+      id: '1',
+      reviewer_name: 'Priya & Raj',
+      content: 'Shanvik made our wedding day absolutely perfect! The food was exceptional and the service was impeccable. All our guests are still talking about the delicious spread.',
+      rating: 5,
+      photo_url: 'https://images.pexels.com/photos/1043474/pexels-photo-1043474.jpeg?auto=compress&cs=tinysrgb&w=150',
+      created_at: new Date().toISOString()
+    },
+    {
+      id: '2',
+      reviewer_name: 'Anand Kumar',
+      content: 'We hired Shanvik for our corporate event and they exceeded all expectations. Professional, punctual, and the food quality was outstanding. Highly recommended!',
+      rating: 5,
+      photo_url: 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=150',
+      created_at: new Date().toISOString()
+    },
+    {
+      id: '3',
+      reviewer_name: 'Lakshmi Reddy',
+      content: 'Thank you for making my mother\'s 75th birthday so special. The traditional dishes were authentic and reminded us of home-cooked meals. Personal attention to every detail!',
+      rating: 5,
+      photo_url: 'https://images.pexels.com/photos/3763188/pexels-photo-3763188.jpeg?auto=compress&cs=tinysrgb&w=150',
+      created_at: new Date().toISOString()
+    }
+  ];
+
+  // Calculate displayTestimonials BEFORE using in useEffect
+  const displayTestimonials = testimonials.length > 0 ? testimonials : defaultTestimonials;
+  const currentTestimonial = displayTestimonials[currentIndex];
+
   useEffect(() => {
     fetchTestimonials();
   }, []);
@@ -41,36 +73,6 @@ export function Testimonials() {
   const prev = () => {
     setCurrentIndex((prev) => (prev - 1 + (displayTestimonials.length || 1)) % (displayTestimonials.length || 1));
   };
-
-  const defaultTestimonials: Testimonial[] = [
-    {
-      id: '1',
-      reviewer_name: 'Priya & Raj',
-      content: 'Shanvik made our wedding day absolutely perfect! The food was exceptional and the service was impeccable. All our guests are still talking about the delicious spread.',
-      rating: 5,
-      photo_url: 'https://images.pexels.com/photos/1043474/pexels-photo-1043474.jpeg?auto=compress&cs=tinysrgb&w=150',
-      created_at: new Date().toISOString()
-    },
-    {
-      id: '2',
-      reviewer_name: 'Anand Kumar',
-      content: 'We hired Shanvik for our corporate event and they exceeded all expectations. Professional, punctual, and the food quality was outstanding. Highly recommended!',
-      rating: 5,
-      photo_url: 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=150',
-      created_at: new Date().toISOString()
-    },
-    {
-      id: '3',
-      reviewer_name: 'Lakshmi Reddy',
-      content: 'Thank you for making my mother\'s 75th birthday so special. The traditional dishes were authentic and reminded us of home-cooked meals. Personal attention to every detail!',
-      rating: 5,
-      photo_url: 'https://images.pexels.com/photos/3763188/pexels-photo-3763188.jpeg?auto=compress&cs=tinysrgb&w=150',
-      created_at: new Date().toISOString()
-    }
-  ];
-
-  const displayTestimonials = testimonials.length > 0 ? testimonials : defaultTestimonials;
-  const currentTestimonial = displayTestimonials[currentIndex];
 
   return (
     <section id="testimonials" className="py-20 relative overflow-hidden" ref={ref}>
