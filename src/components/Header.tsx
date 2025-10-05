@@ -64,22 +64,9 @@ export function Header() {
 
   return (
     <header className={`fixed w-full z-50 transition-all duration-500 ${bgColor} border-b ${isScrolled || isNonHomePage ? 'border-[#d4af37]/30' : 'border-[#d4af37]/20'}`}>
-      <div className="relative">
-        <div className="absolute top-3 left-1/2 transform -translate-x-1/2 text-center z-10">
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="flex flex-col leading-none"
-          >
-            <span className="text-[#d4af37] text-xs sm:text-sm font-semibold tracking-wide">Turning Moments</span>
-            <span className="text-[#1e3a8a] text-xs sm:text-sm font-semibold tracking-wide">into Memories</span>
-          </motion.div>
-        </div>
-      </div>
       <nav className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="hidden lg:flex items-center justify-center h-28 gap-8 xl:gap-12 pt-10">
-          <div className="flex items-center gap-6 xl:gap-8 flex-1 justify-end">
+        <div className="hidden lg:flex items-center justify-center h-28 gap-12">
+          <div className="flex items-center gap-8 flex-1 justify-end">
             {leftLinks.map((link, index) => (
               <motion.div
                 key={link.to}
@@ -90,7 +77,7 @@ export function Header() {
                 <Link
                   to={link.to}
                   onClick={(e) => handleNavClick(link.to, e)}
-                  className={`text-sm font-semibold transition-all duration-300 hover:text-[#d4af37] hover:scale-105 relative group ${textColor}`}
+                  className={`text-sm font-semibold transition-all duration-300 hover:text-[#d4af37] hover:scale-110 relative group ${textColor}`}
                 >
                   {link.label}
                   <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#d4af37] transition-all duration-300 group-hover:w-full"></span>
@@ -102,38 +89,47 @@ export function Header() {
           <Link
             to="/"
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            className="flex flex-col items-center justify-center px-8 xl:px-12 group"
+            className="flex items-center gap-4 px-12 group"
           >
             <motion.div
               initial={{ opacity: 0, scale: 0.5, rotate: -10 }}
               animate={{ opacity: 1, scale: 1, rotate: 0 }}
               transition={{ duration: 0.7, type: "spring" }}
-              className="relative flex items-center gap-3"
+              className="relative"
             >
               <div className="relative">
                 <div className="absolute inset-0 bg-[#d4af37]/30 blur-lg opacity-30 group-hover:opacity-50 transition-opacity duration-300"></div>
                 <img
                   src={logoImage}
                   alt="Shanvik Catering & Events"
-                  className="h-16 w-auto relative z-10 group-hover:scale-110 transition-transform duration-300 drop-shadow-xl"
+                  className="h-20 w-auto relative z-10 group-hover:scale-110 transition-transform duration-300 drop-shadow-xl"
                 />
               </div>
-              <motion.span
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.3, duration: 0.5 }}
-                className={`text-base font-display font-bold transition-all duration-300 whitespace-nowrap ${
-                  isScrolled || isNonHomePage
-                    ? 'text-[#d4af37]'
-                    : 'text-[#d4af37] drop-shadow-lg'
-                }`}
-              >
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.5 }}
+              className="flex flex-col"
+            >
+              <span className={`text-xl font-display font-bold leading-tight transition-all duration-300 ${
+                isScrolled || isNonHomePage
+                  ? 'text-[#d4af37]'
+                  : 'text-[#d4af37] drop-shadow-lg'
+              }`}>
                 Shanvik Catering & Events
-              </motion.span>
+              </span>
+              <span className={`text-sm font-medium leading-tight transition-all duration-300 ${
+                isScrolled || isNonHomePage
+                  ? 'text-[#1e3a8a]/70'
+                  : 'text-white/90 drop-shadow-md'
+              }`}>
+                Turning Moments into Memories
+              </span>
             </motion.div>
           </Link>
 
-          <div className="flex items-center gap-6 xl:gap-8 flex-1">
+          <div className="flex items-center gap-8 flex-1">
             {rightLinks.map((link, index) => (
               <motion.div
                 key={link.to}
@@ -144,7 +140,7 @@ export function Header() {
                 <Link
                   to={link.to}
                   onClick={(e) => handleNavClick(link.to, e)}
-                  className={`text-sm font-semibold transition-all duration-300 hover:text-[#d4af37] hover:scale-105 relative group ${textColor}`}
+                  className={`text-sm font-semibold transition-all duration-300 hover:text-[#d4af37] hover:scale-110 relative group ${textColor}`}
                 >
                   {link.label}
                   <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#d4af37] transition-all duration-300 group-hover:w-full"></span>
@@ -155,7 +151,7 @@ export function Header() {
         </div>
 
         <motion.div
-          className="lg:hidden flex items-center justify-between py-2 pt-12"
+          className="lg:hidden flex items-center justify-between py-3"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5 }}
@@ -166,7 +162,7 @@ export function Header() {
               <img
                 src={logoImage}
                 alt="Shanvik Catering & Events"
-                className="h-10 w-auto relative z-10 drop-shadow-lg"
+                className="h-12 w-auto relative z-10 drop-shadow-lg"
               />
             </div>
             <motion.div
@@ -175,12 +171,17 @@ export function Header() {
               transition={{ delay: 0.2, duration: 0.5 }}
               className="flex flex-col"
             >
-              <span className={`text-sm font-display font-bold leading-tight transition-colors duration-300 ${
+              <span className={`text-base font-display font-bold leading-tight transition-colors duration-300 ${
                 isScrolled || isNonHomePage
                   ? 'text-[#d4af37]'
                   : 'text-[#d4af37] drop-shadow-lg'
               }`}>
                 Shanvik Catering & Events
+              </span>
+              <span className={`text-[10px] font-medium leading-tight transition-colors duration-300 ${
+                isScrolled || isNonHomePage ? 'text-[#1e3a8a]/80' : 'text-[#d4af37]/90'
+              }`}>
+                Turning Moments into Memories
               </span>
             </motion.div>
           </Link>
@@ -194,7 +195,7 @@ export function Header() {
               animate={{ rotate: isOpen ? 90 : 0 }}
               transition={{ duration: 0.3 }}
             >
-              {isOpen ? <X size={24} /> : <Menu size={24} />}
+              {isOpen ? <X size={26} /> : <Menu size={26} />}
             </motion.div>
           </button>
         </motion.div>
