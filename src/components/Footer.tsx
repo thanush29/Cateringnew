@@ -101,7 +101,7 @@ export function Footer() {
               </li>
               <li className="flex items-center gap-3 text-gray-300 hover:text-[#d4af37] transition-colors group">
                 <Mail size={20} className="text-[#d4af37] flex-shrink-0 group-hover:scale-110 transition-transform" />
-                <a href="mailto:info@shanvikcateringevents.com" className="text-sm">info@shanvikcateringevents.com</a>
+                <a href="mailto:info@shanvikcateringevents.com" className="text-sm">mohankrish25@gmail.com</a>
               </li>
             </ul>
           </motion.div>

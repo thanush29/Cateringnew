@@ -103,8 +103,11 @@ export function Gallery() {
   const [searchQuery, setSearchQuery] = useState('');
   const [images, setImages] = useState<GalleryImage[]>([]);
   const [lightboxImage, setLightboxImage] = useState<GalleryImage | null>(null);
+  const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
 
   useEffect(() => {
+    // Scroll to top when Gallery component mounts
+    window.scrollTo(0, 0);
     fetchGalleryImages();
   }, []);
 
@@ -129,6 +132,71 @@ export function Gallery() {
       img.alt_text.toLowerCase().includes(searchQuery.toLowerCase()) ||
       img.category.toLowerCase().includes(searchQuery.toLowerCase())
     );
+    
+  // Add keyboard and touch navigation for lightbox
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (!lightboxImage) return;
+      
+      switch (e.key) {
+        case 'ArrowLeft':
+          if (currentImageIndex > 0) {
+            e.preventDefault();
+            showPrevImage(e as unknown as React.MouseEvent);
+          }
+          break;
+        case 'ArrowRight':
+          if (currentImageIndex < filteredImages.length - 1) {
+            e.preventDefault();
+            showNextImage(e as unknown as React.MouseEvent);
+          }
+          break;
+        case 'Escape':
+          setLightboxImage(null);
+          break;
+        default:
+          break;
+      }
+    };
+    
+    // Add keyboard navigation
+    window.addEventListener('keydown', handleKeyDown);
+    
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [lightboxImage, currentImageIndex, filteredImages]);
+    
+  // Function to handle opening the lightbox
+  const openLightbox = (image: GalleryImage) => {
+    const index = filteredImages.findIndex(img => img.id === image.id);
+    setCurrentImageIndex(index);
+    setLightboxImage(image);
+  };
+  
+  // Function to navigate to the next image
+  const showNextImage = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation(); // Prevent closing the lightbox and other default behaviors
+    // Check if we're not at the last image
+    if (currentImageIndex < filteredImages.length - 1) {
+      const nextIndex = currentImageIndex + 1;
+      setCurrentImageIndex(nextIndex);
+      setLightboxImage(filteredImages[nextIndex]);
+    }
+  };
+  
+  // Function to navigate to the previous image
+  const showPrevImage = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation(); // Prevent closing the lightbox and other default behaviors
+    // Check if we're not at the first image
+    if (currentImageIndex > 0) {
+      const prevIndex = currentImageIndex - 1;
+      setCurrentImageIndex(prevIndex);
+      setLightboxImage(filteredImages[prevIndex]);
+    }
+  };
 
   return (
     <div className="min-h-screen pt-20">
@@ -219,7 +287,7 @@ export function Gallery() {
               transition={{ duration: 0.5, delay: index * 0.05 }}
               whileHover={{ scale: 1.05, y: -10 }}
               className="relative aspect-square rounded-2xl overflow-hidden shadow-xl cursor-pointer group border-4 border-transparent hover:border-[#d4af37]"
-              onClick={() => setLightboxImage(image)}
+              onClick={() => openLightbox(image)}
             >
               <img
                 src={image.image_url}
@@ -241,23 +309,67 @@ export function Gallery() {
 
       {lightboxImage && (
         <div
-          className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4"
-          onClick={() => setLightboxImage(null)}
+          className="fixed inset-0 bg-black/90 z-40 flex items-center justify-center p-2 sm:p-4"
         >
           <button
-            className="absolute top-4 right-4 text-white hover:text-amber-400 transition-colors"
+            className="absolute top-2 sm:top-4 right-2 sm:right-4 text-white hover:text-amber-400 transition-colors z-50 bg-black/40 p-2 rounded-full"
             onClick={() => setLightboxImage(null)}
             aria-label="Close lightbox"
           >
-            <X size={32} />
+            <X size={28} />
           </button>
-          <motion.img
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            src={lightboxImage.image_url}
-            alt={lightboxImage.alt_text}
-            className="max-w-full max-h-full object-contain"
-          />
+          
+          {/* Previous button - only show when not at first image */}
+          {currentImageIndex > 0 && (
+            <button
+              className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center text-white transition-all duration-300 bg-black/70 hover:bg-[#d4af37] hover:scale-110 cursor-pointer z-50"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                showPrevImage(e);
+              }}
+              aria-label="Previous image"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="15 18 9 12 15 6"></polyline>
+              </svg>
+            </button>
+          )}
+          
+          <div className="relative max-w-full sm:max-w-5xl max-h-[85vh] overflow-hidden z-45">
+            <motion.img
+              key={lightboxImage.id} // Add key to ensure animation resets for each image
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 0.3 }}
+              src={lightboxImage.image_url}
+              alt={lightboxImage.alt_text}
+              className="max-w-full max-h-[70vh] sm:max-h-[80vh] object-contain"
+            />
+            
+            {/* Caption */}
+            <div className="absolute bottom-0 left-0 right-0 bg-black/70 text-white p-2 sm:p-3 text-center">
+              <h3 className="text-base sm:text-lg font-semibold">{lightboxImage.title}</h3>
+              <p className="text-xs sm:text-sm text-gray-300">{lightboxImage.category}</p>
+            </div>
+          </div>
+          
+          {/* Next button - only show when not at last image */}
+          {currentImageIndex < filteredImages.length - 1 && (
+            <button
+              className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center text-white transition-all duration-300 bg-black/70 hover:bg-[#d4af37] hover:scale-110 cursor-pointer z-50"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                showNextImage(e);
+              }}
+              aria-label="Next image"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </button>
+          )}
         </div>
       )}
     </div>
