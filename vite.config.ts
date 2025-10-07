@@ -1,14 +1,14 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
+// https://vitejs.dev/config/
 export default defineConfig({
-  base: './', // ensures built site works even when opened via file:// or in subfolder
   plugins: [react()],
   optimizeDeps: {
     exclude: ['lucide-react'], // keeps lucide out of pre-bundle
   },
   build: {
-    chunkSizeWarningLimit: 1200, // increase warning threshold
+    chunkSizeWarningLimit: 1200, // increase limit from 500 KB → 1.2 MB
     rollupOptions: {
       output: {
         manualChunks: {
