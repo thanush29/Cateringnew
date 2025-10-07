@@ -19,26 +19,30 @@ export function ServiceWedding() {
   const packages = [
     {
       name: 'Basic',
-      price: '₹2,50,000',
+      price: '₹2,29,000',
       features: [
-        'Up to 100 guests',
+        'Up to 250 guests',
         'Standard menu (4 courses)',
-        'Basic décor setup',
+        'Classic disco setup',
         'Service staff included',
-        '4-hour event coverage'
+        'Basic camera package',
+        'Complimentary gift for couple',
+        'Makeup for bride and groom',
+        '5-hour event coverage'
       ]
     },
     {
       name: 'Standard',
-      price: '₹5,00,000',
+      price: '₹3,90,000',
       popular: true,
       features: [
-        'Up to 250 guests',
-        'Premium menu (6 courses)',
+        'Up to 450 guests',
+        'Premium menu (9 courses)',
         'Enhanced décor & lighting',
         'Photography package',
         'Full-day event coverage',
-        'Complimentary tasting session'
+        'Complimentary tasting session',
+        'Photograph with candid'
       ]
     },
     {
