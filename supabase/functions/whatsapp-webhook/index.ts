@@ -18,7 +18,7 @@ interface EventSubmission {
   budget_range?: string;
 }
 
-const WHATSAPP_PHONE = "919840650939";
+const WHATSAPP_PHONE = "7200219061";
 const WHATSAPP_API_URL = "https://api.whatsapp.com/send";
 
 Deno.serve(async (req: Request) => {

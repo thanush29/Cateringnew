@@ -32,7 +32,7 @@ export function Footer() {
               Creating unforgettable culinary experiences with passion, tradition, and excellence.
             </p>
             <p className="text-[#d4af37] text-sm font-medium mb-4">
-              Turning moments into memories since 2000
+              Turning moments into memories since 2013
             </p>
             <div className="flex items-center gap-2 text-[#d4af37]">
               <Heart size={16} className="fill-current" />
@@ -97,11 +97,11 @@ export function Footer() {
               </li>
               <li className="flex items-center gap-3 text-gray-300 hover:text-[#d4af37] transition-colors group">
                 <Phone size={20} className="text-[#d4af37] flex-shrink-0 group-hover:scale-110 transition-transform" />
-                <a href="tel:+919840650939" className="text-sm">+91 98406 50939</a>
+                <a href="tel:+919840650939" className="text-sm">+91 72002 19061</a>
               </li>
               <li className="flex items-center gap-3 text-gray-300 hover:text-[#d4af37] transition-colors group">
                 <Mail size={20} className="text-[#d4af37] flex-shrink-0 group-hover:scale-110 transition-transform" />
-                <a href="mailto:info@shanvikcateringevents.com" className="text-sm">info@shanvikcateringevents.com</a>
+                <a href="mailto:info@shanvikcateringevents.com" className="text-sm">mohankrish25@gmail.com</a>
               </li>
             </ul>
           </motion.div>

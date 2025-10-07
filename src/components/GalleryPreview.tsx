@@ -11,6 +11,7 @@ const defaultImages: GalleryImage[] = [
     alt_text: 'Wedding catering setup',
     image_url: 'https://images.pexels.com/photos/1024359/pexels-photo-1024359.jpeg?auto=compress&cs=tinysrgb&w=800',
     category: 'Wedding',
+    display_order: 1,
     created_at: new Date().toISOString()
   },
   {
@@ -19,6 +20,7 @@ const defaultImages: GalleryImage[] = [
     alt_text: 'Corporate event catering',
     image_url: 'https://images.pexels.com/photos/1267320/pexels-photo-1267320.jpeg?auto=compress&cs=tinysrgb&w=800',
     category: 'Corporate',
+    display_order: 2,
     created_at: new Date().toISOString()
   },
   {
@@ -27,6 +29,7 @@ const defaultImages: GalleryImage[] = [
     alt_text: 'Private party catering',
     image_url: 'https://images.pexels.com/photos/1395964/pexels-photo-1395964.jpeg?auto=compress&cs=tinysrgb&w=800',
     category: 'Private',
+    display_order: 3,
     created_at: new Date().toISOString()
   },
   {
@@ -35,6 +38,7 @@ const defaultImages: GalleryImage[] = [
     alt_text: 'Outdoor catering setup',
     image_url: 'https://images.pexels.com/photos/2291367/pexels-photo-2291367.jpeg?auto=compress&cs=tinysrgb&w=800',
     category: 'Outdoor',
+    display_order: 4,
     created_at: new Date().toISOString()
   },
   {
@@ -43,6 +47,7 @@ const defaultImages: GalleryImage[] = [
     alt_text: 'Luxury event catering',
     image_url: 'https://images.pexels.com/photos/1126359/pexels-photo-1126359.jpeg?auto=compress&cs=tinysrgb&w=800',
     category: 'Luxury',
+    display_order: 5,
     created_at: new Date().toISOString()
   },
   {
@@ -51,6 +56,7 @@ const defaultImages: GalleryImage[] = [
     alt_text: 'Wedding reception catering',
     image_url: 'https://images.pexels.com/photos/1616113/pexels-photo-1616113.jpeg?auto=compress&cs=tinysrgb&w=800',
     category: 'Wedding',
+    display_order: 6,
     created_at: new Date().toISOString()
   }
 ];
@@ -160,6 +166,10 @@ export function GalleryPreview() {
         >
           <Link
             to="/gallery"
+            onClick={() => {
+              // This will trigger after navigation
+              setTimeout(() => window.scrollTo(0, 0), 100);
+            }}
             className="inline-block bg-gradient-to-r from-[#1e3a8a] to-[#1d4ed8] text-white px-10 py-4 rounded-xl hover:from-[#1d4ed8] hover:to-[#1e3a8a] transition-all font-bold shadow-2xl text-lg hover:scale-105"
           >
             View Complete Gallery

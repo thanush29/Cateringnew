@@ -25,7 +25,7 @@ export function Contact({ isStandalone = false }: { isStandalone?: boolean }) {
       const message = encodeURIComponent(
         `Hello! I'm ${formData.name}.\n\nEmail: ${formData.email}\nPhone: ${formData.phone}\n\nMessage: ${formData.message}`
       );
-      window.open(`https://wa.me/919840650939?text=${message}`, '_blank');
+      window.open(`https://wa.me/7200219061?text=${message}`, '_blank');
 
       const { error } = await supabase
         .from('contact_inquiries')
