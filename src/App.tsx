@@ -1,5 +1,5 @@
 // App.tsx
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { PublicRoute } from './components/PublicRoute';
@@ -18,51 +18,49 @@ import { NotFound } from './pages/NotFound';
 function App() {
   return (
     <AuthProvider>
-      <Router>
-        <Routes>
-          {/* Admin Login Route - Redirect to dashboard if already logged in */}
-          <Route
-            path="/admin/login"
-            element={
-              <PublicRoute>
-                <AdminLogin />
-              </PublicRoute>
-            }
-          />
-          
-          {/* Admin Dashboard Route - Protected */}
-          <Route
-            path="/admin/dashboard"
-            element={
-              <ProtectedRoute>
-                <AdminDashboard />
-              </ProtectedRoute>
-            }
-          />
+      <Routes>
+        {/* Admin Login Route - Redirect to dashboard if already logged in */}
+        <Route
+          path="/admin/login"
+          element={
+            <PublicRoute>
+              <AdminLogin />
+            </PublicRoute>
+          }
+        />
 
-          {/* Public Routes with Header and Footer */}
-          <Route
-            path="/*"
-            element={
-              <div className="flex flex-col min-h-screen">
-                <Header />
-                <main className="flex-grow">
-                  <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/gallery" element={<Gallery />} />
-                    <Route path="/contact" element={<ContactPage />} />
-                    <Route path="/services/wedding" element={<ServiceWedding />} />
-                    <Route path="/services/corporate" element={<ServiceCorporate />} />
-                    <Route path="/services/private" element={<ServicePrivate />} />
-                    <Route path="*" element={<NotFound />} />
-                  </Routes>
-                </main>
-                <Footer />
-              </div>
-            }
-          />
-        </Routes>
-      </Router>
+        {/* Admin Dashboard Route - Protected */}
+        <Route
+          path="/admin/dashboard"
+          element={
+            <ProtectedRoute>
+              <AdminDashboard />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Public Routes with Header and Footer */}
+        <Route
+          path="/*"
+          element={
+            <div className="flex flex-col min-h-screen">
+              <Header />
+              <main className="flex-grow">
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/gallery" element={<Gallery />} />
+                  <Route path="/contact" element={<ContactPage />} />
+                  <Route path="/services/wedding" element={<ServiceWedding />} />
+                  <Route path="/services/corporate" element={<ServiceCorporate />} />
+                  <Route path="/services/private" element={<ServicePrivate />} />
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </main>
+              <Footer />
+            </div>
+          }
+        />
+      </Routes>
     </AuthProvider>
   );
 }

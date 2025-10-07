@@ -4,11 +4,12 @@ import react from '@vitejs/plugin-react';
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
+  base: './', // Important for static hosting
   optimizeDeps: {
-    exclude: ['lucide-react'], // keeps lucide out of pre-bundle
+    exclude: ['lucide-react'],
   },
   build: {
-    chunkSizeWarningLimit: 1200, // increase limit from 500 KB → 1.2 MB
+    chunkSizeWarningLimit: 1200,
     rollupOptions: {
       output: {
         manualChunks: {
@@ -18,6 +19,19 @@ export default defineConfig({
           ui: ['lucide-react'],
         },
       },
+    },
+  },
+  // 👇 Vite-specific fix for SPA routing
+  server: {
+    fs: {
+      strict: false,
+    },
+    middlewareMode: false,
+  },
+  preview: {
+    // 👇 this makes /admin/login etc. work in preview/live mode
+    headers: {
+      'Cache-Control': 'no-cache',
     },
   },
 });
