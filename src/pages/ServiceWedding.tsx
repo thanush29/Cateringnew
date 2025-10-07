@@ -38,7 +38,7 @@ export function ServiceWedding() {
       features: [
         'Up to 450 guests',
         'Premium menu (9 courses)',
-        'Enhanced décor & lighting',
+        'Enhanced disco & lighting',
         'Photography package',
         'Full-day event coverage',
         'Complimentary tasting session',

@@ -35,7 +35,7 @@ export function ServiceCorporate() {
       features: [
         'Up to 150 attendees',
         'Premium menu (5 courses)',
-        'Enhanced décor & setup',
+        'Enhanced disco & setup',
         'Photography included',
         'Full-day event coverage',
         'Coffee & tea stations'

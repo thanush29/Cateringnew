@@ -23,7 +23,7 @@ export function ServicePrivate() {
       features: [
         'Up to 30 guests',
         'Standard menu (3 courses)',
-        'Basic décor setup',
+        'Basic disco setup',
         'Service staff included',
         '3-hour event coverage'
       ]
@@ -35,7 +35,7 @@ export function ServicePrivate() {
       features: [
         'Up to 75 guests',
         'Premium menu (5 courses)',
-        'Themed décor & setup',
+        'Themed disco & setup',
         'Photography included',
         'Full-day event coverage',
         'Entertainment options'
