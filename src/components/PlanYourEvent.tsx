@@ -103,7 +103,7 @@ export function PlanYourEvent() {
       const message = encodeURIComponent(
         `🎉 New Event Inquiry\n\nName: ${formData.fullName}\nEmail: ${formData.email}\nPhone: ${formData.phone}\nEvent Type: ${formData.eventType}\nEvent Date: ${formData.eventDate}\nBudget: ${formData.budgetRange}\n\nDetails: ${formData.additionalDetails}`
       );
-      window.open(`https://wa.me/919840650939?text=${message}`, '_blank');
+      window.open(`https://wa.me/7200219061?text=${message}`, '_blank');
 
       setSubmitStatus('success');
       setFormData({
