@@ -131,29 +131,30 @@ export function OurStory() {
                   <span className="h-1 w-5 bg-[#27ae60] inline-block"></span>
                 </motion.div>
               </div>
-<motion.div
+
+              <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
                 transition={{ duration: 0.8, delay: 1 }}
                 className="space-y-5"
               >
-                <p className="leading-7 text-[#1e3a8a] text-base text-justify text-base sm:text-lg leading-relaxed">
-                  For over <strong className="text-[#d4af37]">12 years</strong>, <strong className="text-[#d4af37]">Shanvik Catering & Events</strong> has been a trusted name behind <strong className="text-[#d4af37]">Chennai's</strong> most memorable celebrations. 
-                  We specialize in <strong className="text-[#d4af37]">birthdays, social events, meetings, weddings, and anniversaries</strong>, 
-                  offering comprehensive services including <strong className="text-[#d4af37]">makeup, candid photography, and stage decoration</strong>. 
+                <p className="leading-7 text-[#4a4a4a] text-base text-justify sm:text-lg">
+                  For over <strong className="text-[#1e3a8a]">12 years</strong>, <strong className="text-[#1e3a8a]">Shanvik Catering & Events</strong> has been a trusted name behind <strong className="text-[#1e3a8a]">Chennai's</strong> most memorable celebrations. 
+                  We specialize in <strong className="text-[#1e3a8a]">birthdays, social events, meetings, weddings, and anniversaries</strong>, 
+                  offering comprehensive services including <strong className="text-[#1e3a8a]">makeup, candid photography, and stage decoration</strong>. 
                   We began with a simple passion: to serve incredible food that brought people together. 
                   This dedication to culinary excellence quickly established us as one of the region's finest caterers.
                 </p>
                 
-                <p className="leading-7 text-[#1e3a8a] text-base text-justify text-base sm:text-lg leading-relaxed">
+                <p className="leading-7 text-[#4a4a4a] text-base text-justify sm:text-lg">
                   However, we saw that a truly perfect event was about more than just the food. It was about the seamless flow, 
                   the stunning ambiance, and the flawless execution of a grand vision. That's why we evolved, blending our 
                   culinary artistry with comprehensive event management to offer a complete, stress-free experience. 
                   Today, we are proud to be a full-service team that designs, manages, and caters events from concept to completion.
                 </p>
 
-                <p className="text-[#333] text-lg text-center font-medium mt-6">
-                  <strong>Shanvik Caterers & Events – Turning Your Celebrations into Cherished Memories 
+                <p className="text-[#4a4a4a] text-lg text-center font-medium mt-6">
+                  <strong className="text-[#1e3a8a]">Shanvik Caterers & Events – Turning Your Celebrations into Cherished Memories 
                   with Incredible Experiences!</strong>
                 </p>
               </motion.div>
@@ -209,7 +210,7 @@ export function OurStory() {
             animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            <div className="space-y-6 text-[#1e3a8a] text-base sm:text-lg leading-relaxed">
+            <div className="space-y-6 text-[#4a4a4a] text-base sm:text-lg leading-relaxed">
               <h3 className="text-2xl sm:text-3xl font-display font-bold text-[#1e3a8a] mb-4">
                 Our Journey
               </h3>
@@ -280,7 +281,7 @@ export function OurStory() {
             >
               <div className="text-4xl mb-3">{feature.icon}</div>
               <h4 className="font-display font-bold text-lg text-[#1e3a8a] mb-2">{feature.title}</h4>
-              <p className="text-sm text-[#1e3a8a]/80">{feature.description}</p>
+              <p className="text-sm text-[#4a4a4a]">{feature.description}</p>
             </motion.div>
           ))}
         </motion.div>

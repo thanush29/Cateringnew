@@ -16,10 +16,11 @@ export function Hero() {
         loop
         playsInline
         className="absolute inset-0 w-full h-full object-cover"
-        poster="https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=1920"
+        poster="/image.jpg"
+        style={{ objectPosition: 'center center' }}
       >
         <source
-          src="https://cdn.pixabay.com/video/2024/02/11/200139-912119482_large.mp4"
+          src="/Animated2.mp4"
           type="video/mp4"
         />
       </video>
@@ -38,36 +39,18 @@ export function Hero() {
         }}
       />
 
-      <div className="relative h-full flex items-center justify-center">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center pt-20">
+      <div className="relative h-full flex flex-col items-center justify-end pb-32">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <motion.h1
-              className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-display font-bold text-white mb-4 drop-shadow-2xl tracking-wider"
-              initial={{ opacity: 0, scale: 0.8, y: -50 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              transition={{ duration: 1, delay: 0.2, type: "spring", stiffness: 100 }}
-            >
-              SHANVIK
-            </motion.h1>
-
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.5 }}
-              className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-display font-semibold text-[#d4af37] mb-3 drop-shadow-lg"
-            >
-              Catering & Event Management
-            </motion.h2>
-
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, delay: 0.7 }}
-              className="inline-block mb-8"
+              transition={{ duration: 0.8, delay: 0.3 }}
+              className="inline-block mb-12"
             >
               <motion.p
                 animate={{
@@ -82,42 +65,39 @@ export function Hero() {
                   repeat: Infinity,
                   ease: "easeInOut"
                 }}
-                className="text-xl pt-5 sm:text-2xl md:text-3xl text-white mb-4 max-w-4xl mx-auto font-serif leading-relaxed"
+                className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-white/80 max-w-5xl mx-auto font-serif leading-relaxed italic"
               >
-                Transform your special occasions with our premium catering and event management services. Creating unforgettable experiences with flavors that delight.
+                "Creating unforgettable experiences with flavors that delight"
               </motion.p>
-            </motion.div>
-
-           
-
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 1.1 }}
-            >
-              <motion.button
-                onClick={() => scrollToSection('#contact')}
-                className="relative px-10 py-5 text-lg sm:text-xl font-bold text-white rounded-xl overflow-hidden group shadow-2xl"
-                whileHover={{ scale: 1.08, y: -3 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <div className="absolute  inset-0 bg-gradient-to-r from-[#d4af37] to-[#c9a332] group-hover:from-[#c9a332] group-hover:to-[#d4af37] transition-all duration-300"></div>
-                <motion.div
-                  className="absolute inset-0 bg-[#d4af37]/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                  animate={{
-                    x: ["-100%", "100%"],
-                  }}
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    ease: "linear"
-                  }}
-                ></motion.div>
-                <span className="relative z-10">Plan Your Event Today</span>
-              </motion.button>
             </motion.div>
           </motion.div>
         </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.7 }}
+        >
+          <motion.button
+            onClick={() => scrollToSection('#contact')}
+            className="relative px-10 py-5 text-lg sm:text-xl font-bold text-white/90 rounded-xl overflow-hidden group shadow-2xl bg-transparent border-2 border-white/40 hover:border-white/60 backdrop-blur-sm transition-all duration-300"
+            whileHover={{ scale: 1.08, y: -3 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <motion.div
+              className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              animate={{
+                x: ["-100%", "100%"],
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                ease: "linear"
+              }}
+            ></motion.div>
+            <span className="relative z-10">Plan Your Event Today</span>
+          </motion.button>
+        </motion.div>
       </div>
 
       <motion.div
@@ -149,3 +129,5 @@ export function Hero() {
     </section>
   );
 }
+
+export default Hero;
