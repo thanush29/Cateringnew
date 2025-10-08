@@ -20,7 +20,7 @@ export function Hero() {
         style={{ objectPosition: 'center center' }}
       >
         <source
-          src="/Animated.mp4"
+          src="/heroSection.mp4"
           type="video/mp4"
         />
       </video>
