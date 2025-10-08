@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import logoImage from '/Site-logo.png';
@@ -8,6 +8,7 @@ export function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
   const isNonHomePage = location.pathname !== '/';
 
@@ -21,6 +22,16 @@ export function Header() {
 
   useEffect(() => {
     setIsOpen(false);
+  }, [location]);
+
+  // Handle hash navigation after route change
+  useEffect(() => {
+    if (location.pathname === '/' && location.hash) {
+      // Wait longer for all components to fully render
+      setTimeout(() => {
+        scrollToSection(location.hash);
+      }, 500);
+    }
   }, [location]);
 
   const leftLinks = [
@@ -39,9 +50,24 @@ export function Header() {
     if (hash.startsWith('#')) {
       const element = document.querySelector(hash);
       if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
+        const headerHeight = 112; // Fixed header height (h-28 = 112px)
+        const elementPosition = element.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - headerHeight;
+        
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
       }
     }
+  };
+
+  const isActiveLink = (to: string) => {
+    // Only check active state for /contact and /gallery
+    if (to === '/contact' || to === '/gallery') {
+      return location.pathname === to;
+    }
+    return false;
   };
 
   const handleNavClick = (to: string, e: React.MouseEvent) => {
@@ -55,8 +81,8 @@ export function Header() {
       if (location.pathname === '/') {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       } else {
-        // Navigate to home page
-        window.location.href = '/';
+        // Navigate to home page using React Router
+        navigate('/');
       }
       return;
     }
@@ -69,11 +95,17 @@ export function Header() {
     
     if (to.includes('#')) {
       e.preventDefault();
+      const pathPart = to.split('#')[0];
       const hash = to.split('#')[1];
-      if (location.pathname !== '/') {
-        window.location.href = `/#${hash}`;
+      
+      if (location.pathname !== pathPart) {
+        // Navigate to the path with hash
+        navigate(`${pathPart}#${hash}`);
       } else {
-        scrollToSection(`#${hash}`);
+        // Already on the correct page, just scroll
+        setTimeout(() => {
+          scrollToSection(`#${hash}`);
+        }, 100);
       }
     }
   };
@@ -98,10 +130,14 @@ export function Header() {
                 <Link
                   to={link.to}
                   onClick={(e) => handleNavClick(link.to, e)}
-                  className={`text-sm font-semibold transition-all duration-300 hover:text-[#d4af37] hover:scale-110 relative group ${textColor}`}
+                  className={`text-sm font-semibold transition-all duration-300 hover:text-[#d4af37] hover:scale-110 relative group ${
+                    isActiveLink(link.to) ? 'text-[#d4af37]' : textColor
+                  }`}
                 >
                   {link.label}
-                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#d4af37] transition-all duration-300 group-hover:w-full"></span>
+                  <span className={`absolute -bottom-1 left-0 h-0.5 bg-[#d4af37] transition-all duration-300 ${
+                    isActiveLink(link.to) ? 'w-full' : 'w-0 group-hover:w-full'
+                  }`}></span>
                 </Link>
               </motion.div>
             ))}
@@ -109,7 +145,14 @@ export function Header() {
 
           <Link
             to="/"
-            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            onClick={(e) => {
+              e.preventDefault();
+              if (location.pathname === '/') {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              } else {
+                navigate('/');
+              }
+            }}
             className="flex items-center gap-4 px-12 group"
           >
             <motion.div
@@ -161,10 +204,14 @@ export function Header() {
                 <Link
                   to={link.to}
                   onClick={(e) => handleNavClick(link.to, e)}
-                  className={`text-sm font-semibold transition-all duration-300 hover:text-[#d4af37] hover:scale-110 relative group ${textColor}`}
+                  className={`text-sm font-semibold transition-all duration-300 hover:text-[#d4af37] hover:scale-110 relative group ${
+                    isActiveLink(link.to) ? 'text-[#d4af37]' : textColor
+                  }`}
                 >
                   {link.label}
-                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#d4af37] transition-all duration-300 group-hover:w-full"></span>
+                  <span className={`absolute -bottom-1 left-0 h-0.5 bg-[#d4af37] transition-all duration-300 ${
+                    isActiveLink(link.to) ? 'w-full' : 'w-0 group-hover:w-full'
+                  }`}></span>
                 </Link>
               </motion.div>
             ))}
@@ -177,7 +224,18 @@ export function Header() {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5 }}
         >
-          <Link to="/" className="flex items-center gap-2">
+          <Link 
+            to="/" 
+            onClick={(e) => {
+              e.preventDefault();
+              if (location.pathname === '/') {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              } else {
+                navigate('/');
+              }
+            }}
+            className="flex items-center gap-2"
+          >
             <div className="relative">
               <div className="absolute inset-0 bg-[#d4af37]/30 blur-md opacity-40"></div>
               <img
@@ -242,7 +300,7 @@ export function Header() {
                   <Link
                     to={link.to}
                     onClick={(e) => handleNavClick(link.to, e)}
-                    className="block py-3.5 px-5 text-[#1e3a8a] font-semibold hover:text-white hover:bg-gradient-to-r hover:from-[#1e3a8a] hover:to-[#1d4ed8] rounded-xl transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg border border-[#d4af37]/20 hover:border-[#d4af37]"
+                    className={`block py-3.5 px-5 font-semibold rounded-xl transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg border `}
                   >
                     {link.label}
                   </Link>
