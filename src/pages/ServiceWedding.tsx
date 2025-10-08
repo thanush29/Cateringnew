@@ -47,12 +47,15 @@ export function ServiceWedding() {
     },
     {
       name: 'Premium',
-      price: '₹10,00,000',
+      price: '₹7,99,000',
       features: [
         'Up to 500 guests',
         'Luxury menu (8+ courses)',
         'Complete venue transformation',
         'Full photo & video package',
+        'Classic makeup for bride and groom',
+        'Live singer performance',
+        'Premium DJ service with top DJ',
         'Live entertainment included',
         'Dedicated event coordinator',
         'Unlimited event duration'
