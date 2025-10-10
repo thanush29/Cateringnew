@@ -116,7 +116,7 @@ export function Header() {
     : 'bg-gradient-to-r from-[#1e3a8a]/80 via-[#1e3a8a]/60 to-[#1e3a8a]/80 backdrop-blur-md';
 
   return (
-    <header className={`fixed w-full z-50 transition-all duration-500 ${bgColor} border-b ${isScrolled || isNonHomePage ? 'border-[#d4af37]/30' : 'border-[#d4af37]/20'}`}>
+    <header className={`fixed w-full z-50 transition-all duration-500 ${bgColor} border-b ${isScrolled || isNonHomePage ? 'border-[#b8860b]/30' : 'border-[#b8860b]/20'}`}>
       <nav className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="hidden lg:flex items-center justify-center h-28 gap-12">
           <div className="flex items-center gap-8 flex-1 justify-end">
@@ -130,12 +130,12 @@ export function Header() {
                 <Link
                   to={link.to}
                   onClick={(e) => handleNavClick(link.to, e)}
-                  className={`text-sm font-semibold transition-all duration-300 hover:text-[#d4af37] hover:scale-110 relative group ${
-                    isActiveLink(link.to) ? 'text-[#d4af37]' : textColor
+                  className={`text-sm font-semibold transition-all duration-300 hover:text-[#b8860b] hover:scale-110 relative group ${
+                    isActiveLink(link.to) ? 'text-[#b8860b]' : textColor
                   }`}
                 >
                   {link.label}
-                  <span className={`absolute -bottom-1 left-0 h-0.5 bg-[#d4af37] transition-all duration-300 ${
+                  <span className={`absolute -bottom-1 left-0 h-0.5 bg-[#b8860b] transition-all duration-300 ${
                     isActiveLink(link.to) ? 'w-full' : 'w-0 group-hover:w-full'
                   }`}></span>
                 </Link>
@@ -162,7 +162,7 @@ export function Header() {
               className="relative"
             >
               <div className="relative">
-                <div className="absolute inset-0 bg-[#d4af37]/30 blur-lg opacity-30 group-hover:opacity-50 transition-opacity duration-300"></div>
+                <div className="absolute inset-0 bg-[#b8860b]/30 blur-lg opacity-30 group-hover:opacity-50 transition-opacity duration-300"></div>
                 <img
                   src={logoImage}
                   alt="Shanvik Catering & Events"
@@ -178,8 +178,8 @@ export function Header() {
             >
               <span className={`text-xl font-display font-bold leading-tight transition-all duration-300 ${
                 isScrolled || isNonHomePage
-                  ? 'text-[#d4af37]'
-                  : 'text-[#d4af37] drop-shadow-lg'
+                  ? 'text-[#b8860b]'
+                  : 'text-[#b8860b] drop-shadow-lg'
               }`}>
                 Shanvik Catering & Events
               </span>
@@ -204,12 +204,12 @@ export function Header() {
                 <Link
                   to={link.to}
                   onClick={(e) => handleNavClick(link.to, e)}
-                  className={`text-sm font-semibold transition-all duration-300 hover:text-[#d4af37] hover:scale-110 relative group ${
-                    isActiveLink(link.to) ? 'text-[#d4af37]' : textColor
+                  className={`text-sm font-semibold transition-all duration-300 hover:text-[#b8860b] hover:scale-110 relative group ${
+                    isActiveLink(link.to) ? 'text-[#b8860b]' : textColor
                   }`}
                 >
                   {link.label}
-                  <span className={`absolute -bottom-1 left-0 h-0.5 bg-[#d4af37] transition-all duration-300 ${
+                  <span className={`absolute -bottom-1 left-0 h-0.5 bg-[#b8860b] transition-all duration-300 ${
                     isActiveLink(link.to) ? 'w-full' : 'w-0 group-hover:w-full'
                   }`}></span>
                 </Link>
@@ -237,7 +237,7 @@ export function Header() {
             className="flex items-center gap-2"
           >
             <div className="relative">
-              <div className="absolute inset-0 bg-[#d4af37]/30 blur-md opacity-40"></div>
+              <div className="absolute inset-0 bg-[#b8860b]/30 blur-md opacity-40"></div>
               <img
                 src={logoImage}
                 alt="Shanvik Catering & Events"
@@ -252,13 +252,13 @@ export function Header() {
             >
               <span className={`text-base font-display font-bold leading-tight transition-colors duration-300 ${
                 isScrolled || isNonHomePage
-                  ? 'text-[#d4af37]'
-                  : 'text-[#d4af37] drop-shadow-lg'
+                  ? 'text-[#b8860b]'
+                  : 'text-[#b8860b] drop-shadow-lg'
               }`}>
                 Shanvik Catering & Events
               </span>
               <span className={`text-[10px] font-medium leading-tight transition-colors duration-300 ${
-                isScrolled || isNonHomePage ? 'text-[#1e3a8a]/80' : 'text-[#d4af37]/90'
+                isScrolled || isNonHomePage ? 'text-[#1e3a8a]/80' : 'text-[#b8860b]/90'
               }`}>
                 Turning Moments into Memories
               </span>
@@ -266,7 +266,7 @@ export function Header() {
           </Link>
 
           <button
-            className={`p-2 transition-all duration-300 rounded-lg hover:bg-[#d4af37]/20 active:bg-[#d4af37]/30 ${textColor}`}
+            className={`p-2 transition-all duration-300 rounded-lg hover:bg-[#b8860b]/20 active:bg-[#b8860b]/30 ${textColor}`}
             onClick={() => setIsOpen(!isOpen)}
             aria-label="Toggle menu"
           >
@@ -287,7 +287,7 @@ export function Header() {
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3 }}
-            className="lg:hidden bg-white/95 border-t border-[#d4af37]/30 shadow-xl backdrop-blur-lg"
+            className="lg:hidden bg-white/95 border-t border-[#b8860b]/30 shadow-xl backdrop-blur-lg"
           >
             <div className="container mx-auto px-4 py-6 space-y-2">
               {[...leftLinks, ...rightLinks].map((link, index) => (
