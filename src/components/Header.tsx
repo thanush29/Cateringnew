@@ -258,7 +258,7 @@ export function Header() {
                 Shanvik Catering & Events
               </span>
               <span className={`text-[10px] font-medium leading-tight transition-colors duration-300 ${
-                isScrolled || isNonHomePage ? 'text-[#1e3a8a]/80' : 'text-[#b8860b]/90'
+                isScrolled || isNonHomePage ? 'text-[#1e3a8a]/80' : 'text-white/90 drop-shadow-md'
               }`}>
                 Turning Moments into Memories
               </span>
