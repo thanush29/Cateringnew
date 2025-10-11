@@ -50,9 +50,9 @@ export function Hero() {
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, delay: 0.3 }}
-              className="inline-block mb-12"
+              className="inline-block mb-12 max-w-6xl mx-auto"
             >
-              <motion.p
+              <motion.div
                 animate={{
                   textShadow: [
                     "0 0 20px rgba(212, 175, 55, 0.3)",
@@ -65,10 +65,25 @@ export function Hero() {
                   repeat: Infinity,
                   ease: "easeInOut"
                 }}
-                className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-white/80 max-w-5xl mx-auto font-serif leading-relaxed italic"
+                className="space-y-6"
               >
-                "Creating unforgettable experiences with flavors that delight"
-              </motion.p>
+                <p className="text-xl sm:text-2xl md:text-3xl lg:text-4xl text-white/90 font-serif leading-relaxed tracking-wide">
+                  It's the art of creating{' '}
+                  <span className="text-[#d4af37] font-bold italic">perfect moments</span>{' '}
+                  tailored to your wishes.
+                </p>
+                
+                <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-white/85 font-sans leading-relaxed tracking-normal">
+                  We will craft a menu that highlights the{' '}
+                  <span className="text-white font-semibold">style of your event</span>
+                </p>
+                
+                <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/80 font-light leading-relaxed tracking-wider">
+                  and provide{' '}
+                  <span className="text-[#d4af37] font-medium">flawless service</span>{' '}
+                  for every People.
+                </p>
+              </motion.div>
             </motion.div>
           </motion.div>
         </div>
