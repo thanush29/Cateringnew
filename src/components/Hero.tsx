@@ -39,20 +39,21 @@ export function Hero() {
         }}
       />
 
-      <div className="relative h-full flex flex-col items-center justify-end pb-32">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <div className="relative h-full flex flex-col items-center justify-end pb-24 md:pb-32">
+        <div className="container mx-auto px-6 sm:px-8 lg:px-12 text-center max-w-6xl">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
+            className="space-y-8 md:space-y-12"
           >
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, delay: 0.3 }}
-              className="inline-block mb-12 max-w-6xl mx-auto"
+              className="space-y-6 md:space-y-8"
             >
-              <motion.div
+              <motion.h1
                 animate={{
                   textShadow: [
                     "0 0 20px rgba(212, 175, 55, 0.3)",
@@ -65,25 +66,55 @@ export function Hero() {
                   repeat: Infinity,
                   ease: "easeInOut"
                 }}
-                className="space-y-6"
+                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-white font-serif leading-tight tracking-wide"
               >
-                <p className="text-xl sm:text-2xl md:text-3xl lg:text-4xl text-white/90 font-serif leading-relaxed tracking-wide">
-                  It's the art of creating{' '}
-                  <span className="text-[#d4af37] font-bold italic">perfect moments</span>{' '}
-                  tailored to your wishes.
-                </p>
-                
-                <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-white/85 font-sans leading-relaxed tracking-normal">
-                  We will craft a menu that highlights the{' '}
-                  <span className="text-white font-semibold">style of your event</span>
-                </p>
-                
-                <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/80 font-light leading-relaxed tracking-wider">
-                  and provide{' '}
-                  <span className="text-[#d4af37] font-medium">flawless service</span>{' '}
-                  for every People.
-                </p>
-              </motion.div>
+                It's the art of creating
+              </motion.h1>
+              
+              <motion.h2
+                animate={{
+                  textShadow: [
+                    "0 0 25px rgba(212, 175, 55, 0.4)",
+                    "0 0 35px rgba(212, 175, 55, 0.6)",
+                    "0 0 25px rgba(212, 175, 55, 0.4)",
+                  ]
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: 0.3
+                }}
+                className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-[#d4af37] font-bold tracking-wider"
+                style={{ fontFamily: 'Georgia, serif' }}
+              >
+                Perfect Moments
+              </motion.h2>
+              
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.5 }}
+                className="text-xl sm:text-2xl md:text-3xl text-white/90 font-light italic tracking-wide"
+                style={{ fontFamily: 'Palatino, serif' }}
+              >
+                tailored to your wishes
+              </motion.p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+              className="space-y-4 md:space-y-6 px-4 md:px-8"
+            >
+              <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/95 leading-relaxed max-w-4xl mx-auto font-light">
+                We will craft a menu that highlights the style of your event
+              </p>
+              
+              <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/95 leading-relaxed max-w-4xl mx-auto font-light">
+                and provide flawless service for every People.
+              </p>
             </motion.div>
           </motion.div>
         </div>
@@ -91,11 +122,12 @@ export function Hero() {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.7 }}
+          transition={{ duration: 0.8, delay: 0.9 }}
+          className="mt-12 md:mt-16"
         >
           <motion.button
             onClick={() => scrollToSection('#contact')}
-            className="relative px-10 py-5 text-lg sm:text-xl font-bold text-white/90 rounded-xl overflow-hidden group shadow-2xl bg-transparent border-2 border-white/40 hover:border-white/60 backdrop-blur-sm transition-all duration-300"
+            className="relative px-8 sm:px-10 md:px-12 py-4 md:py-5 text-base sm:text-lg md:text-xl font-bold text-white/90 rounded-xl overflow-hidden group shadow-2xl bg-transparent border-2 border-white/40 hover:border-white/60 backdrop-blur-sm transition-all duration-300"
             whileHover={{ scale: 1.08, y: -3 }}
             whileTap={{ scale: 0.95 }}
           >
@@ -110,13 +142,13 @@ export function Hero() {
                 ease: "linear"
               }}
             ></motion.div>
-            <span className="relative z-10">Plan Your Event Today</span>
+            <span className="relative z-10 tracking-wide">Plan Your Event Today</span>
           </motion.button>
         </motion.div>
       </div>
 
       <motion.div
-        className="absolute bottom-10 left-1/2 transform -translate-x-1/2"
+        className="absolute bottom-6 md:bottom-10 left-1/2 transform -translate-x-1/2"
         animate={{
           y: [0, 10, 0],
         }}
@@ -126,9 +158,9 @@ export function Hero() {
           ease: "easeInOut"
         }}
       >
-        <div className="w-8 h-12 border-2 border-[#d4af37]/70 rounded-full flex items-start justify-center p-2">
+        <div className="w-6 h-10 md:w-8 md:h-12 border-2 border-[#d4af37]/70 rounded-full flex items-start justify-center p-2">
           <motion.div
-            className="w-1.5 h-3 bg-[#d4af37] rounded-full"
+            className="w-1 h-2 md:w-1.5 md:h-3 bg-[#d4af37] rounded-full"
             animate={{
               y: [0, 16, 0],
               opacity: [1, 0, 1],
