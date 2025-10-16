@@ -310,43 +310,7 @@ export function Hero() {
         </div>
       </div>
 
-      {/* Refined scroll indicator */}
-      <motion.div
-        className="absolute bottom-8 md:bottom-12 left-1/2 -translate-x-1/2"
-        initial={{ opacity: 0 }}
-        animate={{ 
-          opacity: [0, 1, 1],
-          y: [0, 10, 0] 
-        }}
-        transition={{
-          opacity: { delay: 3, duration: 1 },
-          y: { duration: 2, repeat: Infinity, ease: "easeInOut", delay: 3 }
-        }}
-      >
-        <div 
-          className="w-8 h-12 md:w-9 md:h-14 border-2 border-amber-400/60 rounded-full flex items-start justify-center p-2 backdrop-blur-sm"
-          style={{
-            background: 'rgba(0, 0, 0, 0.3)',
-            boxShadow: '0 0 20px rgba(251, 191, 36, 0.3)',
-          }}
-        >
-          <motion.div
-            className="w-1.5 h-3 bg-amber-400 rounded-full"
-            animate={{
-              y: [0, 16, 0],
-              opacity: [1, 0.3, 1],
-            }}
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
-            style={{
-              boxShadow: '0 0 8px rgba(251, 191, 36, 0.8)',
-            }}
-          />
-        </div>
-      </motion.div>
+
 
     </section>
   );
