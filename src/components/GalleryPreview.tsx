@@ -70,19 +70,20 @@ export function GalleryPreview() {
     fetchGalleryImages();
   }, []);
 
-  const fetchGalleryImages = async () => {
-    const { data, error } = await supabase
-      .from('gallery_images')
-      .select('*')
-      .order('created_at', { ascending: false })
-      .limit(6);
+const fetchGalleryImages = async () => {
+  const { data, error } = await supabase
+    .from('gallery_images')
+    .select('*')
+    .order('display_order', { ascending: true })
+    .order('created_at', { ascending: false })
+    .limit(6);
 
-    if (!error && data && data.length > 0) {
-      setImages(data);
-    } else {
-      setImages(defaultImages);
-    }
-  };
+  if (!error && data && data.length > 0) {
+    setImages(data);
+  } else {
+    setImages(defaultImages);
+  }
+};
 
   return (
     <section className="py-16 sm:py-20 lg:py-24 relative overflow-hidden" ref={ref}>

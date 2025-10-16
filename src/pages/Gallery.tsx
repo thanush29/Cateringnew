@@ -111,10 +111,11 @@ export function Gallery() {
     fetchGalleryImages();
   }, []);
 
-  const fetchGalleryImages = async () => {
+const fetchGalleryImages = async () => {
     const { data, error } = await supabase
       .from('gallery_images')
       .select('*')
+      .order('display_order', { ascending: true })
       .order('created_at', { ascending: false });
 
     if (!error && data && data.length > 0) {
