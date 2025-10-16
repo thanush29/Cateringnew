@@ -9,6 +9,7 @@ import { useEffect } from 'react';
 export function Home() {
   // Handle scroll to contact section if coming from package selection
   useEffect(() => {
+    window.scrollTo(0, 0);
     const shouldScrollToContact = sessionStorage.getItem('scrollToContact');
     
     if (shouldScrollToContact === 'true') {

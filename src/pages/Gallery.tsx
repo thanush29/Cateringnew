@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { X, Search } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { X, Search, ChevronLeft, ChevronRight, ZoomIn } from 'lucide-react';
 import { supabase, GalleryImage } from '../lib/supabase';
 
 const categories = ['All', 'Wedding', 'Corporate', 'Private', 'Outdoor', 'Luxury'];
@@ -104,14 +104,14 @@ export function Gallery() {
   const [images, setImages] = useState<GalleryImage[]>([]);
   const [lightboxImage, setLightboxImage] = useState<GalleryImage | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
+  const [imageLoading, setImageLoading] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
-    // Scroll to top when Gallery component mounts
     window.scrollTo(0, 0);
     fetchGalleryImages();
   }, []);
 
-const fetchGalleryImages = async () => {
+  const fetchGalleryImages = async () => {
     const { data, error } = await supabase
       .from('gallery_images')
       .select('*')
@@ -134,7 +134,6 @@ const fetchGalleryImages = async () => {
       img.category.toLowerCase().includes(searchQuery.toLowerCase())
     );
     
-  // Add keyboard and touch navigation for lightbox
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (!lightboxImage) return;
@@ -143,43 +142,40 @@ const fetchGalleryImages = async () => {
         case 'ArrowLeft':
           if (currentImageIndex > 0) {
             e.preventDefault();
-            showPrevImage(e as unknown as React.MouseEvent);
+            showPrevImage();
           }
           break;
         case 'ArrowRight':
           if (currentImageIndex < filteredImages.length - 1) {
             e.preventDefault();
-            showNextImage(e as unknown as React.MouseEvent);
+            showNextImage();
           }
           break;
         case 'Escape':
-          setLightboxImage(null);
+          closeLightbox();
           break;
         default:
           break;
       }
     };
     
-    // Add keyboard navigation
     window.addEventListener('keydown', handleKeyDown);
-    
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-    };
+    return () => window.removeEventListener('keydown', handleKeyDown);
   }, [lightboxImage, currentImageIndex, filteredImages]);
     
-  // Function to handle opening the lightbox
   const openLightbox = (image: GalleryImage) => {
     const index = filteredImages.findIndex(img => img.id === image.id);
     setCurrentImageIndex(index);
     setLightboxImage(image);
+    document.body.style.overflow = 'hidden';
   };
   
-  // Function to navigate to the next image
-  const showNextImage = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation(); // Prevent closing the lightbox and other default behaviors
-    // Check if we're not at the last image
+  const closeLightbox = () => {
+    setLightboxImage(null);
+    document.body.style.overflow = 'auto';
+  };
+  
+  const showNextImage = () => {
     if (currentImageIndex < filteredImages.length - 1) {
       const nextIndex = currentImageIndex + 1;
       setCurrentImageIndex(nextIndex);
@@ -187,11 +183,7 @@ const fetchGalleryImages = async () => {
     }
   };
   
-  // Function to navigate to the previous image
-  const showPrevImage = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation(); // Prevent closing the lightbox and other default behaviors
-    // Check if we're not at the first image
+  const showPrevImage = () => {
     if (currentImageIndex > 0) {
       const prevIndex = currentImageIndex - 1;
       setCurrentImageIndex(prevIndex);
@@ -199,27 +191,27 @@ const fetchGalleryImages = async () => {
     }
   };
 
+  const getCategoryCount = (category: string) => {
+    if (category === 'All') return images.length;
+    return images.filter(img => img.category === category).length;
+  };
+
   return (
-    <div className="min-h-screen pt-20">
-      <div className="bg-gradient-to-br from-[#1e3a8a] via-[#1d4ed8] to-[#2563eb] text-white py-20 relative overflow-hidden">
-        <motion.div
-          className="absolute inset-0 bg-[#1e3a8a]/20"
-          animate={{
-            backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
-          }}
-          transition={{
-            duration: 10,
-            repeat: Infinity,
-            ease: "linear"
-          }}
-          style={{ backgroundSize: "200% 200%" }}
-        />
+    <div className="min-h-screen pt-20 bg-gradient-to-b from-gray-50 to-white">
+      {/* Hero Section */}
+      <div className="bg-gradient-to-br from-[#1e3a8a] via-[#1d4ed8] to-[#2563eb] text-white py-24 relative overflow-hidden">
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute inset-0" style={{
+            backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)',
+            backgroundSize: '40px 40px'
+          }} />
+        </div>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
           <motion.h1
             initial={{ opacity: 0, y: -30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-5xl md:text-6xl font-bold mb-6 drop-shadow-2xl"
+            className="text-5xl md:text-7xl font-bold mb-4 drop-shadow-2xl"
           >
             Our Gallery
           </motion.h1>
@@ -227,152 +219,277 @@ const fetchGalleryImages = async () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-2xl text-white/95 font-medium"
+            className="text-xl md:text-2xl text-white/90 font-light max-w-2xl mx-auto"
           >
-            Explore our memorable events and celebrations
+            Explore memorable moments from our exceptional events
           </motion.p>
+
         </div>
       </div>
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        {/* Search Bar */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="max-w-xl mx-auto mb-12"
+          className="max-w-2xl mx-auto mb-12"
         >
-          <div className="relative">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[#1e3a8a]" size={24} />
+          <div className="relative group">
+            <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-[#d4af37] transition-colors" size={22} />
             <input
               type="text"
-              placeholder="Search gallery..."
+              placeholder="Search by title, category, or description..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-14 pr-4 py-4 rounded-xl border-2 border-gray-200 focus:border-[#d4af37] focus:ring-2 focus:ring-[#d4af37]/20 transition-all text-[#1e3a8a] font-medium"
+              className="w-full pl-14 pr-5 py-4 rounded-2xl border-2 border-gray-200 focus:border-[#d4af37] focus:ring-4 focus:ring-[#d4af37]/10 transition-all text-gray-800 text-lg shadow-sm hover:shadow-md"
             />
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery('')}
+                className="absolute right-5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+              >
+                <X size={20} />
+              </button>
+            )}
           </div>
         </motion.div>
 
+        {/* Category Filters */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="flex flex-wrap justify-center gap-4 mb-16"
+          className="mb-12"
         >
-          {categories.map((category, index) => (
-            <motion.button
-              key={category}
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.3, delay: index * 0.1 }}
-              whileHover={{ scale: 1.1, y: -3 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => setSelectedCategory(category)}
-              className={`px-8 py-3 rounded-full font-bold transition-all duration-300 ${
-                selectedCategory === category
-                  ? 'bg-gradient-to-r from-[#d4af37] to-[#c9a332] text-[#1e3a8a] shadow-xl'
-                  : 'bg-gradient-to-r from-gray-100 to-gray-200 text-gray-700 hover:from-[#d4af37]/20 hover:to-[#c9a332]/20 hover:text-[#1e3a8a] shadow-md'
-              }`}
-            >
-              {category}
-            </motion.button>
-          ))}
+          <div className="flex flex-wrap justify-center gap-3">
+            {categories.map((category, index) => {
+              return (
+                <motion.button
+                  key={category}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.3, delay: index * 0.05 }}
+                  whileHover={{ scale: 1.05, y: -2 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => setSelectedCategory(category)}
+                  className={`relative px-6 py-3 rounded-full font-semibold transition-all duration-300 ${
+                    selectedCategory === category
+                      ? 'bg-gradient-to-r from-[#d4af37] to-[#c9a332] text-white shadow-lg shadow-[#d4af37]/30'
+                      : 'bg-white text-gray-700 hover:bg-gray-50 border-2 border-gray-200 hover:border-[#d4af37]/30 shadow-sm'
+                  }`}
+                >
+                  <span className="flex items-center gap-2">
+                    {category}
+                  </span>
+                </motion.button>
+              );
+            })}
+          </div>
         </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-          {filteredImages.map((image, index) => (
+        {/* Results Count */}
+        <AnimatePresence mode="wait">
+          {(searchQuery || selectedCategory !== 'All') && (
             <motion.div
-              key={image.id}
-              initial={{ opacity: 0, y: 30, scale: 0.9 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{ duration: 0.5, delay: index * 0.05 }}
-              whileHover={{ scale: 1.05, y: -10 }}
-              className="relative aspect-square rounded-2xl overflow-hidden shadow-xl cursor-pointer group border-4 border-transparent hover:border-[#d4af37]"
-              onClick={() => openLightbox(image)}
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              className="text-center mb-8"
             >
-              <img
-                src={image.image_url}
-                alt={image.alt_text}
-                className="w-full h-full object-cover transition-all duration-500 group-hover:scale-125 group-hover:rotate-2"
-                loading="lazy"
-              />
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-br from-[#1e3a8a]/80 to-[#d4af37]/80 opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center"
-                initial={{ opacity: 0 }}
-                whileHover={{ opacity: 1 }}
-              >
-                <span className="text-white font-bold text-xl drop-shadow-lg transform -translate-y-2 group-hover:translate-y-0 transition-transform duration-300">{image.title}</span>
-              </motion.div>
+              <p className="text-gray-600 text-lg">
+                Showing <span className="font-bold text-[#1e3a8a]">{filteredImages.length}</span> {filteredImages.length === 1 ? 'result' : 'results'}
+                {searchQuery && <span> for "{searchQuery}"</span>}
+              </p>
             </motion.div>
-          ))}
-        </div>
+          )}
+        </AnimatePresence>
+
+        {/* Gallery Grid */}
+        <AnimatePresence mode="wait">
+          {filteredImages.length > 0 ? (
+            <motion.div
+              key="gallery-grid"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+            >
+              {filteredImages.map((image, index) => (
+                <motion.div
+                  key={image.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: index * 0.03 }}
+                  whileHover={{ y: -8 }}
+                  className="group relative aspect-square rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl cursor-pointer bg-gray-100 transition-all duration-300"
+                  onClick={() => openLightbox(image)}
+                >
+                  {/* Image */}
+                  <img
+                    src={image.image_url}
+                    alt={image.alt_text}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    loading="lazy"
+                    onLoad={() => setImageLoading(prev => ({ ...prev, [image.id]: false }))}
+                  />
+                  
+                  {/* Hover Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <div className="absolute bottom-0 left-0 right-0 p-5 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="flex-1">
+                          <h3 className="text-white font-bold text-lg mb-1 line-clamp-1">
+                            {image.title}
+                          </h3>
+                          <span className="inline-block px-3 py-1 bg-[#d4af37] text-white text-xs font-semibold rounded-full">
+                            {image.category}
+                          </span>
+                        </div>
+                        <div className="bg-white/20 backdrop-blur-sm p-2 rounded-full">
+                          <ZoomIn size={18} className="text-white" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Category Badge (visible on mobile) */}
+                  <div className="absolute top-3 right-3 sm:opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <span className="px-3 py-1 bg-white/95 backdrop-blur-sm text-[#1e3a8a] text-xs font-bold rounded-full shadow-lg">
+                      {image.category}
+                    </span>
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
+          ) : (
+            <motion.div
+              key="no-results"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              className="text-center py-20"
+            >
+              <div className="inline-block p-8 bg-gray-100 rounded-3xl mb-6">
+                <Search size={64} className="text-gray-400 mx-auto" />
+              </div>
+              <h3 className="text-2xl font-bold text-gray-800 mb-3">No images found</h3>
+              <p className="text-gray-600 mb-6">Try adjusting your search or filter criteria</p>
+              <button
+                onClick={() => {
+                  setSearchQuery('');
+                  setSelectedCategory('All');
+                }}
+                className="px-6 py-3 bg-[#d4af37] text-white rounded-full font-semibold hover:bg-[#c9a332] transition-colors"
+              >
+                Clear Filters
+              </button>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
 
-      {lightboxImage && (
-        <div
-          className="fixed inset-0 bg-black/90 z-40 flex items-center justify-center p-2 sm:p-4"
-        >
-          <button
-            className="absolute top-2 sm:top-4 right-2 sm:right-4 text-white hover:text-amber-400 transition-colors z-50 bg-black/40 p-2 rounded-full"
-            onClick={() => setLightboxImage(null)}
-            aria-label="Close lightbox"
+      {/* Lightbox */}
+      <AnimatePresence>
+        {lightboxImage && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center"
+            onClick={closeLightbox}
           >
-            <X size={28} />
-          </button>
-          
-          {/* Previous button - only show when not at first image */}
-          {currentImageIndex > 0 && (
-            <button
-              className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center text-white transition-all duration-300 bg-black/70 hover:bg-[#d4af37] hover:scale-110 cursor-pointer z-50"
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                showPrevImage(e);
-              }}
-              aria-label="Previous image"
+            {/* Close Button */}
+            <motion.button
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.2 }}
+              className="absolute top-4 right-4 text-white hover:text-[#d4af37] transition-colors z-50 bg-white/10 backdrop-blur-sm p-3 rounded-full hover:bg-white/20"
+              onClick={closeLightbox}
+              aria-label="Close lightbox"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <polyline points="15 18 9 12 15 6"></polyline>
-              </svg>
-            </button>
-          )}
-          
-          <div className="relative max-w-full sm:max-w-5xl max-h-[85vh] overflow-hidden z-45">
-            <motion.img
-              key={lightboxImage.id} // Add key to ensure animation resets for each image
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 0.3 }}
-              src={lightboxImage.image_url}
-              alt={lightboxImage.alt_text}
-              className="max-w-full max-h-[70vh] sm:max-h-[80vh] object-contain"
-            />
+              <X size={24} />
+            </motion.button>
             
-            {/* Caption */}
-            <div className="absolute bottom-0 left-0 right-0 bg-black/70 text-white p-2 sm:p-3 text-center">
-              <h3 className="text-base sm:text-lg font-semibold">{lightboxImage.title}</h3>
-              <p className="text-xs sm:text-sm text-gray-300">{lightboxImage.category}</p>
-            </div>
-          </div>
-          
-          {/* Next button - only show when not at last image */}
-          {currentImageIndex < filteredImages.length - 1 && (
-            <button
-              className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center text-white transition-all duration-300 bg-black/70 hover:bg-[#d4af37] hover:scale-110 cursor-pointer z-50"
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                showNextImage(e);
-              }}
-              aria-label="Next image"
+            {/* Image Counter */}
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="absolute top-4 left-1/2 -translate-x-1/2 bg-white/10 backdrop-blur-sm px-5 py-2 rounded-full text-white font-semibold z-50"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <polyline points="9 18 15 12 9 6"></polyline>
-              </svg>
-            </button>
-          )}
-        </div>
-      )}
+              {currentImageIndex + 1} / {filteredImages.length}
+            </motion.div>
+            
+            {/* Previous Button */}
+            {currentImageIndex > 0 && (
+              <motion.button
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.2 }}
+                className="absolute left-4 top-1/2 -translate-y-1/2 w-14 h-14 rounded-full flex items-center justify-center text-white transition-all duration-300 bg-white/10 backdrop-blur-sm hover:bg-[#d4af37] hover:scale-110 z-50"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  showPrevImage();
+                }}
+                aria-label="Previous image"
+              >
+                <ChevronLeft size={28} strokeWidth={3} />
+              </motion.button>
+            )}
+            
+            {/* Image Container */}
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="relative max-w-7xl max-h-[90vh] mx-4"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <img
+                key={lightboxImage.id}
+                src={lightboxImage.image_url}
+                alt={lightboxImage.alt_text}
+                className="max-w-full max-h-[80vh] object-contain rounded-lg shadow-2xl"
+              />
+              
+              {/* Caption */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
+                className="absolute -bottom-20 left-0 right-0 bg-white/10 backdrop-blur-md text-white p-4 rounded-xl"
+              >
+                <h3 className="text-xl font-bold mb-1">{lightboxImage.title}</h3>
+                <div className="flex items-center gap-3">
+                  <span className="px-3 py-1 bg-[#d4af37] rounded-full text-sm font-semibold">
+                    {lightboxImage.category}
+                  </span>
+                  <span className="text-sm text-gray-300">{lightboxImage.alt_text}</span>
+                </div>
+              </motion.div>
+            </motion.div>
+            
+            {/* Next Button */}
+            {currentImageIndex < filteredImages.length - 1 && (
+              <motion.button
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.2 }}
+                className="absolute right-4 top-1/2 -translate-y-1/2 w-14 h-14 rounded-full flex items-center justify-center text-white transition-all duration-300 bg-white/10 backdrop-blur-sm hover:bg-[#d4af37] hover:scale-110 z-50"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  showNextImage();
+                }}
+                aria-label="Next image"
+              >
+                <ChevronRight size={28} strokeWidth={3} />
+              </motion.button>
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
