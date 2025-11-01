@@ -19,7 +19,7 @@ export function ServiceCorporate() {
   const packages = [
     {
       name: 'Basic',
-      price: '₹1,00,000',
+      price: '₹40,000',
       features: [
         'Up to 50 attendees',
         'Standard menu (3 courses)',
@@ -30,7 +30,7 @@ export function ServiceCorporate() {
     },
     {
       name: 'Standard',
-      price: '₹2,50,000',
+      price: '₹1,50,000',
       popular: true,
       features: [
         'Up to 150 attendees',
@@ -43,7 +43,7 @@ export function ServiceCorporate() {
     },
     {
       name: 'Premium',
-      price: '₹5,00,000',
+      price: '₹2,50,000',
       features: [
         'Up to 300 attendees',
         'Executive menu (7+ courses)',

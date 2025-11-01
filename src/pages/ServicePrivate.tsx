@@ -19,7 +19,7 @@ export function ServicePrivate() {
   const packages = [
     {
       name: 'Basic',
-      price: '₹50,000',
+      price: '₹40,000',
       features: [
         'Up to 30 guests',
         'Standard menu (3 courses)',
@@ -30,7 +30,7 @@ export function ServicePrivate() {
     },
     {
       name: 'Standard',
-      price: '₹1,25,000',
+      price: '₹1,50,000',
       popular: true,
       features: [
         'Up to 75 guests',

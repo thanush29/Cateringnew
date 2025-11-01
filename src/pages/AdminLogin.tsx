@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Lock, Mail, Eye, EyeOff, Shield, ChefHat } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
-
+import logoImage from '/Site-logo.png';
 export function AdminLogin() {
   const navigate = useNavigate();
   const { signIn } = useAuth();
@@ -119,9 +119,14 @@ export function AdminLogin() {
                 ease: "easeInOut",
               }}
             />
-            <div className="relative z-10 bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 rounded-full p-4 shadow-xl">
-              <Shield className="text-white" size={32} />
-            </div>
+            <div className="relative z-10 bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 rounded-full p-3 shadow-xl">
+            <img 
+              src={logoImage}
+              alt="Admin Logo"
+              className="w-12 h-12 object-contain rounded-full"
+            />
+          </div>
+
           </motion.div>
           
           <motion.div
@@ -261,8 +266,9 @@ export function AdminLogin() {
                 </>
               ) : (
                 <>
-                  <Shield size={20} />
-                  Sign In Securely
+                  <img src={logoImage} alt="logo" className="w-5 h-5" />
+                    Sign In Securely
+
                 </>
               )}
             </span>
