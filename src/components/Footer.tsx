@@ -1,9 +1,11 @@
 import { Instagram, Facebook, Linkedin, Mail, Phone, MapPin, Heart, Code, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import logoImage from '/Site-logo.png';
 
 export function Footer() {
+  const navigate = useNavigate();
   const currentYear = new Date().getFullYear();
   const [modalOpen, setModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState({ title: '', content: '' });
@@ -366,7 +368,7 @@ export function Footer() {
     }
   };
 
-  const openModal = (type) => {
+  const openModal = (type: 'privacy' | 'terms' | 'cookies') => {
     setModalContent(policyContent[type]);
     setModalOpen(true);
     document.body.style.overflow = 'hidden';
@@ -432,15 +434,41 @@ export function Footer() {
                     <a
                       href={link.href}
                       onClick={(e) => {
-                        if (link.href.includes('#') && window.location.pathname === '/') {
-                          e.preventDefault();
+                        e.preventDefault();
+                        
+                        if (link.href.includes('#')) {
                           const hash = link.href.split('#')[1];
-                          const element = document.querySelector(`#${hash}`);
-                          if (element) {
-                            element.scrollIntoView({ behavior: 'smooth' });
+                          
+                          // Function to scroll to element with retries
+                          const scrollToElement = (elementId: string, retries = 3) => {
+                            const element = document.querySelector(`#${elementId}`);
+                            if (element) {
+                              // Use setTimeout to ensure smooth scroll happens after rendering
+                              setTimeout(() => {
+                                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                              }, 50);
+                            } else if (retries > 0) {
+                              // Retry if element not found
+                              setTimeout(() => {
+                                scrollToElement(elementId, retries - 1);
+                              }, 300);
+                            }
+                          };
+                          
+                          // If on home page, scroll to section
+                          if (window.location.pathname === '/') {
+                            scrollToElement(hash);
+                          } else {
+                            // If not on home page, navigate to home and scroll
+                            navigate('/');
+                            // Wait longer for page navigation and rendering
+                            setTimeout(() => {
+                              scrollToElement(hash);
+                            }, 800);
                           }
-                        } else if (link.href.includes('#') && window.location.pathname !== '/') {
-                          window.location.href = link.href;
+                        } else {
+                          // For non-hash links, just navigate
+                          navigate(link.href);
                         }
                       }}
                       className="text-gray-300 hover:text-[#d4af37] transition-all duration-300 hover:translate-x-2 inline-flex items-center group"
