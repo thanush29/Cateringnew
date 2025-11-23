@@ -2,8 +2,19 @@ import { motion, useInView } from 'framer-motion';
 import { useRef, useState } from 'react';
 import { Phone, Mail, MapPin, Send } from 'lucide-react';
 import { supabase } from '../lib/supabase';
+import { updateSEO } from "../utils/seo";
+import { useEffect } from "react";
+
 
 export function Contact({ isStandalone = false }: { isStandalone?: boolean }) {
+  useEffect(() => {
+  updateSEO(
+    "Contact Shanvik Catering & Events",
+    "Get in touch to plan your perfect event.",
+    "https://shanvikcateringevents.com/#/contact"
+  );
+}, []);
+
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
   const [formData, setFormData] = useState({
@@ -258,6 +269,7 @@ export function Contact({ isStandalone = false }: { isStandalone?: boolean }) {
           </motion.div>
         </div>
       </div>
+      
     </section>
   );
 }

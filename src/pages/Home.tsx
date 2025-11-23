@@ -5,8 +5,16 @@ import { GalleryPreview } from '../components/GalleryPreview';
 import { Testimonials } from '../components/Testimonials';
 import { PlanYourEvent } from '../components/PlanYourEvent';
 import { useEffect } from 'react';
+import { updateSEO } from "../utils/seo";
 
 export function Home() {
+  useEffect(() => {
+    updateSEO(
+      "Shanvik Catering & Events – Premium Catering in Chennai",
+      "Wedding, corporate, and private catering services crafted with passion and precision.",
+      "https://shanvikcateringevents.com/"
+    );
+  }, []);
   // Handle scroll to contact section if coming from package selection
   useEffect(() => {
     window.scrollTo(0, 0);

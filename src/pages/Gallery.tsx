@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Search, ChevronLeft, ChevronRight, ZoomIn } from 'lucide-react';
 import { supabase, GalleryImage } from '../lib/supabase';
+import { updateSEO } from "../utils/seo";
 
 const categories = ['All', 'Wedding', 'Corporate', 'Private', 'Outdoor', 'Luxury'];
 
@@ -105,6 +106,14 @@ export function Gallery() {
   const [lightboxImage, setLightboxImage] = useState<GalleryImage | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
   const [imageLoading, setImageLoading] = useState<Record<string, boolean>>({});
+  useEffect(() => {
+  updateSEO(
+    "Event Gallery – Shanvik Catering & Events",
+    "Browse our gallery of wedding, corporate, and private event catering.",
+    "https://shanvikcateringevents.com/#/gallery"
+  );
+}, []);
+
 
   useEffect(() => {
     window.scrollTo(0, 0);
