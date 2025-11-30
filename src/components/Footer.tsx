@@ -426,7 +426,7 @@ export function Footer() {
                 {[
                   { href: '/#story', label: 'Our Story' },
                   { href: '/#services', label: 'Services' },
-                  { href: '/#gallery', label: 'Gallery' },
+                  { href: '/gallery', label: 'Gallery' },
                   { href: '/#testimonials', label: 'Testimonials' },
                   { href: '/#contact', label: 'Contact Us' }
                 ].map((link) => (
