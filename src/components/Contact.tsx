@@ -135,25 +135,23 @@ export function Contact({ isStandalone = false }: { isStandalone?: boolean }) {
                 <div>
                   <h3 className="font-semibold text-[#1e3a8a] mb-1">Location</h3>
                   <p className="text-[#1e3a8a]">
-                    L2 block, 12207, KKR Town 5th St, KKR Town 1st St, near Anthony hospital, Kodungaiyur, Chennai, Tamil Nadu 600060
+                    Chennai, Tamil Nadu, India
                   </p>
                 </div>
               </div>
 
               <div className="mt-8 rounded-lg overflow-hidden shadow-lg h-64">
-                  <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3885.349020559653!2d80.2396278!3d13.140370899999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a5265006da2e08f%3A0x77303eb3f2f12ad9!2sShanvik%20Catering%20%26%20Events!5e0!3m2!1sen!2sin!4v1761982204805!5m2!1sen!2sin"
-                    width="100%"
-                    height="100%"
-                    style={{ border: 0 }}
-                    allowFullScreen
-                    loading="lazy"
-                    referrerPolicy="no-referrer-when-downgrade"
-                    title="Location map"
-                  />
-                </div>
-
-
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d248849.84916296526!2d80.06892545!3d13.047982699999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a5265ea4f7d3361%3A0x6e61a70b6863d433!2sChennai%2C%20Tamil%20Nadu!5e0!3m2!1sen!2sin!4v1234567890123"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="Location map"
+                />
+              </div>
             </div>
           </motion.div>
 
