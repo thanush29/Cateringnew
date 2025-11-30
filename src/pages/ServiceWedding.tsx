@@ -1,17 +1,8 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Check } from 'lucide-react';
-import { updateSEO } from "../utils/seo";
-import { useEffect } from "react";
-export function ServiceWedding() {
-  useEffect(() => {
-  updateSEO(
-    "Wedding Catering Services – Shanvik Catering",
-    "Premium wedding catering with traditional, modern, and fusion menu options.",
-    "https://shanvikcateringevents.com/#/services/wedding"
-  );
-}, []);
 
+export function ServiceWedding() {
   const services = [
     'Complete wedding planning & coordination',
     'Custom menu design & tasting sessions',

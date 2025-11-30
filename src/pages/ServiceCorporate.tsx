@@ -1,17 +1,8 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Check } from 'lucide-react';
-import { updateSEO } from "../utils/seo";
-import { useEffect } from "react";
-export function ServiceCorporate() {
-  useEffect(() => {
-  updateSEO(
-    "Corporate Catering – Shanvik Catering",
-    "Professional catering for conferences, office events, seminars, and business meets.",
-    "https://shanvikcateringevents.com/#/services/corporate"
-  );
-}, []);
 
+export function ServiceCorporate() {
   const services = [
     'Event planning & logistics management',
     'Professional buffet & plated service',

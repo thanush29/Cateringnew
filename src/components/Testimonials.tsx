@@ -2,17 +2,8 @@ import { motion, useInView } from 'framer-motion';
 import { useRef, useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Instagram, Star } from 'lucide-react';
 import { supabase, Testimonial } from '../lib/supabase';
-import { updateSEO } from "../utils/seo";
 
 export function Testimonials() {
-  useEffect(() => {
-  updateSEO(
-    "Client Testimonials – Shanvik Catering",
-    "See how our customers experienced our catering services.",
-    "https://shanvikcateringevents.com/#/#testimonials"
-  );
-}, []);
-
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);

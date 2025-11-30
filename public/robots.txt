@@ -1,9 +1,3 @@
+# https://www.robotstxt.org/robotstxt.html
 User-agent: *
-Allow: /
-
-# Block admin pages
-Disallow: /#/admin/login
-Disallow: /#/admin/dashboard
-
-# Sitemap
-Sitemap: https://shanvikcateringevents.com/sitemap.xml
+Disallow:

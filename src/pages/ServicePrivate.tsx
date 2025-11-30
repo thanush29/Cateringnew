@@ -1,17 +1,8 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Check } from 'lucide-react';
-import { updateSEO } from "../utils/seo";
-import { useEffect } from "react";
-export function ServicePrivate() {
-  useEffect(() => {
-  updateSEO(
-    "Private Event Catering – Shanvik Catering",
-    "Catering for birthdays, engagements, naming ceremonies, and intimate gatherings.",
-    "https://shanvikcateringevents.com/#/services/private"
-  );
-}, []);
 
+export function ServicePrivate() {
   const services = [
     'Personalized event planning',
     'Custom menu creation',
